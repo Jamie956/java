@@ -2,6 +2,7 @@ package com.example.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -48,6 +49,16 @@ public class JdbcUtils {
 	 */
 	public static void closeAll(ResultSet rs, Statement stmt, Connection conn) {
 		close(rs);
+		close(stmt);
+		close(conn);
+	}
+	
+	/**
+	 * Close Statement and Connection
+	 * @param stmt
+	 * @param conn
+	 */
+	public static void closeAll(Statement stmt, Connection conn) {
 		close(stmt);
 		close(conn);
 	}
@@ -125,5 +136,77 @@ public class JdbcUtils {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * Update ( insert, update, delete )
+	 */
+	public static int update(String sql) {
+		Connection conn = getConnection();
+		Statement stmt = null;
+		try {
+			stmt = conn.createStatement();
+			int count = stmt.executeUpdate(sql);
+			return count;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(stmt, conn);
+		}
+		return 0;
+	}
+	
+	/**
+	 * Query With Pstmt
+	 * @param sql
+	 * @param rowMapper
+	 * @return
+	 */
+	public static <T> List<T> queryWithPstmt(String sql, RowMapper<T> rowMapper) {
+		Connection conn = getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeQuery();
+			rs = pstmt.executeQuery();
+			List<T> result = new ArrayList<T>();
+			while (rs.next()) {
+				T t = rowMapper.getEntity(rs);
+				result.add(t);
+			}
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			closeAll(rs, pstmt, conn);
+		}
+		return null;
+	}
+	
+	/**
+	 * Update With Pstmt
+	 * @param sql
+	 * @param param
+	 * @return
+	 */
+	public static int updateWithPstmt(String sql, Object[] param) {
+		Connection conn = getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			if(null != param && param.length>0){
+				for (int i = 0; i < param.length; i++) {
+					pstmt.setObject(i+1, param[i]);
+				}
+			}
+			int count = pstmt.executeUpdate();
+			return count;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(pstmt, conn);
+		}
+		return 0;
+	}
 	
 }
