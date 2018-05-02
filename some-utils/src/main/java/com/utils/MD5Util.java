@@ -1,4 +1,4 @@
-package com.jarvis.base.util;
+package com.utils;
 import java.security.MessageDigest;
 
 public class MD5Util {

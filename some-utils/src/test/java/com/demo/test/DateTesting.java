@@ -4,7 +4,8 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.jarvis.base.util.DateHelper;
+import com.utils.DateHelper;
+
 
 public class DateTesting {
 	@Test

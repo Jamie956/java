@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jarvis.base.util.FastJsonUtil;
-import com.jarvis.base.util.HttpUtils;
+import com.utils.FastJsonUtil;
+import com.utils.HttpUtils;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

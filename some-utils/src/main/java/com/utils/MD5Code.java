@@ -1,4 +1,4 @@
-package com.jarvis.base.util;
+package com.utils;
 /**
  * MD5编码工具类
  *
