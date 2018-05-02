@@ -106,17 +106,15 @@ public class DateTesting {
 	}
 	
 	@Test
-	public void getTimesperTest() {
-		int result = DateHelper.getTimesper("2018-04-20 19:15:24");
+	public void formatDateTimeTest() {
+		String result = DateHelper.formatDateTime("2018-05-01-23-14");
 		System.out.println(result);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	@Test
+	public void formatDateTimeTest2() {
+		String result = DateHelper.formatDateTime(new Date());
+		System.out.println(result);
+	}
 	
 }

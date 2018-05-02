@@ -233,31 +233,8 @@ public class DateHelper {
 	}
 
 	/**
-	 * 当前时间与指定时间的差
-	 * @param str yyyy-MM-dd HH:mm:ss 格式的日期
-	 * @return 时间差，单位：秒
-	 */
-	public static int getTimesper(String str) {
-		if ((str == null) || ("".equals(str))) {
-			return 0;
-		}
-		try {
-			Date date1 = new Date(Long.parseLong(str));
-			Date date = new Date();
-			long nowtime = (date.getTime() - date1.getTime()) / 1000L;
-			return (int) nowtime;
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("日期转换出错");
-		}
-		return 0;
-	}
-
-	/**
-	 * 描述：获取16位日期时间，yyyyMMddHHmmss
-	 * 
-	 * @param dateTime
-	 *            字串日期
+	 * 获取16位日期时间，yyyyMMddHHmmss
+	 * @param dateTime 字串日期
 	 * @return
 	 */
 	public static String formatDateTime(String dateTime) {
@@ -271,15 +248,12 @@ public class DateHelper {
 			}
 			return date + time;
 		}
-
 		return "";
 	}
 
 	/**
-	 * 描述：获取16位日期时间，yyyyMMddHHmmss
-	 * 
-	 * @param date
-	 *            日期
+	 * 获取16位日期时间，yyyyMMddHHmmss
+	 * @param date 日期
 	 * @return
 	 */
 	public static String formatDateTime(Date date) {
