@@ -6,22 +6,44 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateHelper {
-	public static final String pattern_date = "yyyy-MM-dd";
-	public static final String pattern_time = "yyyy-MM-dd HH:mm:ss";
+//	public static final String pattern_date = "yyyy-MM-dd";
+//	public static final String pattern_time = "yyyy-MM-dd HH:mm:ss";
 	
+	/**
+	 * 格式化日期
+	 * @param date
+	 * @return
+	 */
 	public static String formatDate(Date date) {
-		return formatDate(date, pattern_time);
+		return formatDate(date, "yyyy-MM-dd HH:mm:ss");
 	}
-
+	
+	/**
+	 * 指定pattern，格式化日期
+	 * @param date
+	 * @param pattern
+	 * @return
+	 */
 	public static String formatDate(Date date, String pattern) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
 		return dateFormat.format(date);
 	}
-
+	
+	/**
+	 * 解析日期
+	 * @param dateStr
+	 * @return
+	 */
 	public static Date parseString(String dateStr) {
 		return parseString(dateStr, "yyyy-MM-dd HH:mm:ss");
 	}
-
+	
+	/**
+	 * 指定pattern，解析日期
+	 * @param dateStr
+	 * @param pattern
+	 * @return
+	 */
 	public static Date parseString(String dateStr, String pattern) {
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		try {
@@ -34,7 +56,12 @@ public class DateHelper {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * 获取某天的星期
+	 * @param date
+	 * @return
+	 */
 	public static String getWeekStr(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -65,7 +92,13 @@ public class DateHelper {
 		}
 		return weekStr;
 	}
-
+	
+	/**
+	 * fromDate和toDate相差的秒数
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
 	public static long getDateMiliDispersion(Date fromDate, Date toDate) {
 		if ((fromDate == null) || (toDate == null)) {
 			return 0L;
@@ -77,6 +110,12 @@ public class DateHelper {
 		return toTime - fromTime;
 	}
 
+	/**
+	 * fromDate和toDate相差的天数
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
 	public static int getDateDiff(Date fromDate, Date toDate) {
 		if ((fromDate == null) || (toDate == null)) {
 			return 0;
@@ -91,12 +130,9 @@ public class DateHelper {
 	}
 
 	/**
-	 * 描述：获取指定日期之前多少天的日期
-	 * 
-	 * @param date
-	 *            指定日期
-	 * @param day
-	 *            天数
+	 * 某天过去x天的日期
+	 * @param date 指定日期
+	 * @param day 天数
 	 * @return 日期
 	 */
 	public static Date getDataDiff(Date date, int day) {
@@ -109,8 +145,7 @@ public class DateHelper {
 	}
 
 	/**
-	 * 描述：获取当前周
-	 * 
+	 * 获取数字星期
 	 * @return
 	 */
 	public static int getCurrentWeek() {
@@ -124,8 +159,7 @@ public class DateHelper {
 	}
 
 	/**
-	 * 描述：获取中文当前周
-	 * 
+	 * 获取中文星期
 	 * @return
 	 */
 	public static String getCurrentWeekStr() {
@@ -133,8 +167,7 @@ public class DateHelper {
 	}
 
 	/**
-	 * 描述：获取本年
-	 * 
+	 * 获取本年
 	 * @return
 	 */
 	public static int getCurrentYear() {
@@ -143,8 +176,7 @@ public class DateHelper {
 	}
 
 	/**
-	 * 描述：获取本月
-	 * 
+	 * 获取本月
 	 * @return
 	 */
 	public static int getCurrentMonth() {
@@ -153,8 +185,7 @@ public class DateHelper {
 	}
 
 	/**
-	 * 描述：获取本月的当前日期数
-	 * 
+	 * 获取本月的当前日期数
 	 * @return
 	 */
 	public static int getCurrentDay() {
@@ -163,10 +194,8 @@ public class DateHelper {
 	}
 
 	/**
-	 * 描述：当前时间与指定时间的差
-	 * 
-	 * @param str
-	 *            秒数
+	 * 当前时间与指定时间的差
+	 * @param str 秒数
 	 * @return 时间差，单位：秒
 	 */
 	public static int getUnixTime(String str) {
@@ -189,8 +218,7 @@ public class DateHelper {
 	}
 
 	/**
-	 * 描述：去除日期字串中原“-”和“:”
-	 * 
+	 * 去除日期字串中原“-”和“:”
 	 * @param dateTime日期字串
 	 * @return
 	 */
@@ -201,15 +229,12 @@ public class DateHelper {
 			String date = formatDateTime.substring(0, 8);
 			return date;
 		}
-
 		return "";
 	}
 
 	/**
-	 * 描述：当前时间与指定时间的差
-	 * 
-	 * @param str
-	 *            yyyy-MM-dd HH:mm:ss 格式的日期
+	 * 当前时间与指定时间的差
+	 * @param str yyyy-MM-dd HH:mm:ss 格式的日期
 	 * @return 时间差，单位：秒
 	 */
 	public static int getTimesper(String str) {

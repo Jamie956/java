@@ -55,4 +55,68 @@ public class DateTesting {
 		int dateDiff = DateHelper.getDateDiff(fromDate, toDate);
 		System.out.println(dateDiff);
 	}
+	
+	@Test
+	public void getDatePastTest() {
+		Date date = DateHelper.parseString("2018-05-01 19:15:24");
+		Date result = DateHelper.getDataDiff(date, 3);
+		System.out.println(result);
+	}
+	
+	@Test
+	public void getCurrentWeekTest() {
+		int week = DateHelper.getCurrentWeek();
+		System.out.println(week);
+	}
+	
+	@Test
+	public void getCurrentWeekStrTest() {
+		String result = DateHelper.getCurrentWeekStr();
+		System.out.println(result);
+	}
+	
+	@Test
+	public void getCurrentYearTest() {
+		int result = DateHelper.getCurrentYear();
+		System.out.println(result);
+	}
+	
+	@Test
+	public void getCurrentMonthTest() {
+		int result = DateHelper.getCurrentMonth();
+		System.out.println(result);
+	}
+	
+	@Test
+	public void getCurrentDayTest() {
+		int result = DateHelper.getCurrentDay();
+		System.out.println(result);
+	}
+	
+	@Test
+	public void getUnixTimeTest() {
+		int result = DateHelper.getUnixTime("1525255821");
+		System.out.println(result);
+	}
+	
+	@Test
+	public void formatStringTest() {
+		String result = DateHelper.formatString("2018-05-01");
+		System.out.println(result);
+	}
+	
+	@Test
+	public void getTimesperTest() {
+		int result = DateHelper.getTimesper("2018-04-20 19:15:24");
+		System.out.println(result);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
