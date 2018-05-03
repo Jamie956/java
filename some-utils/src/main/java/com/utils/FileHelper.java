@@ -3,17 +3,12 @@ package com.utils;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
 
 import org.apache.commons.io.FilenameUtils;
-import org.dom4j.Document;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 
 public class FileHelper {
 
@@ -483,10 +478,8 @@ public class FileHelper {
 
 	/**
 	 * 写字串到文件中，若文件不存在，则建立新文件
-	 *
 	 * @param file 需要写的文件的路径
-	 * @param data
-	 *            需要写入的字串
+	 * @param data 需要写入的字串
 	 * @return true:写入成功 false:写入失败
 	 */
 	public static boolean writeToFile(String file, String data) {
@@ -495,13 +488,9 @@ public class FileHelper {
 
 	/**
 	 * 写字串到文件中，若文件不存在，则建立新文件
-	 *
-	 * @param file
-	 *            需要写的文件的路径
-	 * @param data
-	 *            需要写入的字串
-	 * @param dncoding
-	 *            文件编码，默认为GBK
+	 * @param file 需要写的文件的路径
+	 * @param data 需要写入的字串
+	 * @param dncoding 文件编码，默认为GBK
 	 * @return true:写入成功 false:写入失败
 	 */
 	public static boolean writeToFile(String file, String data, String encoding) {
@@ -520,9 +509,7 @@ public class FileHelper {
 
 	/**
 	 * 建立由filePathName指定的文件，若文件路径中的目录不存在，则先建立目录
-	 *
-	 * @param filePathName
-	 *            文件路径全名
+	 * @param filePathName 文件路径全名
 	 * @return
 	 */
 	public static boolean createNewFile(String filePathName) {
@@ -533,7 +520,6 @@ public class FileHelper {
 				return false;
 			}
 		}
-
 		try {
 			File file = new File(filePathName);
 			return file.createNewFile();
@@ -546,9 +532,7 @@ public class FileHelper {
 
 	/**
 	 * 判断文件和目录是否已存在
-	 *
-	 * @param filePath
-	 *            文件和目录完整路径
+	 * @param filePath 文件和目录完整路径
 	 * @return tru:存在 false：不存在
 	 */
 	public static boolean exists(String filePath) {
@@ -558,9 +542,7 @@ public class FileHelper {
 
 	/**
 	 * 判断特定的路径是否为文件
-	 *
-	 * @param filePath
-	 *            文件完整的路径
+	 * @param filePath 文件完整的路径
 	 * @return 若是文件，则返回true，否则返回false
 	 */
 	public static boolean isFile(String filePath) {
@@ -570,9 +552,7 @@ public class FileHelper {
 
 	/**
 	 * 判断特定的路径是否为目录
-	 *
-	 * @param filePath
-	 *            文件完整的路径
+	 * @param filePath 文件完整的路径
 	 * @return 若是目录，则返回true，否则返回false
 	 */
 	public static boolean isDirectory(String filePath) {
@@ -582,11 +562,8 @@ public class FileHelper {
 
 	/**
 	 * 更改文件的名称，若不在同一个目录下,则系统会移动文件
-	 *
-	 * @param srcFile
-	 *            源文件路径名称
-	 * @param destFile
-	 *            目的文件路径名称
+	 * @param srcFile 源文件路径名称
+	 * @param destFile 目的文件路径名称
 	 * @return
 	 */
 	public static boolean renameTo(String srcFile, String destFile) {
@@ -594,234 +571,4 @@ public class FileHelper {
 		return file.renameTo(new File(destFile));
 	}
 
-	/**
-	 * 
-	 * 描述：根据document生成Xml文件 作者：刘宝 时间：Jun 9, 2010 3:16:11 PM
-	 * 
-	 * @param fileName
-	 *            生成文件的路径
-	 * @param document
-	 * @param encoding
-	 *            编码格式
-	 * @return
-	 */
-	public static boolean WriteToXMLFile(String fileName, Document document, String encoding) {
-		createNewFile(fileName);
-		boolean success = false;
-		/** 格式化输出,类型IE浏览一样 */
-		OutputFormat format = OutputFormat.createPrettyPrint();
-		/** 指定XML编码 */
-		format.setEncoding(encoding);
-		XMLWriter writer = null;
-		try {
-			/** 将document中的内容写入文件中 */
-			writer = new XMLWriter(new FileOutputStream(new File(fileName)), format);
-			writer.write(document);
-			writer.flush();
-			success = true;
-			/** 执行成功,需返回true */
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println("写文件出错");
-		} finally {
-			if (writer != null) {
-				try {
-					writer.close();
-					writer = null;
-				} catch (IOException e) {
-					e.printStackTrace();
-					System.err.println("Convert code Error");
-				}
-			}
-		}
-		return success;
-	}
-
-	/** 
-     * 获取文件的后缀名并转化成大写 
-     *  
-     * @param fileName 
-     *            文件名 
-     * @return 
-     */  
-    public String getFileSuffix(String fileName) throws Exception {  
-        return fileName.substring(fileName.lastIndexOf(".") + 1,  
-                fileName.length()).toUpperCase();  
-    }  
-  
-    /** 
-     * 创建多级目录 
-     *  
-     * @param path 
-     *            目录的绝对路径 
-     */  
-    public void createMultilevelDir(String path) {  
-        try {  
-            StringTokenizer st = new StringTokenizer(path, "/");  
-            String path1 = st.nextToken() + "/";  
-            String path2 = path1;  
-            while (st.hasMoreTokens()) {  
-  
-                path1 = st.nextToken() + "/";  
-                path2 += path1;  
-                File inbox = new File(path2);  
-                if (!inbox.exists())  
-                    inbox.mkdir();  
-  
-            }  
-        } catch (Exception e) {  
-            System.out.println("目录创建失败" + e);  
-            e.printStackTrace();  
-        }  
-  
-    }  
-  
-    /** 
-     * 删除文件/目录(递归删除文件/目录) 
-     *  
-     * @param path 
-     *            文件或文件夹的绝对路径 
-     */  
-    public void deleteAll(String dirpath) {  
-        if (dirpath == null) {  
-            System.out.println("目录为空");  
-        } else {  
-            File path = new File(dirpath);  
-            try {  
-                if (!path.exists())  
-                    return;// 目录不存在退出  
-                if (path.isFile()) // 如果是文件删除  
-                {  
-                    path.delete();  
-                    return;  
-                }  
-                File[] files = path.listFiles();// 如果目录中有文件递归删除文件  
-                for (int i = 0; i < files.length; i++) {  
-                    deleteAll(files[i].getAbsolutePath());  
-                }  
-                path.delete();  
-  
-            } catch (Exception e) {  
-                System.out.println("文件/目录 删除失败" + e);  
-                e.printStackTrace();  
-            }  
-        }  
-    }  
-  
-    /** 
-     * 文件/目录 重命名 
-     *  
-     * @param oldPath 
-     *            原有路径（绝对路径） 
-     * @param newPath 
-     *            更新路径 
-     * @author lyf 注：不能修改上层次的目录 
-     */  
-    public void renameDir(String oldPath, String newPath) {  
-        File oldFile = new File(oldPath);// 文件或目录  
-        File newFile = new File(newPath);// 文件或目录  
-        try {  
-            boolean success = oldFile.renameTo(newFile);// 重命名  
-            if (!success) {  
-                System.out.println("重命名失败");  
-            } else {  
-                System.out.println("重命名成功");  
-            }  
-        } catch (RuntimeException e) {  
-            e.printStackTrace();  
-        }  
-  
-    }  
-  
-    /** 
-     * 新建目录 
-     */  
-    public static boolean newDir(String path) throws Exception {  
-        File file = new File(path);  
-        return file.mkdirs();//创建目录  
-    }  
-      
-    /** 
-     * 删除目录 
-     */  
-    public static boolean deleteDir(String path) throws Exception {  
-        File file = new File(path);  
-        if (!file.exists())  
-            return false;// 目录不存在退出  
-        if (file.isFile()) // 如果是文件删除  
-        {  
-            file.delete();  
-            return false;  
-        }  
-        File[] files = file.listFiles();// 如果目录中有文件递归删除文件  
-        for (int i = 0; i < files.length; i++) {  
-            deleteDir(files[i].getAbsolutePath());  
-        }  
-        file.delete();  
-          
-        return file.delete();//删除目录  
-    }  
-  
-    /** 
-     * 更新目录 
-     */  
-    public static boolean updateDir(String path, String newPath) throws Exception {  
-        File file = new File(path);  
-        File newFile = new File(newPath);  
-        return file.renameTo(newFile);  
-    }
-    
- // 删除文件夹  
-    // param folderPath 文件夹完整绝对路径  
-    public static void delFolder(String folderPath) {  
-        try {  
-            delAllFile(folderPath); // 删除完里面所有内容  
-            String filePath = folderPath;  
-            filePath = filePath.toString();  
-            java.io.File myFilePath = new java.io.File(filePath);  
-            myFilePath.delete(); // 删除空文件夹  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }  
-    }  
-  
-    // 删除指定文件夹下所有文件  
-    // param path 文件夹完整绝对路径  
-    public static boolean delAllFile(String path) {  
-        boolean flag = false;  
-        File file = new File(path);  
-        if (!file.exists()) {  
-            return flag;  
-        }  
-        if (!file.isDirectory()) {  
-            return flag;  
-        }  
-        String[] tempList = file.list();  
-        File temp = null;  
-        for (int i = 0; i < tempList.length; i++) {  
-            if (path.endsWith(File.separator)) {  
-                temp = new File(path + tempList[i]);  
-            } else {  
-                temp = new File(path + File.separator + tempList[i]);  
-            }  
-            if (temp.isFile()) {  
-                temp.delete();  
-            }  
-            if (temp.isDirectory()) {  
-                delAllFile(path + "/" + tempList[i]);// 先删除文件夹里面的文件  
-                delFolder(path + "/" + tempList[i]);// 再删除空文件夹  
-                flag = true;  
-            }  
-        }  
-        return flag;  
-    }  
-  
-    
-    
-      
-    public static void main(String d[]) throws Exception{  
-        //deleteDir("d:/ff/dddf");  
-        updateDir("D:\\TOOLS\\Tomcat 6.0\\webapps\\BCCCSM\\nationalExperiment/22222", "D:\\TOOLS\\Tomcat 6.0\\webapps\\BCCCSM\\nationalExperiment/224222");  
-    }  
-      
 }

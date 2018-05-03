@@ -293,9 +293,64 @@ public class FileHelperTests {
 		System.out.println(result);
 	}
 	
+	@Test
+	public void writeToFileTest2() {
+		String file = "D:\\test\\ax\\a\\a.txt";
+		String data = "hello world";
+		boolean result = FileHelper.writeToFile(file, data);
+		System.out.println(result);
+	}
 	
+	@Test
+	public void writeToFileTest3() {
+		String file = "D:\\test\\ax\\a\\a.txt";
+		String data = "hello world";
+		boolean result = FileHelper.writeToFile(file, data, "GBK");
+		System.out.println(result);
+	}
 	
+	@Test
+	public void createNewFileTest() {
+		String filePathName = "D:\\test\\ax\\a\\a.txt";
+		boolean result = FileHelper.createNewFile(filePathName);
+		System.out.println(result);
+	}
 	
+	@Test
+	public void existsTest() {
+		String filePathName = "D:\\test\\ax\\a\\a1.txt";
+		boolean result = FileHelper.exists(filePathName);
+		System.out.println(result);
+	}
+	
+	@Test
+	public void isFileTest() {
+		String filePathName = "D:\\test\\ax\\a\\a.txt";
+		boolean result = FileHelper.isFile(filePathName);
+		System.out.println(result);
+	}
+	
+	@Test
+	public void isDirectoryTest() {
+		String filePathName = "D:\\test\\ax\\a";
+		boolean result = FileHelper.isDirectory(filePathName);
+		System.out.println(result);
+	}
+	
+	@Test
+	public void renameToTest() {
+		String srcFile = "D:\\test\\ax\\a\\a.txt";
+		String destFile = "D:\\test\\ax\\a\\b.txt";
+		boolean result = FileHelper.renameTo(srcFile, destFile);
+		System.out.println(result);
+	}
+	
+	@Test
+	public void getFileSuffixTest() {
+		String fileName = "D:\\test\\ax\\a\\b.txt";
+		String result = FileHelper.getFileSuffix(fileName);
+		System.out.println(result);
+	}
 	
 	
 	
