@@ -15,16 +15,6 @@ import org.dom4j.Document;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
-/**
- *   
- * 
- * @Title: FileHelper.java
- * @Package com.jarvis.base.util
- * @Description:文件工具类
- * @author Jack 
- * @date 2017年9月2日 下午2:39:29
- * @version V1.0  
- */
 public class FileHelper {
 
 	/**
@@ -33,10 +23,8 @@ public class FileHelper {
 	private final static int KB_1 = 1024;
 
 	/**
-	 * 获得文件的CRC32校验和
-	 *
-	 * @param file
-	 *            要进行校验的文件
+	 * 获得文件的CRC32校验
+	 * @param file 要进行校验的文件
 	 * @return
 	 * @throws Exception
 	 */
@@ -55,9 +43,7 @@ public class FileHelper {
 
 	/**
 	 * 获得字串的CRC32校验和
-	 *
-	 * @param string
-	 *            要进行校验的字串
+	 * @param string 要进行校验的字串
 	 * @return
 	 * @throws Exception
 	 */
@@ -76,11 +62,8 @@ public class FileHelper {
 
 	/**
 	 * 连接路径和文件名称，组成最后的包含路径的文件名
-	 *
-	 * @param basePath
-	 *            文件路径
-	 * @param fullFilenameToAdd
-	 *            文件名称
+	 * @param basePath 文件路径
+	 * @param fullFilenameToAdd 文件名称
 	 * @return
 	 */
 	public static String concat(String basePath, String fullFilenameToAdd) {
@@ -89,9 +72,7 @@ public class FileHelper {
 
 	/**
 	 * 获得不带文件扩展名的文件名称
-	 *
-	 * @param filename
-	 *            文件完整路径
+	 * @param filename 文件完整路径
 	 * @return 不带扩展名的文件名称
 	 */
 	public static String getBaseName(String filename) {
@@ -100,9 +81,7 @@ public class FileHelper {
 
 	/**
 	 * 获得带扩展名的文件名称
-	 *
-	 * @param filename
-	 *            文件完整路径
+	 * @param filename 文件完整路径
 	 * @return 文件名称
 	 */
 	public static String getFileName(String filename) {
@@ -111,9 +90,7 @@ public class FileHelper {
 
 	/**
 	 * 获得文件的完整路径，包含最后的路径分隔条
-	 *
-	 * @param filename
-	 *            文件完整路径
+	 * @param filename 文件完整路径
 	 * @return 目录结构
 	 */
 	public static String getFullPath(String filename) {
@@ -122,9 +99,7 @@ public class FileHelper {
 
 	/**
 	 * 获得文件的完整路径，不包含最后的路径分隔条
-	 *
-	 * @param filename
-	 *            文件完整路径
+	 * @param filename 文件完整路径
 	 * @return
 	 */
 	public static String getFullPathNoEndSeparator(String filename) {
@@ -133,11 +108,8 @@ public class FileHelper {
 
 	/**
 	 * 判断文件是否有某扩展名
-	 *
-	 * @param filename
-	 *            文件完整路径
-	 * @param extension
-	 *            扩展名名称
+	 * @param filename 文件完整路径
+	 * @param extension 扩展名名称
 	 * @return 若是，返回true，否则返回false
 	 */
 	public static boolean isExtension(String filename, String extension) {
@@ -146,11 +118,8 @@ public class FileHelper {
 
 	/**
 	 * 判断文件的扩展名是否是扩展名数组中的一个
-	 *
-	 * @param filename
-	 *            文件完整路径
-	 * @param extensions
-	 *            扩展名名称
+	 * @param filename 文件完整路径
+	 * @param extensions 扩展名名称
 	 * @return 若是，返回true，否则返回false
 	 */
 	public static boolean isExtension(String filename, String[] extensions) {
@@ -159,9 +128,7 @@ public class FileHelper {
 
 	/**
 	 * 规范化路径，合并其中的多个分隔符为一个,并转化为本地系统路径格式
-	 *
-	 * @param filename
-	 *            文件完整路径
+	 * @param filename 文件完整路径
 	 * @return
 	 */
 	public static String normalize(String filename) {
@@ -170,9 +137,7 @@ public class FileHelper {
 
 	/**
 	 * 规范化路径，合并其中的多个分隔符为一个,并转化为本地系统路径格式,若是路径，则不带最后的路径分隔符
-	 *
-	 * @param filename
-	 *            文件完整路径
+	 * @param filename 文件完整路径
 	 * @return
 	 */
 	public static String normalizeNoEndSeparator(String filename) {
@@ -181,9 +146,7 @@ public class FileHelper {
 
 	/**
 	 * 把文件路径中的分隔符转换为unix的格式，也就是"/"
-	 *
-	 * @param path
-	 *            文件完整路径
+	 * @param path 文件完整路径
 	 * @return 转换后的路径
 	 */
 	public static String separatorsToUnix(String path) {
@@ -192,9 +155,7 @@ public class FileHelper {
 
 	/**
 	 * 把文件路径中的分隔符转换为window的格式，也就是"\"
-	 *
-	 * @param path
-	 *            文件完整路径
+	 * @param path 文件完整路径
 	 * @return 转换后的路径
 	 */
 	public static String separatorsToWindows(String path) {
@@ -203,9 +164,7 @@ public class FileHelper {
 
 	/**
 	 * 把文件路径中的分隔符转换当前系统的分隔符
-	 *
-	 * @param path
-	 *            文件完整路径
+	 * @param path 文件完整路径
 	 * @return 转换后的路径
 	 */
 	public static String separatorsToSystem(String path) {
@@ -214,9 +173,7 @@ public class FileHelper {
 
 	/**
 	 * 提取文件的扩展名
-	 *
-	 * @param filename
-	 *            文件名称
+	 * @param filename 文件名称
 	 * @return 文件扩展名，若没有扩展名，则返回空字符串
 	 */
 	public static String getExtension(String filename) {
@@ -225,9 +182,7 @@ public class FileHelper {
 
 	/**
 	 * 移出文件的扩展名
-	 *
-	 * @param filename
-	 *            文件名称
+	 * @param filename 文件名称
 	 * @return 若文件存在扩展名，则移出扩展名，然后返回移出后的值
 	 */
 	public static String removeExtension(String filename) {
@@ -236,9 +191,7 @@ public class FileHelper {
 
 	/**
 	 * 清除一个目录的内容，但不删除此目录
-	 *
-	 * @param directory
-	 *            需要清除的目录
+	 * @param directory 需要清除的目录
 	 * @return true:清除成功 false:清除失败
 	 */
 	public static boolean cleanDirectory(File directory) {
@@ -254,11 +207,8 @@ public class FileHelper {
 
 	/**
 	 * 拷贝一个目录的内容到另外一个目录中
-	 *
-	 * @param srcDir
-	 *            源目录
-	 * @param destDir
-	 *            目的目录
+	 * @param srcDir 源目录
+	 * @param destDir 目的目录
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyDirectory(File srcDir, File destDir) {
@@ -267,11 +217,8 @@ public class FileHelper {
 
 	/**
 	 * 拷贝一个目录的内容到另外一个目录中
-	 *
-	 * @param srcDir
-	 *            源目录
-	 * @param destDir
-	 *            目的目录
+	 * @param srcDir 源目录
+	 * @param destDir 目的目录
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyDirectory(String srcDir, String destDir) {
@@ -280,13 +227,9 @@ public class FileHelper {
 
 	/**
 	 * 拷贝一个目录的内容到另外一个目录中
-	 *
-	 * @param srcDir
-	 *            源目录
-	 * @param destDir
-	 *            目的目录
-	 * @param preserveFileDate
-	 *            是否保持文件日期
+	 * @param srcDir 源目录
+	 * @param destDir 目的目录
+	 * @param preserveFileDate 是否保持文件日期
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyDirectory(File srcDir, File destDir, boolean preserveFileDate) {
@@ -302,11 +245,8 @@ public class FileHelper {
 
 	/**
 	 * 拷贝源目录的内容到目的目录中(注：是拷贝到目的目录的里面)
-	 *
-	 * @param srcDir
-	 *            源目录
-	 * @param destDir
-	 *            目的目录
+	 * @param srcDir 源目录
+	 * @param destDir 目的目录
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyDirectoryToDirectory(File srcDir, File destDir) {
@@ -322,11 +262,8 @@ public class FileHelper {
 
 	/**
 	 * 拷贝源目录的内容到目的目录中(注：是拷贝到目的目录的里面)
-	 *
-	 * @param srcDir
-	 *            源目录
-	 * @param destDir
-	 *            目的目录
+	 * @param srcDir 源目录
+	 * @param destDir 目的目录
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyDirectoryToDirectory(String srcDir, String destDir) {
@@ -335,11 +272,8 @@ public class FileHelper {
 
 	/**
 	 * 拷贝文件
-	 *
-	 * @param srcFile
-	 *            源文件
-	 * @param destFile
-	 *            目的文件
+	 * @param srcFile 源文件
+	 * @param destFile 目的文件
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyFile(File srcFile, File destFile) {
@@ -348,11 +282,8 @@ public class FileHelper {
 
 	/**
 	 * 拷贝文件
-	 *
-	 * @param srcFile
-	 *            源文件路径
-	 * @param destFile
-	 *            目的文件路径
+	 * @param srcFile 源文件路径
+	 * @param destFile 目的文件路径
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyFile(String srcFile, String destFile) {
@@ -361,13 +292,9 @@ public class FileHelper {
 
 	/**
 	 * 拷贝文件
-	 *
-	 * @param srcFile
-	 *            源文件
-	 * @param destFile
-	 *            目的文件
-	 * @param preserveFileDate
-	 *            是否保留文件日期
+	 * @param srcFile 源文件
+	 * @param destFile 目的文件
+	 * @param preserveFileDate 是否保留文件日期
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyFile(File srcFile, File destFile, boolean preserveFileDate) {
@@ -383,11 +310,8 @@ public class FileHelper {
 
 	/**
 	 * 拷贝文件到某目录中
-	 *
-	 * @param srcFile
-	 *            源文件
-	 * @param destDir
-	 *            目的目录
+	 * @param srcFile 源文件
+	 * @param destDir 目的目录
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyFileToDirectory(File srcFile, File destDir) {
@@ -403,11 +327,8 @@ public class FileHelper {
 
 	/**
 	 * 拷贝文件到某目录中
-	 *
-	 * @param srcFile
-	 *            源文件
-	 * @param destDir
-	 *            目的目录
+	 * @param srcFile 源文件
+	 * @param destDir 目的目录
 	 * @return true:拷贝成功 false:拷贝失败
 	 */
 	public static boolean copyFileToDirectory(String srcFile, String destDir) {
@@ -416,9 +337,7 @@ public class FileHelper {
 
 	/**
 	 * 删除一个目录和该目录下的所有内容
-	 *
-	 * @param directory
-	 *            需要删除的目录
+	 * @param directory 需要删除的目录
 	 * @return true:删除成功 false:删除失败
 	 */
 	public static boolean deleteDirectory(String directory) {
@@ -434,9 +353,7 @@ public class FileHelper {
 
 	/**
 	 * 删除文件
-	 *
-	 * @param file
-	 *            需要删除的文件路径
+	 * @param file 需要删除的文件路径
 	 * @return true:删除成功 false:删除失败
 	 */
 	public static boolean deleteFile(String file) {
@@ -452,9 +369,7 @@ public class FileHelper {
 
 	/**
 	 * 递归创建目录
-	 *
-	 * @param directory
-	 *            目录
+	 * @param directory 目录
 	 * @return
 	 */
 	public static boolean createDirectory(String directory) {
@@ -470,9 +385,7 @@ public class FileHelper {
 
 	/**
 	 * 读入文件到字节数组中
-	 *
-	 * @param file
-	 *            需要读取的文件路径
+	 * @param file 需要读取的文件路径
 	 * @return 读取的字节数组，若读入失败，则返回null
 	 */
 	public static byte[] readFileToByteArray(String file) {
@@ -488,9 +401,7 @@ public class FileHelper {
 
 	/**
 	 * 读入文件到字串中
-	 *
-	 * @param file
-	 *            需要读取的文件路径
+	 * @param file 需要读取的文件路径
 	 * @return 读取的文件内容，若读入失败，则返回空字串
 	 */
 	public static String readFileToString(String file, String encoding) {
@@ -509,9 +420,7 @@ public class FileHelper {
 
 	/**
 	 * 读入文件到字串中
-	 *
-	 * @param file
-	 *            需要读取的文件路径
+	 * @param file 需要读取的文件路径
 	 * @return 读取的文件内容，若读入失败，则返回空字串
 	 */
 	public static String readFileToString(String file) {
@@ -520,45 +429,35 @@ public class FileHelper {
 
 	/**
 	 * 读入文本文件到一个按行分开的List中
-	 *
-	 * @param file
-	 *            需要读取的文件路径
+	 * @param file 需要读取的文件路径
 	 * @return 按行内容分开的List
 	 */
-	@SuppressWarnings("rawtypes")
-	public static List readLines(String file) {
+	public static List<?> readLines(String file) {
 		return readLines(file, "GBK");
 	}
 
 	/**
 	 * 读入文本文件到一个按行分开的List中
-	 *
-	 * @param file
-	 *            需要读取的文件路径
+	 * @param file 需要读取的文件路径
 	 * @return 按行内容分开的List
 	 */
-	@SuppressWarnings("rawtypes")
-	public static List readLines(String file, String encoding) {
-
+	public static List<?> readLines(String file, String encoding) {
 		try {
 			if (StringHelper.isEmpty(encoding)) {
 				encoding = "GBK";
 			}
-			List lineList = org.apache.commons.io.FileUtils.readLines(new File(file), encoding);
+			List<?> lineList = org.apache.commons.io.FileUtils.readLines(new File(file), encoding);
 			return lineList;
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.err.println("读取文件出错");
 		}
 		return null;
-
 	}
 
 	/**
 	 * 递归求一个目录的容量大小
-	 *
-	 * @param directory
-	 *            需要计算容量的目录路径
+	 * @param directory 需要计算容量的目录路径
 	 * @return 容量的大小(字节数)
 	 */
 	public static long sizeOfDirectory(String directory) {
@@ -567,11 +466,8 @@ public class FileHelper {
 
 	/**
 	 * 写字节数组到文件中，若文件不存在，则建立新文件
-	 *
-	 * @param file
-	 *            需要写的文件的路径
-	 * @param data
-	 *            需要写入的字节数据
+	 * @param file 需要写的文件的路径
+	 * @param data 需要写入的字节数据
 	 * @return true:写入成功 false:写入失败
 	 */
 	public static boolean writeToFile(String file, byte[] data) {
@@ -588,8 +484,7 @@ public class FileHelper {
 	/**
 	 * 写字串到文件中，若文件不存在，则建立新文件
 	 *
-	 * @param file
-	 *            需要写的文件的路径
+	 * @param file 需要写的文件的路径
 	 * @param data
 	 *            需要写入的字串
 	 * @return true:写入成功 false:写入失败
