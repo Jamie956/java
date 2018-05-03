@@ -1,4 +1,4 @@
-package com.demo.test;
+package com.demo.utils;
 
 import java.util.Date;
 import org.junit.Test;
