@@ -6,9 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateHelper {
-//	public static final String pattern_date = "yyyy-MM-dd";
-//	public static final String pattern_time = "yyyy-MM-dd HH:mm:ss";
-	
 	/**
 	 * 格式化日期
 	 * @param date

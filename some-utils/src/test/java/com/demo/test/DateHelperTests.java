@@ -1,13 +1,10 @@
 package com.demo.test;
 
 import java.util.Date;
-
 import org.junit.Test;
-
 import com.utils.DateHelper;
 
-
-public class DateTesting {
+public class DateHelperTests {
 	@Test
 	public void formatDateTest(){
 		String now = DateHelper.formatDate(new Date());
