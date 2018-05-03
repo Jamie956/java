@@ -2,28 +2,16 @@ package com.utils;
 
 import java.util.List;
 
-/**   
-* @Title: ConvertHelper.java 
-* @Package com.jarvis.base.util 
-* @Description:数据类型转换
-* @author Jack  
-* @date 2017年9月2日 下午3:22:05 
-* @version V1.0   
-*/ 
-public class ConvertHelper
-{
+public class ConvertHelper {
 	/**
 	 * 把字串转化为整数,若转化失败，则返回0
-	 *
-	 * @param str
-	 *            字串
+	 * @param str 字串
 	 * @return
 	 */
 	public static int strToInt(String str) {
 		if (str == null) {
 			return 0;
 		}
-
 		try {
 			return Integer.parseInt(str);
 		} catch (Exception ex) {
@@ -35,16 +23,13 @@ public class ConvertHelper
 
 	/**
 	 * 把字串转化为长整型数,若转化失败，则返回0
-	 *
-	 * @param str
-	 *            要转化为长整型的字串
+	 * @param str 要转化为长整型的字串
 	 * @return
 	 */
 	public static long strToLong(String str) {
 		if (str == null) {
 			return 0;
 		}
-
 		try {
 			return Long.parseLong(str);
 		} catch (Exception ex) {
@@ -56,9 +41,7 @@ public class ConvertHelper
 
 	/**
 	 * 把字串转化为Float型数据,若转化失败，则返回0
-	 *
-	 * @param str
-	 *            要转化为Float的字串
+	 * @param str 要转化为Float的字串
 	 * @return
 	 */
 	public static float strToFloat(String str) {
@@ -76,9 +59,7 @@ public class ConvertHelper
 
 	/**
 	 * 把字串转化为Double型数据，若转化失败，则返回0
-	 * 
-	 * @param str
-	 *            要转化为Double的字串
+	 * @param str 要转化为Double的字串
 	 * @return
 	 */
 	public static double strToDouble(String str) {
@@ -96,7 +77,6 @@ public class ConvertHelper
 
 	/**
 	 * 描述：字符转为一个元素的Object数组
-	 * 
 	 * @param str
 	 * @return
 	 */
@@ -110,9 +90,7 @@ public class ConvertHelper
 
 	/**
 	 * 对于一个字符串数组，把字符串数组中的每一个字串转换为整数。 返回一个转换后的整型数组，对于每一个字串若转换失败，则对 应的整型值就为0
-	 *
-	 * @param strArray
-	 *            要转化的数组
+	 * @param strArray 要转化的数组
 	 * @return
 	 */
 	public static int[] strArrayToIntArray(String[] strArray) {
@@ -125,9 +103,7 @@ public class ConvertHelper
 
 	/**
 	 * 描述：数组转换为字符串
-	 * 
-	 * @param arg0
-	 *            数组
+	 * @param arg0 数组
 	 * @return
 	 */
 	public static String arrToString(Object[] arg0) {
@@ -139,11 +115,8 @@ public class ConvertHelper
 
 	/**
 	 * 描述：数据转换为字符串
-	 * 
-	 * @param arg0
-	 *            数组
-	 * @param arg1
-	 *            取数组个数
+	 * @param arg0 数组
+	 * @param arg1 取数组个数
 	 * @return
 	 */
 	public static String arrToString(Object[] arg0, int arg1) {
@@ -155,11 +128,8 @@ public class ConvertHelper
 
 	/**
 	 * 描述：数据转换为字符串
-	 * 
-	 * @param arg0
-	 *            数组
-	 * @param arg1
-	 *            间隔符号
+	 * @param arg0 数组
+	 * @param arg1 间隔符号
 	 * @return
 	 */
 	public static String arrToString(Object[] arg0, String arg1) {
@@ -168,13 +138,9 @@ public class ConvertHelper
 
 	/**
 	 * 描述：数据转换为字符串
-	 * 
-	 * @param arg0
-	 *            数组
-	 * @param arg1
-	 *            间隔符号
-	 * @param arg2
-	 *            取数组个数
+	 * @param arg0 数组
+	 * @param arg1 间隔符号
+	 * @param arg2 取数组个数
 	 * @return
 	 */
 	public static String arrToString(Object[] arg0, String arg1, int arg2) {
@@ -198,39 +164,41 @@ public class ConvertHelper
 
 	/**
 	 * 描述：List转换为字符串
-	 * 
-	 * @param list
-	 *            List数据
-	 * @param separation
-	 *            间隔符
+	 * @param list List数据
+	 * @param separation 间隔符
 	 * @return
 	 */
 	public static String listToString(List<?> list) {
 		return listToString(list, ",");
 	}
-
+	
 	/**
 	 * 描述：List转换为字符串
-	 * 
-	 * @param list
-	 *            List数据
-	 * @param separation
-	 *            间隔符
+	 * @param list List数据
+	 * @param separation 间隔符
 	 * @return
 	 */
 	public static String listToString(List<?> list, String separation) {
 		return arrToString(listToStringArray(list), separation);
 	}
-
+	
+	/**
+	 * 描述：list 转换为 String[]
+	 * @param list
+	 * @return
+	 */
+	public static String[] listToStringArray(List<?> list) {
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+		return (String[]) list.toArray(new String[list.size()]);
+	}
+	
 	/**
 	 * 描述：字串数据元素包装
-	 * 
-	 * @param sArr
-	 *            字串数据
-	 * @param pre
-	 *            前缀
-	 * @param aft
-	 *            后缀
+	 * @param sArr 字串数据
+	 * @param pre 前缀
+	 * @param aft 后缀
 	 * @return
 	 */
 	public static String[] strArrDoPack(String[] sArr, String pre, String aft) {
@@ -239,15 +207,10 @@ public class ConvertHelper
 
 	/**
 	 * 描述：字串数据元素包装
-	 * 
-	 * @param sArr
-	 *            字串数据
-	 * @param pre
-	 *            前缀
-	 * @param aft
-	 *            后缀
-	 * @param num
-	 *            生成个数
+	 * @param sArr 字串数据
+	 * @param pre 前缀
+	 * @param aft 后缀
+	 * @param num 生成个数
 	 * @return
 	 */
 	public static String[] strArrDoPack(String[] sArr, String pre, String aft, int num) {
@@ -256,17 +219,11 @@ public class ConvertHelper
 
 	/**
 	 * 描述：字串数据元素包装
-	 * 
-	 * @param sArr
-	 *            字串数据
-	 * @param pre
-	 *            前缀
-	 * @param aft
-	 *            后缀
-	 * @param num
-	 *            生成个数
-	 * @param step
-	 *            数字值1：加，-1：减，0：不变
+	 * @param sArr 字串数据
+	 * @param pre 前缀
+	 * @param aft 后缀
+	 * @param num 生成个数
+	 * @param step 数字值1：加，-1：减，0：不变
 	 * @return
 	 */
 	public static String[] strArrDoPack(String[] sArr, String pre, String aft, int num, int step) {
@@ -312,11 +269,8 @@ public class ConvertHelper
 
 	/**
 	 * 描述：生成字符串
-	 * 
-	 * @param arg0
-	 *            字符串元素
-	 * @param arg1
-	 *            生成个数
+	 * @param arg0 字符串元素
+	 * @param arg1 生成个数
 	 * @return
 	 */
 	public static String createStr(String arg0, int arg1) {
@@ -328,13 +282,9 @@ public class ConvertHelper
 
 	/**
 	 * 描述：生成字符串
-	 * 
-	 * @param arg0
-	 *            字符串元素
-	 * @param arg1
-	 *            生成个数
-	 * @param arg2
-	 *            间隔符号
+	 * @param arg0 字符串元素
+	 * @param arg1 生成个数
+	 * @param arg2 间隔符号
 	 * @return
 	 */
 	public static String createStr(String arg0, int arg1, String arg2) {
@@ -350,20 +300,15 @@ public class ConvertHelper
 			if (sb.length() > 0) {
 				sb.delete(sb.lastIndexOf(arg2), sb.length());
 			}
-
 			return sb.toString();
 		}
 	}
 
 	/**
 	 * 描述：生成字符串数据
-	 * 
-	 * @param arg0
-	 *            字符串元素
-	 * @param arg1
-	 *            生成个数
-	 * @param arg2
-	 *            间隔符号
+	 * @param arg0 字符串元素
+	 * @param arg1 生成个数
+	 * @param arg2 间隔符号
 	 * @return
 	 */
 	public static String[] createStrArr(String arg0, int arg1) {
@@ -381,7 +326,6 @@ public class ConvertHelper
 
 	/**
 	 * 描述：只保留字符串的英文字母和“_”号
-	 * 
 	 * @param str
 	 * @return
 	 */
@@ -394,11 +338,8 @@ public class ConvertHelper
 
 	/**
 	 * 描述：字串中的数字值加1
-	 * 
-	 * @param str
-	 *            字串
-	 * @param isAdd
-	 *            数字值true：加，false：减
+	 * @param str 字串
+	 * @param isAdd 数字值true：加，false：减
 	 * @return
 	 */
 	public static String stepNumInStr(String str, boolean isAdd) {
@@ -407,7 +348,6 @@ public class ConvertHelper
 			return str;
 		}
 		String[] sNumArr = sNum.split(",");
-
 		for (int i = 0; i < sNumArr.length; i++) {
 			if (sNumArr[i] != null && sNumArr[i].length() > 0) {
 				int itemp = Integer.parseInt(sNumArr[i]);
@@ -420,21 +360,7 @@ public class ConvertHelper
 				break;
 			}
 		}
-
 		return str;
-	}
-
-	/**
-	 * 描述：list 转换为 String[]
-	 * 
-	 * @param list
-	 * @return
-	 */
-	public static String[] listToStringArray(List<?> list) {
-		if (list == null || list.size() == 0) {
-			return null;
-		}
-		return (String[]) list.toArray(new String[list.size()]);
 	}
 
 }
