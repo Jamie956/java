@@ -345,31 +345,4 @@ public class FileHelperTests {
 		System.out.println(result);
 	}
 	
-	@Test
-	public void getFileSuffixTest() {
-		String fileName = "D:\\test\\ax\\a\\b.txt";
-		String result = FileHelper.getFileSuffix(fileName);
-		System.out.println(result);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
