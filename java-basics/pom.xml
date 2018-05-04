@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
-  <artifactId>maven-tmp</artifactId>
+  <artifactId>java-basics</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>maven-tmp</name>
+  <name>java-basics</name>
   <url>http://maven.apache.org</url>
 
   <properties>
