@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import com.example.pojo.Category;
+import com.example.pojo.Product;
 
 public class Tests {
 
@@ -165,6 +166,33 @@ public class Tests {
 			for (Category c : cs) {
 				System.out.println(c.getName());
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
+
+	@Test
+	public void listOntToMany() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+
+			List<Category> cs = session.selectList("listCategory");
+			for (Category c : cs) {
+				System.out.println(c);
+				List<Product> ps = c.getProducts();
+				for (Product p : ps) {
+					System.out.println("\t" + p);
+				}
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
