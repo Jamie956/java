@@ -13,6 +13,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import com.example.pojo.Category;
+import com.example.pojo.Order;
+import com.example.pojo.OrderItem;
 import com.example.pojo.Product;
 
 public class Tests {
@@ -211,10 +213,10 @@ public class Tests {
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sqlSessionFactory.openSession();
 
-	        List<Product> ps = session.selectList("listProduct");
-	        for (Product p : ps) {
-	            System.out.println(p+" 对应的分类是 \t "+ p.getCategory());
-	        }
+			List<Product> ps = session.selectList("listProduct");
+			for (Product p : ps) {
+				System.out.println(p + " 对应的分类是 \t " + p.getCategory());
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -223,5 +225,103 @@ public class Tests {
 			session.close();
 		}
 	}
+
+	@Test
+	public void listmanytomany() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+
+			List<Order> os = session.selectList("listOrder");
+			for (Order o : os) {
+				System.out.println(o.getCode());
+				List<OrderItem> ois = o.getOrderItems();
+				for (OrderItem oi : ois) {
+					System.out.format("\t%s\t%f\t%d%n", oi.getProduct().getName(), oi.getProduct().getPrice(),
+							oi.getNumber());
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
 	
+	@Test
+	public void manytomanyadd() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+
+	        Order o1 = session.selectOne("getOrder", 1);
+	        Product p6 = session.selectOne("getProduct", 6);
+	        OrderItem oi = new OrderItem();
+	        oi.setProduct(p6);
+	        oi.setOrder(o1);
+	        oi.setNumber(200);
+	 
+	        session.insert("addOrderItem", oi);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
+
+	@Test
+	public void manytomanyremove() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+
+	        Order o1 = session.selectOne("getOrder",1);
+	        Product p6 = session.selectOne("getProduct",6);
+			OrderItem oi = new OrderItem();
+	        oi.setProduct(p6);
+	        oi.setOrder(o1);
+	        session.delete("deleteOrderItem", oi); 
+	        
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
+	
+	
+	@Test
+	public void deleteOrder() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+
+			session.delete("deleteOrder",1);
+	        
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
 }

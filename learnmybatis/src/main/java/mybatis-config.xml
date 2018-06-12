@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
 				<property name="url"
-					value="jdbc:mysql://localhost:3306/mydb?characterEncoding=UTF-8" />
+					value="jdbc:mysql://localhost:3306/mydb?characterEncoding=UTF-8&amp;allowMultiQueries=true" />
 				<property name="username" value="root" />
 				<property name="password" value="123456" />
 			</dataSource>
@@ -21,5 +21,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<mappers>
 		<mapper resource="com/example/Category.xml" />
 		<mapper resource="com/example/Product.xml" />
+		<mapper resource="com/example/Order.xml" />
+		<mapper resource="com/example/OrderItem.xml" />
 	</mappers>
 </configuration>
