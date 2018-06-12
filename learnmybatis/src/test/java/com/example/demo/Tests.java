@@ -201,4 +201,27 @@ public class Tests {
 		}
 	}
 
+	@Test
+	public void manytoone() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+
+	        List<Product> ps = session.selectList("listProduct");
+	        for (Product p : ps) {
+	            System.out.println(p+" 对应的分类是 \t "+ p.getCategory());
+	        }
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
+	
 }
