@@ -38,31 +38,34 @@ public class Tests {
 	@Test
 	public void add() {
 		String resource = "mybatis-config.xml";
-		InputStream inputStream;
+		InputStream inputStream = null;
+		SqlSession session = null;
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-			SqlSession session = sqlSessionFactory.openSession();
+			session = sqlSessionFactory.openSession();
 
 			Category c = new Category();
 			c.setName("new Category");
 			session.insert("addCategory", c);
 
-			session.commit();
-			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
 		}
 	}
 
 	@Test
 	public void remove() {
 		String resource = "mybatis-config.xml";
-		InputStream inputStream;
+		InputStream inputStream = null;
+		SqlSession session = null;
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-			SqlSession session = sqlSessionFactory.openSession();
+			session = sqlSessionFactory.openSession();
 
 			Category c = new Category();
 			c.setId(3);
@@ -72,17 +75,21 @@ public class Tests {
 			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
 		}
 	}
 
 	@Test
 	public void findById() {
 		String resource = "mybatis-config.xml";
-		InputStream inputStream;
+		InputStream inputStream = null;
+		SqlSession session = null;
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-			SqlSession session = sqlSessionFactory.openSession();
+			session = sqlSessionFactory.openSession();
 
 			Category c = session.selectOne("getCategory", 1);
 			System.out.println(c.getName());
@@ -91,17 +98,21 @@ public class Tests {
 			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
 		}
 	}
 
 	@Test
 	public void update() {
 		String resource = "mybatis-config.xml";
-		InputStream inputStream;
+		InputStream inputStream = null;
+		SqlSession session = null;
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-			SqlSession session = sqlSessionFactory.openSession();
+			session = sqlSessionFactory.openSession();
 
 			Category c = session.selectOne("getCategory", 1);
 			c.setName("update category");
@@ -111,6 +122,9 @@ public class Tests {
 			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
 		}
 	}
 
