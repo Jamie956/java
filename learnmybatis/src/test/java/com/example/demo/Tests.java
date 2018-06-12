@@ -2,7 +2,9 @@ package com.example.demo;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -17,21 +19,23 @@ public class Tests {
 	@Test
 	public void list() {
 		String resource = "mybatis-config.xml";
-		InputStream inputStream;
+		InputStream inputStream = null;
+		SqlSession session = null;
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-			SqlSession session = sqlSessionFactory.openSession();
+			session = sqlSessionFactory.openSession();
 
 			List<Category> cs = session.selectList("listCategory");
 			for (Category c : cs) {
 				System.out.println(c.getName());
 			}
 
-			session.commit();
-			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
 		}
 	}
 
@@ -71,8 +75,6 @@ public class Tests {
 			c.setId(3);
 			session.delete("deleteCategory", c);
 
-			session.commit();
-			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -94,8 +96,6 @@ public class Tests {
 			Category c = session.selectOne("getCategory", 1);
 			System.out.println(c.getName());
 
-			session.commit();
-			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -118,8 +118,53 @@ public class Tests {
 			c.setName("update category");
 			session.update("updateCategory", c);
 
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
 			session.commit();
 			session.close();
+		}
+	}
+
+	@Test
+	public void findByName() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+
+			List<Category> cs = session.selectList("listCategoryByName", "cat");
+			for (Category c : cs) {
+				System.out.println(c.getName());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
+
+	@Test
+	public void findByIdAndName() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("id", 1);
+			params.put("name", "cat");
+			List<Category> cs = session.selectList("listCategoryByIdAndName", params);
+			for (Category c : cs) {
+				System.out.println(c.getName());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
