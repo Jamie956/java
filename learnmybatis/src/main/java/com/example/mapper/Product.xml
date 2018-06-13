@@ -7,13 +7,13 @@
 		<id column="pid" property="id" />
 		<result column="pname" property="name" />
 		<result column="price" property="price" />
-
 		<association property="category" javaType="Category">
 			<id column="cid" property="id" />
 			<result column="cname" property="name" />
 		</association>
 	</resultMap>
-
+	
+	<!-- list many to one -->
 	<select id="listProduct" resultMap="productBean">
 		select c.*, p.*, c.id 'cid',
 		p.id 'pid', c.name 'cname', p.name 'pname'
@@ -21,6 +21,8 @@
 		left join
 		product_ p on c.id = p.cid
 	</select>
+	
+	<!-- get by id -->
 	<select id="getProduct" resultMap="productBean">
 		select c.*, p.*, c.id 'cid',
 		p.id 'pid', c.name 'cname', p.name 'pname'
@@ -30,6 +32,7 @@
 		where p.id = #{id}
 	</select>
 
+	<!-- list by if tag -->
 	<select id="listProduct2" resultType="Product">
 		select * from product_
 		<if test="name!=null">
@@ -37,6 +40,7 @@
 		</if>
 	</select>
 
+	<!-- list by where tag -->
 	<select id="listProduct3" resultType="Product">
 		select * from product_
 		<where>

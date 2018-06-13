@@ -5,7 +5,6 @@ import java.util.List;
 public class Order {
     private int id;
     private String code;
-     
     List<OrderItem> orderItems;
      
     public int getId() {
