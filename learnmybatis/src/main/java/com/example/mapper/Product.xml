@@ -104,4 +104,15 @@
 			</choose>
 		</where>
 	</select>
+	
+	
+	<!-- list by foreach -->
+	    <select id="listProduct6" resultType="Product">
+          SELECT * FROM product_
+            WHERE ID in
+                <foreach item="item" index="index" collection="list"
+                    open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+    </select> 
 </mapper>

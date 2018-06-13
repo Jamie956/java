@@ -2,6 +2,7 @@ package com.example;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class Testing {
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sqlSessionFactory.openSession();
 
-			simpleList(session);
+//			simpleList(session);
 			// simpleInsert(session);
 			// simpleDelete(session);
 			// simpleFindById(session);
@@ -45,7 +46,7 @@ public class Testing {
 			// listByTrimWhere(session);
 			// updateByTrimSet(session);
 			// listByWhenOtherwise(session);
-
+			listByForeach(session);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -235,5 +236,18 @@ public class Testing {
 			System.out.println(p);
 		}
 	}
-
+	
+//	list by foreach
+	public static void listByForeach(SqlSession session) {
+        List<Integer> ids = new ArrayList<Integer>();
+        ids.add(1);
+        ids.add(3);
+        ids.add(5);
+         
+      List<Product> ps = session.selectList("listProduct6",ids);
+      for (Product p : ps) {
+          System.out.println(p);
+      }
+	}
+	
 }
