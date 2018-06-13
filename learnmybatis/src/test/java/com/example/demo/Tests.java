@@ -18,6 +18,24 @@ import com.example.pojo.OrderItem;
 import com.example.pojo.Product;
 
 public class Tests {
+	@Test
+	public void main() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+			
+			findwhere(session);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
 
 	@Test
 	public void list() {
@@ -252,7 +270,7 @@ public class Tests {
 			session.close();
 		}
 	}
-	
+
 	@Test
 	public void manytomanyadd() {
 		String resource = "mybatis-config.xml";
@@ -263,14 +281,14 @@ public class Tests {
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sqlSessionFactory.openSession();
 
-	        Order o1 = session.selectOne("getOrder", 1);
-	        Product p6 = session.selectOne("getProduct", 6);
-	        OrderItem oi = new OrderItem();
-	        oi.setProduct(p6);
-	        oi.setOrder(o1);
-	        oi.setNumber(200);
-	 
-	        session.insert("addOrderItem", oi);
+			Order o1 = session.selectOne("getOrder", 1);
+			Product p6 = session.selectOne("getProduct", 6);
+			OrderItem oi = new OrderItem();
+			oi.setProduct(p6);
+			oi.setOrder(o1);
+			oi.setNumber(200);
+
+			session.insert("addOrderItem", oi);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -289,13 +307,13 @@ public class Tests {
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sqlSessionFactory.openSession();
 
-	        Order o1 = session.selectOne("getOrder",1);
-	        Product p6 = session.selectOne("getProduct",6);
+			Order o1 = session.selectOne("getOrder", 1);
+			Product p6 = session.selectOne("getProduct", 6);
 			OrderItem oi = new OrderItem();
-	        oi.setProduct(p6);
-	        oi.setOrder(o1);
-	        session.delete("deleteOrderItem", oi); 
-	        
+			oi.setProduct(p6);
+			oi.setOrder(o1);
+			session.delete("deleteOrderItem", oi);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -303,7 +321,7 @@ public class Tests {
 			session.close();
 		}
 	}
-	
+
 	@Test
 	public void deleteOrder() {
 		String resource = "mybatis-config.xml";
@@ -314,8 +332,8 @@ public class Tests {
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sqlSessionFactory.openSession();
 
-			session.delete("deleteOrder",1);
-	        
+			session.delete("deleteOrder", 1);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -323,7 +341,7 @@ public class Tests {
 			session.close();
 		}
 	}
-	
+
 	@Test
 	public void findByIf() {
 		String resource = "mybatis-config.xml";
@@ -354,6 +372,17 @@ public class Tests {
 			session.commit();
 			session.close();
 		}
+	}
+
+	public static void findwhere(SqlSession session) {
+        System.out.println("多条件查询");
+        Map<String,Object> params = new HashMap<>();
+        params.put("name","a");
+//        params.put("price","10");
+        List<Product> ps2 = session.selectList("listProduct3",params);
+        for (Product p : ps2) {
+            System.out.println(p);
+        }  
 	}
 	
 }

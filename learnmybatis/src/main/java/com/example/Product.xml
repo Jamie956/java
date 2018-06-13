@@ -32,4 +32,16 @@
 			where name like concat('%',#{name},'%')
 		</if>
 	</select>
+	
+	 <select id="listProduct3" resultType="Product">
+        select * from product_
+        <where>
+            <if test="name!=null">
+                and name like concat('%',#{name},'%')
+            </if>        
+            <if test="price!=null and price!=0">
+                and price > #{price}
+            </if>
+        </where>     
+    </select>
 </mapper>
