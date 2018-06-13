@@ -304,7 +304,6 @@ public class Tests {
 		}
 	}
 	
-	
 	@Test
 	public void deleteOrder() {
 		String resource = "mybatis-config.xml";
@@ -324,4 +323,37 @@ public class Tests {
 			session.close();
 		}
 	}
+	
+	@Test
+	public void findByIf() {
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = null;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+
+			System.out.println("查询所有的");
+			List<Product> ps = session.selectList("listProduct2");
+			for (Product p : ps) {
+				System.out.println(p);
+			}
+
+			System.out.println("模糊查询");
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("name", "a");
+			List<Product> ps2 = session.selectList("listProduct2", params);
+			for (Product p : ps2) {
+				System.out.println(p);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+	}
+	
 }

@@ -24,5 +24,12 @@
 		from category_ c
 		left join product_ p on c.id = p.cid
 		where p.id = #{id}
-	</select>    
+	</select>
+	
+	<select id="listProduct2" resultType="Product">
+		select * from product_
+		<if test="name!=null">
+			where name like concat('%',#{name},'%')
+		</if>
+	</select>
 </mapper>
