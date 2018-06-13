@@ -12,7 +12,7 @@
 			<result column="cname" property="name" />
 		</association>
 	</resultMap>
-	
+
 	<!-- list many to one -->
 	<select id="listProduct" resultMap="productBean">
 		select c.*, p.*, c.id 'cid',
@@ -21,7 +21,7 @@
 		left join
 		product_ p on c.id = p.cid
 	</select>
-	
+
 	<!-- get by id -->
 	<select id="getProduct" resultMap="productBean">
 		select c.*, p.*, c.id 'cid',
@@ -104,15 +104,20 @@
 			</choose>
 		</where>
 	</select>
-	
-	
+
 	<!-- list by foreach -->
-	    <select id="listProduct6" resultType="Product">
-          SELECT * FROM product_
-            WHERE ID in
-                <foreach item="item" index="index" collection="list"
-                    open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-    </select> 
+	<select id="listProduct6" resultType="Product">
+		SELECT * FROM product_
+		WHERE ID in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<!-- list by bind -->
+	<select id="listProduct7" resultType="Product">
+		<bind name="likename" value="'%' + name + '%'" />
+		select * from product_ where name like #{likename}
+	</select>
 </mapper>
