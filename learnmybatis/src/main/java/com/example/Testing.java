@@ -418,9 +418,9 @@ public class Testing {
 	// list by when-otherwise tag
 	public static void listByWhenOtherwise(SqlSession session) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		// params.put("name","a");
-		// params.put("price","10");
-		List<Product> ps = session.selectList("listProduct", params);
+//		 params.put("name","a");
+//		 params.put("price","10");
+		List<Product> ps = session.selectList("listProduct5", params);
 		for (Product p : ps) {
 			System.out.println(p);
 		}

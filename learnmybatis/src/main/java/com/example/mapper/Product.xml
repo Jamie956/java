@@ -84,7 +84,7 @@
 	</update>
 
 	<!-- list by when-otherwise tag -->
-	<select id="listProduct" resultType="Product">
+	<select id="listProduct5" resultType="Product">
 		SELECT * FROM product_
 		<where>
 			<choose>
