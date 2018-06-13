@@ -17,7 +17,7 @@ import com.example.pojo.Order;
 import com.example.pojo.OrderItem;
 import com.example.pojo.Product;
 
-public class Tests {
+public class Testing {
 	public static void main(String[] args) {
 		String resource = "mybatis-config.xml";
 		InputStream inputStream = null;
@@ -26,9 +26,12 @@ public class Tests {
 			inputStream = Resources.getResourceAsStream(resource);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sqlSessionFactory.openSession();
-			
-//			findwhere(session);
-			updateset(session);
+
+			// findwhere(session);
+			// updateset(session);
+//			findByTrimWhere(session);
+			// updateByTrimSet(session);
+			 listByWhenOtherwise(session);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -375,20 +378,52 @@ public class Tests {
 	}
 
 	public static void findwhere(SqlSession session) {
-        Map<String,Object> params = new HashMap<String,Object>();
-        params.put("name","a");
-        params.put("price","10");
-        List<Product> ps2 = session.selectList("listProduct3",params);
-        for (Product p : ps2) {
-            System.out.println(p);
-        }  
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("name", "a");
+		params.put("price", "10");
+		List<Product> ps2 = session.selectList("listProduct3", params);
+		for (Product p : ps2) {
+			System.out.println(p);
+		}
 	}
-	public static void updateset(SqlSession session){
-        Product p = new Product();
-        p.setId(6);
-        p.setName("product ax");
-        p.setPrice(99.99f);
-        session.update("updateProduct",p);
+
+	public static void updateset(SqlSession session) {
+		Product p = new Product();
+		p.setId(6);
+		p.setName("product ax");
+		p.setPrice(99.99f);
+		session.update("updateProduct", p);
 	}
-	
+
+	// list by trim tag using where
+	public static void findByTrimWhere(SqlSession session) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("name", "a");
+		params.put("price", "10");
+		List<Product> ps2 = session.selectList("listProduct4", params);
+		for (Product p : ps2) {
+			System.out.println(p);
+		}
+	}
+
+	// update by trim tag using set
+	public static void updateByTrimSet(SqlSession session) {
+		Product p = new Product();
+		p.setId(6);
+		p.setName("product bf");
+		p.setPrice(9.99f);
+		session.update("updateProduct2", p);
+	}
+
+	// list by when-otherwise tag
+	public static void listByWhenOtherwise(SqlSession session) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		// params.put("name","a");
+		// params.put("price","10");
+		List<Product> ps = session.selectList("listProduct", params);
+		for (Product p : ps) {
+			System.out.println(p);
+		}
+	}
+
 }
