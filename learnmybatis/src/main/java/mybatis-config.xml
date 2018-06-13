@@ -19,9 +19,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/example/Category.xml" />
-		<mapper resource="com/example/Product.xml" />
-		<mapper resource="com/example/Order.xml" />
-		<mapper resource="com/example/OrderItem.xml" />
+		<mapper resource="com/example/mapper/Category.xml" />
+		<mapper resource="com/example/mapper/Product.xml" />
+		<mapper resource="com/example/mapper/Order.xml" />
+		<mapper resource="com/example/mapper/OrderItem.xml" />
 	</mappers>
 </configuration>

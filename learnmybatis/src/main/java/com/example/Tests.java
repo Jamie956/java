@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,8 +18,7 @@ import com.example.pojo.OrderItem;
 import com.example.pojo.Product;
 
 public class Tests {
-	@Test
-	public void main() {
+	public static void main(String[] args) {
 		String resource = "mybatis-config.xml";
 		InputStream inputStream = null;
 		SqlSession session = null;
@@ -28,7 +27,8 @@ public class Tests {
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sqlSessionFactory.openSession();
 			
-			findwhere(session);
+//			findwhere(session);
+			updateset(session);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -375,14 +375,20 @@ public class Tests {
 	}
 
 	public static void findwhere(SqlSession session) {
-        System.out.println("多条件查询");
-        Map<String,Object> params = new HashMap<>();
+        Map<String,Object> params = new HashMap<String,Object>();
         params.put("name","a");
-//        params.put("price","10");
+        params.put("price","10");
         List<Product> ps2 = session.selectList("listProduct3",params);
         for (Product p : ps2) {
             System.out.println(p);
         }  
+	}
+	public static void updateset(SqlSession session){
+        Product p = new Product();
+        p.setId(6);
+        p.setName("product ax");
+        p.setPrice(99.99f);
+        session.update("updateProduct",p);
 	}
 	
 }

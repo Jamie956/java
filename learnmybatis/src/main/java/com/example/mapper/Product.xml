@@ -44,4 +44,13 @@
             </if>
         </where>     
     </select>
+    
+    <update id="updateProduct" parameterType="Product" >
+        update product_
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="price != null">price=#{price}</if>
+        </set>
+         where id=#{id}   
+    </update>    
 </mapper>
