@@ -1,5 +1,7 @@
-package com.example;
+package com.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -101,4 +103,16 @@ public class DateUtils {
 		return dateList;
 	}
 	
+	public static void main(String[] args) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		try {
+			Date from = sdf.parse("20171002");
+			Date to = sdf.parse("20171031");
+			for (Date str : DateUtils.getContinuousDate(from, to)) {
+				System.out.println(str);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
