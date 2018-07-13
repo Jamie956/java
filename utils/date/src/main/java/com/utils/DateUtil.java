@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class DateUtils {
+public class DateUtil {
 	
 	//获取指定日期的年份
 	public static int getYear(Date date) {
@@ -108,7 +108,7 @@ public class DateUtils {
 		try {
 			Date from = sdf.parse("20171002");
 			Date to = sdf.parse("20171031");
-			for (Date str : DateUtils.getContinuousDate(from, to)) {
+			for (Date str : DateUtil.getContinuousDate(from, to)) {
 				System.out.println(str);
 			}
 		} catch (ParseException e) {
