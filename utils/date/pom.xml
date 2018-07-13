@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
-  <artifactId>date-tool</artifactId>
+  <artifactId>date</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>date-tool</name>
+  <name>date</name>
   <url>http://maven.apache.org</url>
 
   <properties>
