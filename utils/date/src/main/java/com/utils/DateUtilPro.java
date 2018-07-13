@@ -8,6 +8,7 @@ import java.time.Month;
 import java.time.MonthDay;
 import java.time.Period;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 //Java 8 时间特性
@@ -47,6 +48,11 @@ public class DateUtilPro {
 		period.getYears();// 相差多少年
 
 		Instant.now();// 获取时间戳
+
+		String dateStr = "2018年05月20日";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
+		LocalDate.parse(dateStr, formatter);// 按模板格式解析日期
+		now.format(formatter);// 将日期转换模板格式
 	}
 	
 }
