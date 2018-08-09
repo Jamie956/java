@@ -1,1 +1,4 @@
-# AllJava
+a class as a container for the program
+logic that defines the behavior of an application. As mentioned in Chapter 1, classes are the
+building blocks with which all Java applications and applets are built. Everything in a Java
+program must be inside a class.
