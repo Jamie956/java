@@ -7,10 +7,10 @@ import java.util.regex.Pattern;
 
 public class StringTests {
 	public static void main(String[] args) {
-		test7();
+		test10();
 	}
 
-	public static void test1() {
+	public static void test01() {
 		String firstString = "Test123";
 		String secondString = "Test" + 123;
 		// 字符串比较
@@ -19,7 +19,7 @@ public class StringTests {
 		}
 	}
 
-	public static void test2() {
+	public static void test02() {
 		String firstString = "Test123";
 		String secondString = "TEST123";
 		// 字符串比较忽略大小写
@@ -28,7 +28,7 @@ public class StringTests {
 		}
 	}
 
-	public static void test3() {
+	public static void test03() {
 		// 大小写转换
 		String string = "This is a Random String";
 		String upper = string.toUpperCase();
@@ -47,13 +47,13 @@ public class StringTests {
 	}
 
 	// 避免空指针的比较
-	public static void test4() {
+	public static void test04() {
 		String foo = "baz";
 		boolean rs = Objects.equals(foo, "baz");
 		System.out.println(rs);
 	}
 
-	public static void test6() {
+	public static void test06() {
 		// 分隔字符串
 		String lineFromCsvFile = "Mickey;Bolton;12345;121216";
 		String[] dataCells = lineFromCsvFile.split(";");
@@ -84,7 +84,7 @@ public class StringTests {
 		String string3 = string1.concat(string2);
 	}
 
-	public static void test7() {
+	public static void test07() {
 		// 正则表达式替换
 		String s = "spiral metal petal et al.";
 		String rs = s.replaceAll("(\\w*etal)", "$1lica");
@@ -103,15 +103,28 @@ public class StringTests {
 		return stringOccurrences;
 	}
 
-	public static void test8() {
+	public static void test08() {
 		String text = "One fish, two fish, red fish, blue fish";
 		System.out.println(countStringInString("fish", text)); // prints 4
 		System.out.println(countStringInString(",", text)); // prints 3
 	}
 
-	public static void test9() {
-		
-		
-		
+	public static void test09() {
+		int one = 1;
+		String color = "red";
+		System.out.print(String.format("One=%d, color=%s%n", one, color));
 	}
+
+	public static void test10() {
+		//StringBuilder产生重复字符串
+		final int n = 10;
+		final String s = "hello ";
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < n; i++) {
+			builder.append(s);
+		}
+		String rs = builder.toString();
+		System.out.println(rs);
+	}
+
 }

@@ -3,11 +3,11 @@ package com.example;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
-
 public class Regexp {
+	public static void main(String[] args) {
+		
+	}
 	
-	@Test
 	public void test1(){
 		List<String> list = Arrays.asList
 		(	
@@ -35,7 +35,6 @@ public class Regexp {
 		
 	}
 
-	@Test
 	public void test2(){
 		List<String> list = Arrays.asList
 		(	
@@ -60,7 +59,6 @@ public class Regexp {
 		
 	}
 	
-	@Test
 	public void test3(){
 		List<String> list = Arrays.asList
 		(	
@@ -94,7 +92,6 @@ public class Regexp {
 		
 	}
 	
-	@Test
 	public void test4(){
 		List<String> list = Arrays.asList
 		(	
@@ -118,7 +115,6 @@ public class Regexp {
 		
 	}
 	
-	@Test
 	public void test5(){
 		List<String> list = Arrays.asList
 		(	
@@ -146,7 +142,6 @@ public class Regexp {
 		
 	}
 	
-	@Test
 	public void test6(){
 		List<String> list = Arrays.asList
 		(	
@@ -178,7 +173,6 @@ public class Regexp {
 		
 	}
 	
-	@Test
 	public void test7(){
 		List<String> list = Arrays.asList
 		(	
@@ -200,7 +194,6 @@ public class Regexp {
 		
 	}
 	
-	@Test
 	public void test8(){
 		List<String> list = Arrays.asList
 		(	
