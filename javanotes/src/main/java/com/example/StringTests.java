@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class StringTests {
 	public static void main(String[] args) {
-		test10();
+		test11();
 	}
 
 	public static void test01() {
@@ -127,4 +127,18 @@ public class StringTests {
 		System.out.println(rs);
 	}
 
+	public static void test11() {
+	//按指定长度分隔字符串
+	int length = 5;
+	String str = "asdabsdjsandbkajsdnaskdjnsabdha";
+	String[] parts = str.split("(?<=\\G.{" + length + "})");
+//	System.out.println(parts.toString());
+	for(String s : parts) {
+		System.out.println(s);
+	}
+	}
+	
+	
+	
+	
 }
