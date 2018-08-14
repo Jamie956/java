@@ -1,4 +1,4 @@
-package com.example;
+package com.example.design;
 
 public class EagerSingleton {
 	public static void main(String[] args) {

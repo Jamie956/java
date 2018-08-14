@@ -1,4 +1,4 @@
-package com.example;
+package com.example.design;
 
 public class WhatAInterface {
 	public static void main(String[] args) {
