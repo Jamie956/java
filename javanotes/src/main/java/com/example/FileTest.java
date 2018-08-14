@@ -3,7 +3,7 @@ package com.example;
 import java.io.File;
 import java.io.IOException;
 
-public class File1 {
+public class FileTest {
 	public static void main(String[] args) throws IOException {
 		//从绝对路径获取抽象路径
 		File pathname = new File("D:\\a.txt");
