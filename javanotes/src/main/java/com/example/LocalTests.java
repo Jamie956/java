@@ -1,18 +1,21 @@
-package com.utils;
+package com.example;
 
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.MonthDay;
 import java.time.Period;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 //Java 8 时间特性
-public class DateUtilPro {
+public class LocalTests {
 	public static void main(String[] args) {
 		LocalDate now = LocalDate.now();// 获取当天格式化日期
 		now.getYear();// 获取指定时间的年
@@ -53,6 +56,54 @@ public class DateUtilPro {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
 		LocalDate.parse(dateStr, formatter);// 按模板格式解析日期
 		now.format(formatter);// 将日期转换模板格式
+		
+		LocalDate.parse("2017-12-15");//解析日期格式
+		LocalDate.now(ZoneId.systemDefault());//根据时区获取日期
+		Date date = Date.from(Instant.now());//获取现在的Date
+		ZoneId defaultZoneId = ZoneId.systemDefault();//获取时区
+		LocalDate localDate = date.toInstant().atZone(defaultZoneId).toLocalDate();//根据时区获取LocalDate
+		Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());//根据时区获取Date
+		
 	}
 	
+	//日期时间,跟LocalDate差不多
+	public static void test02() {
+		LocalDateTime lDateTime = LocalDateTime.now();
+		System.out.println(lDateTime);
+		lDateTime = LocalDateTime.of(2017, 12, 15, 11, 30);
+		System.out.println(lDateTime);
+		lDateTime = LocalDateTime.parse("2017-12-05T11:30:30");
+		System.out.println(lDateTime);
+		LocalDateTime.now(ZoneId.systemDefault());
+		
+		Date date = Date.from(Instant.now());
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		LocalDateTime localDateTime =
+		date.toInstant().atZone(defaultZoneId).toLocalDateTime();
+		Date out = Date.from(localDateTime.atZone(defaultZoneId).toInstant());
+		
+	}
+	
+	//时间
+	public static void test03() {
+		LocalTime time = LocalTime.MIDNIGHT;
+		System.out.println(time);
+		time = LocalTime.NOON;
+		System.out.println(time);
+		time = LocalTime.of(12, 12, 45);
+		System.out.println(time);
+		
+		time.plusMinutes(1);
+		System.out.println(time);
+		time.getMinute();
+		System.out.println(time);
+		time.minusMinutes(1);
+		System.out.println(time);
+		
+		
+		LocalTime lTime = LocalTime.now();
+		Instant instant = lTime.atDate(LocalDate.of(2019, 9, 9)).
+		atZone(ZoneId.systemDefault()).toInstant();
+		Date time2 = Date.from(instant);
+	}
 }
