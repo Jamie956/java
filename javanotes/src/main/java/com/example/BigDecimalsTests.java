@@ -69,7 +69,16 @@ public class BigDecimalsTests {
 		System.out.println(rs);
 	}
 	
+	public static void test03() {
+		//初始化
+		BigDecimal good0 = BigDecimal.ZERO;
+		BigDecimal good1 = BigDecimal.ONE;
+		BigDecimal good10 = BigDecimal.TEN;
+	}
+	
 }
+
+
 
 
 
