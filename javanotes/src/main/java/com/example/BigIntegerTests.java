@@ -1,11 +1,11 @@
 package com.example;
 
 import java.math.BigInteger;
-import java.security.interfaces.RSAKey;
+import java.util.Random;
 
 public class BigIntegerTests {
 	public static void main(String[] args) {
-		test03();
+		test04();
 	}
 	public static void test01() {
 		long a = Long.MAX_VALUE;
@@ -69,17 +69,10 @@ public class BigIntegerTests {
 		//大小比较
 		a.equals(b);
 	}
+	
+	public static void test04() {
+		BigInteger a = new BigInteger(10, new Random());
+		System.out.println(a);
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
