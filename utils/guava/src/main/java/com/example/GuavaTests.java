@@ -6,10 +6,11 @@ import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
+import com.google.common.net.UrlEscapers;
 
 public class GuavaTests {
 	public static void main(String[] args) {
-		test03();
+		test04();
 	}
 	
 	//解析url querys并存入Map
@@ -53,6 +54,12 @@ public class GuavaTests {
 		System.out.println(rs);
 		// lowerCamel -> LOWER_CAMEL
 		rs = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, "lowerCamel");
+		System.out.println(rs);
+	}
+	
+	// URL 编码
+	public static void test04() {
+		String rs = UrlEscapers.urlFormParameterEscaper().escape("http://www.baidu.com?name=tom");
 		System.out.println(rs);
 	}
 }
