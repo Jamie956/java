@@ -4,26 +4,44 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class FilteringApples {
+	public static void main(String[] args) {
+		test01();
+	}
 
-	public static void main(String... args) {
-
+	public static void test01() {
 		List<Apple> inventory = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"), new Apple(120, "red"));
 
 		// [Apple{color='green', weight=80}, Apple{color='green', weight=155}]
 		List<Apple> greenApples = filterApples(inventory, FilteringApples::isGreenApple);
 		System.out.println(greenApples);
+	}
+
+	public static void test02() {
+		List<Apple> inventory = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"), new Apple(120, "red"));
 
 		// [Apple{color='green', weight=155}]
 		List<Apple> heavyApples = filterApples(inventory, FilteringApples::isHeavyApple);
 		System.out.println(heavyApples);
+	}
+
+	public static void test03() {
+		List<Apple> inventory = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"), new Apple(120, "red"));
 
 		// [Apple{color='green', weight=80}, Apple{color='green', weight=155}]
 		List<Apple> greenApples2 = filterApples(inventory, (Apple a) -> "green".equals(a.getColor()));
 		System.out.println(greenApples2);
+	}
+
+	public static void test04() {
+		List<Apple> inventory = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"), new Apple(120, "red"));
 
 		// [Apple{color='green', weight=155}]
 		List<Apple> heavyApples2 = filterApples(inventory, (Apple a) -> a.getWeight() > 150);
 		System.out.println(heavyApples2);
+	}
+
+	public static void test05() {
+		List<Apple> inventory = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"), new Apple(120, "red"));
 
 		// []
 		List<Apple> weirdApples = filterApples(inventory,
@@ -67,37 +85,6 @@ public class FilteringApples {
 			}
 		}
 		return result;
-	}
-
-	//苹果实体
-	public static class Apple {
-		private int weight = 0;
-		private String color = "";
-
-		public Apple(int weight, String color) {
-			this.weight = weight;
-			this.color = color;
-		}
-
-		public Integer getWeight() {
-			return weight;
-		}
-
-		public void setWeight(Integer weight) {
-			this.weight = weight;
-		}
-
-		public String getColor() {
-			return color;
-		}
-
-		public void setColor(String color) {
-			this.color = color;
-		}
-
-		public String toString() {
-			return "Apple{" + "color='" + color + '\'' + ", weight=" + weight + '}';
-		}
 	}
 
 }
