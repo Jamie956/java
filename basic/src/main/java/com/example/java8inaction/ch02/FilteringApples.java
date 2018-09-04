@@ -1,29 +1,19 @@
-package com.example.java8inaction.ch01;
+package com.example.java8inaction.ch02;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 import com.example.java8inaction.Apple;
 
 public class FilteringApples {
 	public static void main(String[] args) {
-		test00();
+		test01();
 	}
 
 	public static List<Apple> as = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"),
 			new Apple(120, "red"));
 
-	public static void test00() {
-		// Predicate<T>定义boolean方法
-		Predicate<Apple> p = FilteringApples::isGreenApple;
-		// 调用定义的方法，test传入参数
-		boolean rs = p.test(new Apple(80, "red"));
-		System.out.println(rs);
-	}
-
 	public static void test01() {
-		// 两个冒号调用方法
-		Predicate<Apple> p = FilteringApples::isGreenApple;
+		ApplePredicate p = new AppleColorPredicate();
 		List<Apple> rs = new ArrayList<>();
 		for (Apple a : as) {
 			if (p.test(a)) {
@@ -34,8 +24,7 @@ public class FilteringApples {
 	}
 
 	public static void test02() {
-		// 使用箭头函数
-		Predicate<Apple> p = (Apple a) -> "green".equals(a.getColor());
+		ApplePredicate p = new AppleWeightPredicate();
 		List<Apple> rs = new ArrayList<>();
 		for (Apple a : as) {
 			if (p.test(a)) {
@@ -46,8 +35,11 @@ public class FilteringApples {
 	}
 
 	public static void test03() {
-		// 多条件
-		Predicate<Apple> p = (Apple a) -> a.getWeight() < 80 || "brown".equals(a.getColor());
+		ApplePredicate p = new ApplePredicate() {
+			public boolean test(Apple a) {
+				return a.getColor().equals("red");
+			}
+		};
 		List<Apple> rs = new ArrayList<>();
 		for (Apple a : as) {
 			if (p.test(a)) {
@@ -57,7 +49,21 @@ public class FilteringApples {
 		System.out.println(rs);
 	}
 
-	public static boolean isGreenApple(Apple apple) {
-		return "green".equals(apple.getColor());
+
+
+	interface ApplePredicate {
+		public boolean test(Apple a);
+	}
+
+	static class AppleWeightPredicate implements ApplePredicate {
+		public boolean test(Apple apple) {
+			return apple.getWeight() > 150;
+		}
+	}
+
+	static class AppleColorPredicate implements ApplePredicate {
+		public boolean test(Apple apple) {
+			return "green".equals(apple.getColor());
+		}
 	}
 }
