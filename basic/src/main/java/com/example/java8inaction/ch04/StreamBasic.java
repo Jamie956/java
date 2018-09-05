@@ -1,6 +1,9 @@
 package com.example.java8inaction.ch04;
 
 import java.util.*;
+
+import com.example.java8inaction.Dish;
+
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 

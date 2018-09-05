@@ -1,4 +1,4 @@
-package com.example.java8inaction.ch04;
+package com.example.java8inaction;
 
 import java.util.*;
 
