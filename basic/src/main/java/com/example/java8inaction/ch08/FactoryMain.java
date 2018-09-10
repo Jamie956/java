@@ -41,15 +41,19 @@ public class FactoryMain {
 	
     //Bean Factory
     static private class ProductFactory {
-    	//1. Using switch
-        public static Product createProduct(String name){
-            switch(name){
-                case "loan": return new Loan();
-                case "stock": return new Stock();
-                case "bond": return new Bond();
-                default: throw new RuntimeException("No such product " + name);
-            }
-        }
+		// 1. Using switch
+		public static Product createProduct(String name) {
+			switch (name) {
+			case "loan":
+				return new Loan();
+			case "stock":
+				return new Stock();
+			case "bond":
+				return new Bond();
+			default:
+				throw new RuntimeException("No such product " + name);
+			}
+		}
         //2. Using Lambda
         public static Product createProductLambda(String name){
             Supplier<Product> p = map.get(name);
