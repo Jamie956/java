@@ -1,4 +1,4 @@
-package com.example.javadesignpatterns.abstractdocument;
+package com.example;
 
 import java.util.Map;
 import java.util.function.Function;

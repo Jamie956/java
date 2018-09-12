@@ -1,8 +1,8 @@
-package com.example.javadesignpatterns.abstractdocument;
+package com.example;
 
 import java.util.*;
 
-import com.example.javadesignpatterns.abstractdocument.domain.*;
+import com.example.domain.*;
 
 public class App {
 	public static void main(String[] args) {

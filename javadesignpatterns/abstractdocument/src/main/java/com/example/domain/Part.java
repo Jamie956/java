@@ -1,8 +1,8 @@
-package com.example.javadesignpatterns.abstractdocument.domain;
+package com.example.domain;
 
 import java.util.Map;
 
-import com.example.javadesignpatterns.abstractdocument.AbstractDocument;
+import com.example.AbstractDocument;
 
 public class Part extends AbstractDocument implements HasType, HasModel, HasPrice {
 	public Part(Map<String, Object> properties) {

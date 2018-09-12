@@ -1,8 +1,8 @@
-package com.example.javadesignpatterns.abstractdocument.domain;
+package com.example.domain;
 
 import java.util.stream.Stream;
 
-import com.example.javadesignpatterns.abstractdocument.Document;
+import com.example.Document;
 
 public interface HasParts extends Document {
 	String PROPERTY = "parts";

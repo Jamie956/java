@@ -1,8 +1,8 @@
-package com.example.javadesignpatterns.abstractdocument.domain;
+package com.example.domain;
 
 import java.util.Optional;
 
-import com.example.javadesignpatterns.abstractdocument.Document;
+import com.example.Document;
 
 public interface HasPrice extends Document {
 	String PROPERTY = "price";
