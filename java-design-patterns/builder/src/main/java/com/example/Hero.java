@@ -43,7 +43,6 @@ public final class Hero {
 
 	@Override
 	public String toString() {
-
 		StringBuilder sb = new StringBuilder();
 		sb.append("This is a ").append(profession).append(" named ").append(name);
 		if (hairColor != null || hairType != null) {

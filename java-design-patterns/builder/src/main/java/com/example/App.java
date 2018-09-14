@@ -2,7 +2,7 @@ package com.example;
 
 public class App {
 	public static void main(String[] args) {
-		test03();
+		test01();
 	}
 
 	public static void test01() {
