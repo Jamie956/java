@@ -1,0 +1,22 @@
+package com.example;
+
+public class BusinessLookup {
+	private EjbService ejbService;
+	private JmsService jmsService;
+
+	public BusinessService getBusinessService(ServiceType serviceType) {
+		if (serviceType.equals(ServiceType.EJB)) {
+			return ejbService;
+		} else {
+			return jmsService;
+		}
+	}
+
+	public void setJmsService(JmsService jmsService) {
+		this.jmsService = jmsService;
+	}
+
+	public void setEjbService(EjbService ejbService) {
+		this.ejbService = ejbService;
+	}
+}
