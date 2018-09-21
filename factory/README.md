@@ -6,7 +6,9 @@
 
 
 
-## Simple Factory (Static Factory Method Pattern)
+## Simple Factory 
+
+(Static Factory Method Pattern)
 
 1. 定义一个接口和抽象方法
 2. 定义一个实体类，实现接口和它的方法
@@ -14,8 +16,14 @@
 
 
 
-## Factory Method (Polymorphic Factory or Virtual Constructor)
+## Factory Method 
+
+(Polymorphic Factory or Virtual Constructor)
+
+概念：每个对象都有一个与之对应的工厂
 
 
 
-## Abstract Factory (Kit or Toolkit)
+## Abstract Factory 
+
+(Kit or Toolkit)

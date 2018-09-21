@@ -2,26 +2,17 @@ package com.example;
 
 public class App {
 	public static void main(String[] args) {
-		test02();
+		test01();
 	}
 
 	public static void test01() {
-		Blacksmith blacksmith = new OrcBlacksmith();
+		AnimalFactory deerFactory = new DeerFactory();
+		Animal deer = deerFactory.getAnimal(AnimalType.AWESOME);
+		System.out.println(deer.toString());
 		
-		Weapon weapon1 = blacksmith.manufactureWeapon(WeaponType.SPEAR);
-		System.out.println(weapon1.toString());
-		
-		Weapon weapon2 = blacksmith.manufactureWeapon(WeaponType.AXE);
-		System.out.println(weapon2.toString());
+		AnimalFactory deerFactory2 = new DeerFactory();
+		Animal deer2 = deerFactory2.getAnimal(AnimalType.LITTLE);
+		System.out.println(deer2.toString());
 	}
 
-	public static void test02() {
-		Blacksmith blacksmith = new ElfBlacksmith();
-		
-		Weapon weapon1 = blacksmith.manufactureWeapon(WeaponType.SPEAR);
-		System.out.println(weapon1.toString());
-		
-		Weapon weapon2 = blacksmith.manufactureWeapon(WeaponType.AXE);
-		System.out.println(weapon2.toString());
-	}
 }

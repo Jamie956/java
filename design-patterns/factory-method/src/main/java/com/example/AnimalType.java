@@ -1,11 +1,11 @@
 package com.example;
 
-public enum WeaponType {
-	SHORT_SWORD("short sword"), SPEAR("spear"), AXE("axe"), UNDEFINED("");
+public enum AnimalType {
+	AWESOME("awesome"), LITTLE("little");
 
 	private String title;
 
-	WeaponType(String title) {
+	AnimalType(String title) {
 		this.title = title;
 	}
 
