@@ -5,11 +5,7 @@ import com.example.factory.KingdomFactory;
 import com.example.factory.OrcKingdomFactory;
 
 public class FactoryMaker {
-	public enum KingdomType {
-		ELF, ORC
-	}
-
-	public static KingdomFactory makeFactory(KingdomType type) {
+	public static KingdomFactory create(KingdomType type) {
 		switch (type) {
 		case ELF:
 			return new ElfKingdomFactory();

@@ -1,11 +1,11 @@
 package com.example.factory;
 
-import com.example.base.Army;
-import com.example.base.Castle;
-import com.example.base.King;
-import com.example.orc.OrcArmy;
-import com.example.orc.OrcCastle;
-import com.example.orc.OrcKing;
+import com.example.entity.Army;
+import com.example.entity.Castle;
+import com.example.entity.King;
+import com.example.entity.OrcArmy;
+import com.example.entity.OrcCastle;
+import com.example.entity.OrcKing;
 
 public class OrcKingdomFactory implements KingdomFactory {
 	public Castle createCastle() {

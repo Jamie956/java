@@ -1,6 +1,4 @@
-package com.example.orc;
-
-import com.example.base.Army;
+package com.example.entity;
 
 public class OrcArmy implements Army {
 	static final String DESCRIPTION = "This is the Orc Army!";

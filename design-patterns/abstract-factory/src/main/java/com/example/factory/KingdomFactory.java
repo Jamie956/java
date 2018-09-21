@@ -1,8 +1,8 @@
 package com.example.factory;
 
-import com.example.base.Army;
-import com.example.base.Castle;
-import com.example.base.King;
+import com.example.entity.Army;
+import com.example.entity.Castle;
+import com.example.entity.King;
 
 public interface KingdomFactory {
 	Castle createCastle();

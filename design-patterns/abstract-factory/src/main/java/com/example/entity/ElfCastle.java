@@ -1,6 +1,4 @@
-package com.example.elf;
-
-import com.example.base.Castle;
+package com.example.entity;
 
 public class ElfCastle implements Castle {
 	static final String DESCRIPTION = "This is the Elven castle!";
