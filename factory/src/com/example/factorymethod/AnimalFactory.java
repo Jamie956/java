@@ -1,5 +1,5 @@
 package com.example.factorymethod;
 
 public interface AnimalFactory {
-	Animal getAnimal();
+	Animal getAnimal(AnimalType animalType);
 }

@@ -1,15 +1,15 @@
 package com.example.factorymethod;
 
-public class Cat implements Animal {
+public class Deer implements Animal {
 	private AnimalType animalType;
 
-	public Cat(AnimalType animalType) {
+	public Deer(AnimalType animalType) {
 		this.animalType = animalType;
 	}
 
 	@Override
 	public String toString() {
-		return "Cat type of " + animalType;
+		return "Deer type of " + animalType;
 	}
 
 	@Override
