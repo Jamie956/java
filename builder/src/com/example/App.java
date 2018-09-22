@@ -2,7 +2,7 @@ package com.example;
 
 public class App {
 	public static void main(String[] args) {
-		MealA a = new MealA();
+		MealABuilder a = new MealABuilder();
 		Waiter waiter = new Waiter(a);
 		Meal mealA = waiter.construct();
 		System.out.print("套餐A的组成部分:");

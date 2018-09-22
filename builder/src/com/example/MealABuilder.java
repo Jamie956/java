@@ -1,6 +1,6 @@
 package com.example;
 
-public class MealA extends MealBuilder {
+public class MealABuilder extends MealBuilder {
 	public void buildDrink() {
 		meal.setDrink("可乐");
 	}
