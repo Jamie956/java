@@ -2,10 +2,15 @@ package com.example;
 
 public class App {
 	public static void main(String[] args) {
-		MealABuilder a = new MealABuilder();
-		Waiter waiter = new Waiter(a);
-		Meal mealA = waiter.construct();
-		System.out.print("套餐A的组成部分:");
-		System.out.println("食物：" + mealA.getFood() + "；   " + "饮品：" + mealA.getDrink());
+		test01();
+	}
+
+	public static void test01() {
+		Hero hero = new HeroBuilder(Profession.MAGE, "Riobard")
+				.withHairColor(HairColor.BLACK)
+				.withWeapon(Weapon.DAGGER)
+				.build();
+		
+		System.out.println(hero);
 	}
 }
