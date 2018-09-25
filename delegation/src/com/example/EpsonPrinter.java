@@ -1,6 +1,4 @@
-package com.example.printers;
-
-import com.example.Printer;
+package com.example;
 
 public class EpsonPrinter implements Printer {
 	@Override
