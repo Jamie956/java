@@ -14,9 +14,7 @@ public class World {
 
 	public List<String> fetch() {
 		List<String> data = df.fetch();
-
 		countries = data.isEmpty() ? countries : data;
-
 		return countries;
 	}
 }

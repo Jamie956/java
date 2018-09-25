@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataFetcher {
-
-	private final String filename = "world.txt";
 	private long lastFetched;
 
 	public DataFetcher() {
@@ -25,12 +23,8 @@ public class DataFetcher {
 	}
 
 	public List<String> fetch() {
-		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource(filename).getFile());
-
+		File file = new File("src/com/example/world.txt");
 		if (isDirty(file.lastModified())) {
-			System.out.println(filename + " is dirty! Re-fetching file content...");
-
 			List<String> data = new ArrayList<String>();
 			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 				String line;
