@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,49 +13,47 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 
-public class JxlDemo {
-	@Test
-	public void write() throws IOException, WriteException {
+public class Demo {
+	
+	public void write() throws Exception {
 		File xlsFile = new File("jxl.xls");
 		WritableWorkbook workbook = Workbook.createWorkbook(xlsFile);
 		WritableSheet sheet1 = workbook.createSheet("mySheet1", 0);
-		
+
 		for (int row = 0; row < 10; row++) {
 			for (int col = 0; col < 10; col++) {
 				sheet1.addCell(new Label(col, row, "data" + row + col));
 			}
 		}
-		
+
 		workbook.write();
-		workbook.close();		
+		workbook.close();
 	}
-	
-	@Test
-	public void write2() throws IOException, WriteException {
+
+	public void write2() throws Exception {
 		File xlsFile = new File("jxl.xls");
 		WritableWorkbook workbook = Workbook.createWorkbook(xlsFile);
 		WritableSheet sheet1 = workbook.createSheet("mySheet1", 0);
 		WritableSheet sheet2 = workbook.createSheet("mySheet2", 0);
-		
+
 		for (int row = 0; row < 10; row++) {
 			for (int col = 0; col < 10; col++) {
 				sheet1.addCell(new Label(col, row, "data" + row + col));
 				sheet2.addCell(new Label(col, row, "2data" + row + col));
 			}
 		}
-		
+
 		workbook.write();
-		workbook.close();		
+		workbook.close();
 	}
-	
-	@Test
-	public void read() throws BiffException, IOException {
+
+	public void read() throws Exception {
 		File xlsFile = new File("jxl.xls");
 		Workbook workbook = Workbook.getWorkbook(xlsFile);
 		Sheet[] sheets = workbook.getSheets();
 		if (sheets != null) {
 			for (Sheet sheet : sheets) {
-				System.out.println("sheet => "+sheet.getName());
+				System.out.println("sheet => " + sheet.getName());
 				int rows = sheet.getRows();
 				int cols = sheet.getColumns();
 				for (int row = 0; row < rows; row++) {
@@ -68,5 +66,4 @@ public class JxlDemo {
 		}
 		workbook.close();
 	}
-	
 }
