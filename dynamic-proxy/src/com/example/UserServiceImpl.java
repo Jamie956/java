@@ -1,4 +1,4 @@
-package com.example.dynamic.proxy;
+package com.example;
 
 //目标对象
 public class UserServiceImpl implements UserService {

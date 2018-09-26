@@ -1,4 +1,4 @@
-package com.example.dynamic.proxy;
+package com.example;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

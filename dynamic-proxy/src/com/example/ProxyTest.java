@@ -1,11 +1,8 @@
-package com.example.dynamic.proxy;
-
-import org.junit.Test;
+package com.example;
 
 //动态代理测试类
 public class ProxyTest {
-	@Test
-	public void testProxy() throws Throwable {
+	public static void main(String[] args) {
 		// 实例化目标对象
 		UserService userService = new UserServiceImpl();
 		// 实例化InvocationHandler
