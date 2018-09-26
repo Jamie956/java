@@ -1,7 +1,7 @@
 package com.example;
 
 //动态代理测试类
-public class ProxyTest {
+public class App {
 	public static void main(String[] args) {
 		// 实例化目标对象
 		UserService userService = new UserServiceImpl();
