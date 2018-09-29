@@ -42,3 +42,33 @@ for (T element : array) {}
 Arrays.asList(array)
 ```
 
+# Socket
+## Socket Server
+1. new ServerSocket(int port)，实例化ServerSocket类，在指定监听端口
+2. accept() 接受Socket
+3. 从Socket类获取输入流
+4. 读取输入流
+5. 指定编码
+6. 存入StringBuilder
+7. 关闭Server
+
+## Socket Client
+1. new Socket(String host, int port) 连接到Socket Server
+2. 从Socket获取输出流
+3. 往输出流写入信息
+4. 关闭Socket
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
