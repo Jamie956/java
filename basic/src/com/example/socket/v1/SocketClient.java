@@ -1,4 +1,4 @@
-package com.example.socket;
+package com.example.socket.v1;
 
 import java.io.OutputStream;
 import java.net.Socket;
