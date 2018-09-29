@@ -74,12 +74,20 @@ Arrays.asList(array)
 1. new Socket(String host, int port) 连接到Socket Server
 2. 从Socket获取输出流
 3. 往输出流写入信息
-4. 关闭Socket output
+4. shutdownOutput() 告诉服务器发送完数据
 5. 从Socket获取输入流
 6. 读取输入流
 7. 指定编码
 8. 存入StringBuilder
 9. 关闭Server
+
+
+## 注意
+如果关闭了输出流，那么相应的Socket也将关闭，和直接关闭Socket一个性质
+
+
+
+
 
 
 
