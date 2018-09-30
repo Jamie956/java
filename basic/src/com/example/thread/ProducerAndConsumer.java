@@ -52,6 +52,7 @@ public class ProducerAndConsumer {
 					System.out.println(this.getName() + "获得队列的锁");
 
 					// 达到上限，wait等待
+					// 线程执行会暂时停留在while循环中，等待被唤醒，一旦被唤醒，while循环会继续执行
 					while (queue.size() == maxsize) {
 						System.out.println("队列已满，生产者" + this.getName() + "等待");
 						try {
