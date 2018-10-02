@@ -130,10 +130,6 @@ public class MyReflect {
 	}
 	
 	public static void test08() {
-//		1）Bootstrap ClassLoader 此加载器采用c++编写
-//		2）Extension ClassLoader 用来进行扩展类的加载，一般对应的是jre\lib\ext目录中的类
-//		3）AppClassLoader 加载classpath指定的类，是最常用的加载器。同时也是java中默认的加载器
-		
 		MyInstance myInstance = new MyInstance();
 		// 获取类加载器类型
 		System.out.println(myInstance.getClass().getClassLoader().getClass().getName());
