@@ -81,10 +81,36 @@ Arrays.asList(array)
 
 
 
+# 反射
+- 具体实例 -> 包名类名
 
+```java
+myInstance.getClass().getName()
+```
 
+- 包名类名 -> Class实例
 
+```java
+Class.forName("com.example.MyInstance");
+```
 
+- Class实例 -> 具体实例
+
+```java
+(MyInstance) classInstance.newInstance();
+```
+
+- Class实例 -> 构造函数
+
+```java
+classInstance.getConstructors();
+```
+
+- 构造函数 -> 具体实例
+
+```java
+(MyInstance) constructors[0].newInstance();
+```
 
 
 
