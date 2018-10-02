@@ -112,6 +112,121 @@ classInstance.getConstructors();
 (MyInstance) constructors[0].newInstance();
 ```
 
+- Class实例 -> 实现的接口
+
+```java
+classInstance.getInterfaces();
+```
+
+- Class实例 -> 继承的父类
+
+```java
+classInstance.getSuperclass();
+```
+
+- Class实例 -> 成员变量
+
+
+```java
+classInstance.getDeclaredFields();
+classInstance.getDeclaredFields("name");
+```
+
+- Class实例 -> 父类或接口的变量
+
+```java
+classInstance.getFields();
+```
+
+- fields[i] -> 权限修饰符
+
+```java
+Modifier.toString(fields[i].getModifiers());
+
+```
+
+- fields[i] -> 类型
+
+```java
+fields[i].getType().getName()
+```
+
+- Class实例 -> Method实例
+
+```java
+classInstance.getMethod("hello");
+classInstance.getMethod("hello", String.class);
+
+```
+
+- Method实例 -> Method调用
+
+```java
+method.invoke(classInstance.newInstance());
+method.invoke(classInstance.newInstance(), "tom");
+```
+
+- 操作属性
+
+```java
+field.setAccessible(true);
+field.set(myInstance,"cat");
+
+```
+
+- 获取类加载器类型
+
+```java
+//		1）Bootstrap ClassLoader 此加载器采用c++编写
+//		2）Extension ClassLoader 用来进行扩展类的加载，一般对应的是jre\lib\ext目录中的类
+//		3）AppClassLoader 加载classpath指定的类，是最常用的加载器。同时也是java中默认的加载器
+myInstance.getClass().getClassLoader().getClass().getName()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

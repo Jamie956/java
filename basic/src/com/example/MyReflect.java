@@ -1,12 +1,15 @@
 package com.example;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 public class MyReflect {
 	public static void main(String[] args) {
-		test03();
+		test08();
 	}
-
+	
 	public static void test01() {
 		MyInstance myInstance = new MyInstance();
 		// 获取实例的包名类名
@@ -57,9 +60,97 @@ public class MyReflect {
 		System.out.println(myInstance1);
 		System.out.println(myInstance2);
 	}
+	
+	public static void test04() {
+		Class<?> classInstance = null;
+		try {
+			classInstance = Class.forName("com.example.MyInstance");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		// Class实例 -> 实现的接口
+		Class<?>[] interfaces = classInstance.getInterfaces();
+		for (int i = 0; i < interfaces.length; i++) {
+			System.out.println(interfaces[i].getName());
+		}
+	}
+	
+	public static void test05() {
+		Class<?> classInstance = null;
+		try {
+			classInstance = Class.forName("com.example.MyInstance");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		// Class实例 -> 成员变量
+		Field[] fields = classInstance.getDeclaredFields();
+		for (int i = 0; i < fields.length; i++) {
+			System.out.println(fields[i].getName());
+			// fields[i] -> 权限修饰符
+			System.out.println(Modifier.toString(fields[i].getModifiers()));
+			// fields[i] -> 类型
+			System.out.println(fields[i].getType().getName());
+		}
+	}
+	
+	public static void test06() {
+		Class<?> classInstance = null;
+		try {
+			classInstance = Class.forName("com.example.MyInstance");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			// Class实例 -> Method实例
+			Method method = classInstance.getMethod("hello");
+			// Method实例 -> Method调用
+			method.invoke(classInstance.newInstance());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void test07() {
+		Class<?> classInstance = null;
+		try {
+			classInstance = Class.forName("com.example.MyInstance");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			MyInstance myInstance = (MyInstance) classInstance.newInstance();
+			Field field = classInstance.getDeclaredField("name");
+			// 操作属性
+			field.setAccessible(true);
+			field.set(myInstance,"cat");
+			System.out.println(field.get(myInstance));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void test08() {
+//		1）Bootstrap ClassLoader 此加载器采用c++编写
+//		2）Extension ClassLoader 用来进行扩展类的加载，一般对应的是jre\lib\ext目录中的类
+//		3）AppClassLoader 加载classpath指定的类，是最常用的加载器。同时也是java中默认的加载器
+		
+		MyInstance myInstance = new MyInstance();
+		// 获取类加载器类型
+		System.out.println(myInstance.getClass().getClassLoader().getClass().getName());
+	}
+	
+	
+	
+	
+	
 }
 
-class MyInstance {
+
+interface Root{
+
+}
+
+class MyInstance implements Root{
 	private String name;
 	
 	public MyInstance(){
