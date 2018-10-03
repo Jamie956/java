@@ -27,13 +27,18 @@
 for (T element : array) {}
 ```
 
-## 数组转集合
+​	
+
+## Array -> List
 
 ```java
 Arrays.asList(array)
 ```
 
+
+
 # 单向Socket
+
 ## Socket Server
 1. new ServerSocket(int port)，实例化ServerSocket类，在指定监听端口
 2. accept() 接受Socket
