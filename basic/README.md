@@ -249,40 +249,42 @@ new BigInteger(binaryString , 2);
 
 ```
 
+# Boxing/Unboxing
+
+## Boxing, int -> Integer
+```java
+int i = 1;
+Integer rs = Integer.valueOf(i);
+```
+
+## Unboxing, Integer -> int
+```java
+Integer i = new Integer(1);
+int rs = i.intValue();
+```
+
+# File
+```new File("D:\\a.txt")``` 绝对路径创建实例
+```isDirectory()``` 是否是文件夹
+```mkdir()``` 创建文件夹
+```createNewFile()``` 创建文件
+```isFile()``` 是否是文夹
+```mkdirs()``` 创建层级文件夹
+```renameTo(File)``` 重命名
+```delete()``` 删除文件
+```getName()``` 获取文件名或文件夹名
+```getAbsolutePath()``` 获取绝对路径
+```list()``` 获取绝对路径
+```listFiles()``` 获取抽象路径数组
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# IO
+```new FileInputStream(File);``` 实例化文件输入流
+```fileInputStream.read();fileInputStream.read(new byte[20]);``` 读取输入流
+```new FileOutputStream(File);``` 实例化文件输出流
+```fileOutputStream.write(byte[]);``` 写出输出流
+```fileOutputStream.write(byte[], 0, len);```
+```fileOutputStream.flush();```
 
 
 
