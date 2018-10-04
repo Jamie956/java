@@ -97,25 +97,25 @@ myInstance.getClass().getName()
 Class.forName("com.example.MyInstance");
 ```
 
-- Class实例 -> 具体实例
+- Class实例 -> 创建具体实例
 
 ```java
 (MyInstance) classInstance.newInstance();
 ```
 
-- Class实例 -> 构造函数
+- Class实例 -> 获取构造函数
 
 ```java
 classInstance.getConstructors();
 ```
 
-- 构造函数 -> 具体实例
+- 构造函数 -> 创建具体实例
 
 ```java
 (MyInstance) constructors[0].newInstance();
 ```
 
-- Class实例 -> 实现的接口
+- Class实例 -> 获取实现的接口
 
 ```java
 classInstance.getInterfaces();
@@ -179,9 +179,6 @@ field.set(myInstance,"cat");
 
 - 获取类加载器类型
 
-1. Bootstrap ClassLoader 此加载器采用c++编写
-2. Extension ClassLoader 用来进行扩展类的加载，一般对应的是jre\lib\ext目录中的类
-3. AppClassLoader 加载classpath指定的类，是最常用的加载器。同时也是java中默认的加载器
 
 ```java
 myInstance.getClass().getClassLoader().getClass().getName()
@@ -285,6 +282,59 @@ int rs = i.intValue();
 ```fileOutputStream.write(byte[]);``` 写出输出流
 ```fileOutputStream.write(byte[], 0, len);```
 ```fileOutputStream.flush();```
+
+
+# Java 8 - Time
+```LocalDate.now();``` 获取当天格式化日期
+```LocalDate.of(2018, 05, 20);``` 获取指定格式化日期
+```Clock.systemUTC();```
+```Clock.systemDefaultZone();``` 获取系统时区
+```MonthDay.of(5, 20);```
+```LocalTime.now();``` 获取当前时间
+```YearMonth.now();``` 获取当月天数
+```Instant.now();``` 获取时间戳
+```LocalDate.parse(text, formatter)``` 解析日期
+```LocalDate.format(formatter)``` 格式化日期
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
