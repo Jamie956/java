@@ -116,7 +116,7 @@ public class StringTests {
 	}
 
 	public static void test10() {
-		//StringBuilder产生重复字符串
+		// StringBuilder产生重复字符串
 		final int n = 10;
 		final String s = "hello ";
 		StringBuilder builder = new StringBuilder();
@@ -128,17 +128,14 @@ public class StringTests {
 	}
 
 	public static void test11() {
-	//按指定长度分隔字符串
-	int length = 5;
-	String str = "asdabsdjsandbkajsdnaskdjnsabdha";
-	String[] parts = str.split("(?<=\\G.{" + length + "})");
-//	System.out.println(parts.toString());
-	for(String s : parts) {
-		System.out.println(s);
+		// 按指定长度分隔字符串
+		int length = 5;
+		String str = "asdabsdjsandbkajsdnaskdjnsabdha";
+		String[] parts = str.split("(?<=\\G.{" + length + "})");
+		// System.out.println(parts.toString());
+		for (String s : parts) {
+			System.out.println(s);
+		}
 	}
-	}
-	
-	
-	
-	
+
 }
