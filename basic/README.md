@@ -32,8 +32,10 @@
 ```Arrays.asList(array)```
 
 
-Socket
-## Socket Server
+
+# Socket
+
+### Socket Server
 1. new ServerSocket(int port)，创建Server并指定监听端口
 2. accept() 接受Socket
 3. 从Socket类获取输入流
@@ -44,7 +46,7 @@ Socket
 8. 写出信息
 9. 关闭Server
 
-## Socket Client
+### Socket Client
 1. new Socket(String host, int port) 连接到Socket Server
 2. 从Socket获取输出流
 3. 往输出流写入信息
@@ -56,7 +58,9 @@ Socket
 9. 关闭Server
 
 
+
 # 反射
+
 - 具体实例 -> 包名类名
 
 ```java
@@ -170,13 +174,13 @@ myInstance.getClass().getClassLoader().getClass().getName()
 4. 执行代码块
 5. 执行默认无参构造方法
 
-## 注意
+### 注意
 - 即使同一个class创建多个实例，他们的静态成员变量是共享的
 
 
 
 # BigDecimal
-## 比较大小
+### 比较大小
 ```java
 bigDecimal.compareTo(bigDecimal);
 ```
@@ -184,7 +188,7 @@ bigDecimal.compareTo(bigDecimal);
 - 0 =
 - -1 <
 
-## 运算
+### 运算
 
 ```java
 bigDecimal.add(bigDecimal);//加
@@ -221,13 +225,13 @@ new BigInteger(binaryString , 2);
 
 # Boxing/Unboxing
 
-## Boxing, int -> Integer
+#### Boxing, int -> Integer
 ```java
 int i = 1;
 Integer rs = Integer.valueOf(i);
 ```
 
-## Unboxing, Integer -> int
+#### Unboxing, Integer -> int
 ```java
 Integer i = new Integer(1);
 int rs = i.intValue();
@@ -317,6 +321,7 @@ NumberFormat.getPercentInstance(new Locale("en", "IN")).format(10340.999);
 | {n,m} | m和n均为非负整数，其中n<=m。最少匹配n次且最多匹配m次 |
 
 
+
 ## 例子
 
 |              |                                    |
@@ -335,7 +340,9 @@ NumberFormat.getPercentInstance(new Locale("en", "IN")).format(10340.999);
 | /<\w+?>/     | 匹配开始的 < >                     |
 
 
+
 # String
+
 ```string.toUpperCase();``` 大写
 ```string.toLowerCase();``` 大写
 ```str1.contains(str2)``` 是否包含
@@ -350,27 +357,28 @@ NumberFormat.getPercentInstance(new Locale("en", "IN")).format(10340.999);
 ```stringBuilder.append(string)```
 
 
+
 # 生产者/消费者
 
-## 生产者
+### 生产者
 ```java
 //继承Thread，重写run()
 run(){
-	while(true){
-		synchronized (queue) {
-			//超过限制
-			while(maxSize){
-				//释放锁
-				wait()
-			}
-			//生产
-			notifyAll()
-		}
-	}
+    while(true){
+        synchronized (queue) {
+            //超过限制
+            while(maxSize){
+                //释放锁
+                wait()
+            }
+            //生产
+            notifyAll()
+        }
+    }
 }
 ```
 
-## 消费者
+### 消费者
 ```java
 //继承Thread，重写run()
 run(){
@@ -387,6 +395,7 @@ run(){
 	}	
 }
 ```
+
 
 
 # 线程池
