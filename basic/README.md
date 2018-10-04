@@ -23,17 +23,15 @@
   ```
 
 ## 遍历
-```java
-for (T element : array) {}
-```
+```for (T element : array) {}```
 
-​	
+
 
 ## Array -> List
 
-```java
-Arrays.asList(array)
-```
+```Arrays.asList(array)```
+
+
 
 # 单向Socket
 
@@ -159,7 +157,6 @@ fields[i].getType().getName()
 ```java
 classInstance.getMethod("hello");
 classInstance.getMethod("hello", String.class);
-
 ```
 
 - Method实例 -> Method调用
@@ -174,7 +171,6 @@ method.invoke(classInstance.newInstance(), "tom");
 ```java
 field.setAccessible(true);
 field.set(myInstance,"cat");
-
 ```
 
 - 获取类加载器类型
@@ -231,6 +227,7 @@ bigDecimal.movePointRight(n);//小数点右移n位
 ```
 
 
+
 # BigInteger
 
 ```java
@@ -246,6 +243,8 @@ new BigInteger(binaryString , 2);
 
 ```
 
+
+
 # Boxing/Unboxing
 
 ## Boxing, int -> Integer
@@ -260,7 +259,10 @@ Integer i = new Integer(1);
 int rs = i.intValue();
 ```
 
+
+
 # File
+
 ```new File("D:\\a.txt")``` 绝对路径创建实例
 ```isDirectory()``` 是否是文件夹
 ```mkdir()``` 创建文件夹
@@ -275,7 +277,9 @@ int rs = i.intValue();
 ```listFiles()``` 获取抽象路径数组
 
 
+
 # IO
+
 ```new FileInputStream(File);``` 实例化文件输入流
 ```fileInputStream.read();fileInputStream.read(new byte[20]);``` 读取输入流
 ```new FileOutputStream(File);``` 实例化文件输出流
@@ -284,7 +288,9 @@ int rs = i.intValue();
 ```fileOutputStream.flush();```
 
 
+
 # Java 8 - Time
+
 ```LocalDate.now();``` 获取当天格式化日期
 ```LocalDate.of(2018, 05, 20);``` 获取指定格式化日期
 ```Clock.systemUTC();```
@@ -298,6 +304,7 @@ int rs = i.intValue();
 
 
 
+# NumberFormatTest
 
 
 
