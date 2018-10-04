@@ -186,10 +186,10 @@ myInstance.getClass().getClassLoader().getClass().getName()
 
 - 动态代理结构
 
-1. 定义实体（实现接口）
+1. 定义实体（要实现接口）
 2. 自定义InvocationHandler，需要实现接口InvocationHandler
-3. 重写方法invoke
-4. 获取代理对象，Proxy.newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)
+  1. 重写方法invoke
+  2. 获取代理对象，Proxy.newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)
 
 
 
