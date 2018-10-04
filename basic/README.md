@@ -350,17 +350,54 @@ NumberFormat.getPercentInstance(new Locale("en", "IN")).format(10340.999);
 ```stringBuilder.append(string)```
 
 
+# 生产者/消费者
+
+## 生产者
+```java
+//继承Thread，重写run()
+run(){
+	while(true){
+		synchronized (queue) {
+			//超过限制
+			while(maxSize){
+				//释放锁
+				wait()
+			}
+			//生产
+			notifyAll()
+		}
+	}
+}
+```
+
+## 消费者
+```java
+//继承Thread，重写run()
+run(){
+	while(true){
+		synchronized (queue) {
+			//消费队列为空
+			while(empty){
+				//释放锁
+				wait()
+			}
+			//消费
+			notifyAll()
+		}
+	}	
+}
+```
 
 
+# 线程池
 
+```java
+ThreadPoolExecutor.ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue)
 
+threadPoolExecutor.execute(thread);
+threadPoolExecutor.shutdown();
 
-
-
-
-
-
-
+```
 
 
 
