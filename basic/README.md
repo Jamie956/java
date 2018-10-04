@@ -32,27 +32,9 @@
 ```Arrays.asList(array)```
 
 
-
-# 单向Socket
-
+Socket
 ## Socket Server
-1. new ServerSocket(int port)，实例化ServerSocket类，在指定监听端口
-2. accept() 接受Socket
-3. 从Socket类获取输入流
-4. 读取输入流
-5. 指定编码
-6. 存入StringBuilder
-7. 关闭Server
-
-## Socket Client
-1. new Socket(String host, int port) 连接到Socket Server
-2. 从Socket获取输出流
-3. 往输出流写入信息
-4. 关闭Socket
-
-# 双向Socket
-## Socket
-1. new ServerSocket(int port)，实例化ServerSocket类，在指定监听端口
+1. new ServerSocket(int port)，创建Server并指定监听端口
 2. accept() 接受Socket
 3. 从Socket类获取输入流
 4. 读取输入流
@@ -72,14 +54,6 @@
 7. 指定编码
 8. 存入StringBuilder
 9. 关闭Server
-
-
-## 注意
-- 如果关闭了输出流，那么相应的Socket也将关闭，和直接关闭Socket一个性质
-- 服务端优化，建立线程池处理
-	- 线程复用，创建线程耗时，回收线程慢
-	- 防止短时间内高并发，指定线程池大小，超过数量将等待，方式短时间创建大量线程导致资源耗尽，服务挂掉
-
 
 
 # 反射
