@@ -10,8 +10,8 @@ public class NumberFormatTest {
 
 	public static void test01() {
 		Locale locale = new Locale("en", "IN");
-		NumberFormat nf = NumberFormat.getInstance(locale);
 		//格式化数字
+		NumberFormat nf = NumberFormat.getInstance(locale);
 		String rs = nf.format(10000000.99);
 		System.out.println(rs);
 		//货币格式化
