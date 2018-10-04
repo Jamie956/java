@@ -35,8 +35,6 @@ for (T element : array) {}
 Arrays.asList(array)
 ```
 
-
-
 # 单向Socket
 
 ## Socket Server
@@ -210,9 +208,46 @@ myInstance.getClass().getClassLoader().getClass().getName()
 
 
 
+# BigDecimal
+## 比较大小
+```java
+bigDecimal.compareTo(bigDecimal);
+```
+- 1 >
+- 0 =
+- -1 <
+
+## 运算
+
+```java
+bigDecimal.add(bigDecimal);//加
+bigDecimal.subtract(bigDecimal);//减
+bigDecimal.multiply(bigDecimal);//乘
+bigDecimal.multiply(bigDecimal, new MathContext(4, RoundingMode.HALF_DOWN));//保留位数
+bigDecimal.divide(bigDecimal,10,RoundingMode.HALF_UP);//除，必须保留位数
+bigDecimal.remainder(bigDecimal);//余数
+bigDecimal.pow(n);//n次方
+bigDecimal.max(bigDecimal);//最大值
+bigDecimal.min(bigDecimal);//最小值
+bigDecimal.movePointLeft(n);//小数点左移n位
+bigDecimal.movePointRight(n);//小数点右移n位
+```
 
 
+# BigInteger
 
+```java
+//long/int -> BigInteger
+BigInteger.valueOf(n);
+
+
+//string -> BigInteger
+new BigInteger(string);
+
+//10进制 -> 2进制
+new BigInteger(binaryString , 2);
+
+```
 
 
 

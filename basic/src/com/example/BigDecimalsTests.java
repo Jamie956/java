@@ -6,19 +6,19 @@ import java.math.RoundingMode;
 
 public class BigDecimalsTests {
 	public static void main(String[] args) {
-		test02();
+		test03();
 	}
 	
 	public static void test01() {
 		// BigDecimal大小比较
 		BigDecimal a = new BigDecimal(5);
-		// 大于
+		// 大于 1
 		int rs = a.compareTo(new BigDecimal(0));
 		System.out.println(rs);
-		// 等于
+		// 等于 0
 		rs = a.compareTo(new BigDecimal(5));
 		System.out.println(rs);
-		// 小于
+		// 小于 -1
 		rs = a.compareTo(new BigDecimal(10));
 		System.out.println(rs);
 		// 等于
