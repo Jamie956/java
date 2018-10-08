@@ -7,12 +7,12 @@ import com.example.Apple;
 
 public class FilteringApples {
 	public static void main(String[] args) {
-		test01();
+		test00();
 	}
 
 	public static List<Apple> as = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"),
 			new Apple(120, "red"));
-	
+
 	public static void test00() {
 		// 获取boolean方法
 		Predicate<Apple> p = FilteringApples::isGreenApple;
@@ -44,5 +44,5 @@ public class FilteringApples {
 	public static boolean isGreenApple(Apple apple) {
 		return "green".equals(apple.getColor());
 	}
-}
 
+}

@@ -9,37 +9,37 @@ public class Sorting {
 		test04();
 	}
 
-	public static List<Apple> inventory = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"),
+	public static List<Apple> as = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"),
 			new Apple(120, "red"));
 
 	public static void test01() {
-		inventory.sort(new AppleComparator());
-		System.out.println(inventory);
+		as.sort(new AppleComparator());
+		System.out.println(as);
 	}
 
 	public static void test02() {
-		inventory.sort(new Comparator<Apple>() {
+		as.sort(new Comparator<Apple>() {
 			public int compare(Apple a1, Apple a2) {
 				return a1.getWeight().compareTo(a2.getWeight());
 			}
 		});
-		System.out.println(inventory);
+		System.out.println(as);
 	}
 
 	public static void test03() {
-		inventory.sort((a1, a2) -> a1.getWeight().compareTo(a2.getWeight()));
-		System.out.println(inventory);
+		as.sort((a1, a2) -> a1.getWeight().compareTo(a2.getWeight()));
+		System.out.println(as);
 	}
 
 	public static void test04() {
-		inventory.sort(comparing(Apple::getWeight));
-		System.out.println(inventory);
+		as.sort(comparing(Apple::getWeight));
+		System.out.println(as);
 	}
 
-	// 重量比较器
 	static class AppleComparator implements Comparator<Apple> {
 		public int compare(Apple a1, Apple a2) {
 			return a1.getWeight().compareTo(a2.getWeight());
 		}
 	}
+	
 }
