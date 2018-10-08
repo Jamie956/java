@@ -1,10 +1,8 @@
 package com.example.ch05;
 
-import java.util.*;
-
 import com.example.Dish;
 
-public class Finding{
+public class StreamMatch{
 	public static void main(String[] args) {
 		test04();
 	}
@@ -25,7 +23,6 @@ public class Finding{
 	}
 	
 	public static void test04() {
-		Optional<Dish> dish = Dish.menu.stream().filter(Dish::isVegetarian).findAny();
-        dish.ifPresent(d -> System.out.println(d.getName()));
+		Dish.menu.stream().filter(Dish::isVegetarian).findAny().ifPresent(d -> System.out.println(d.getName()));
 	}
 }

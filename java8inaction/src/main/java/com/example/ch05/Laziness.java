@@ -5,9 +5,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Laziness {
 	public static void main(String[] args) {
-		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8);
-
-		numbers.stream().filter(n -> {
+		Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8).stream().filter(n -> {
 			System.out.println("filtering " + n);
 			return n % 2 == 0;
 		}).map(n -> {
