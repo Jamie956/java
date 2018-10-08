@@ -9,7 +9,7 @@ import java.nio.file.*;
 
 public class BuildingStreams {
 	public static void main(String[] args) throws IOException {
-		test04();
+		test11();
 	}
 
 	public static void test01() {
@@ -72,7 +72,7 @@ public class BuildingStreams {
 
 	public static void test11() throws IOException {
 		long uniqueWords = Files
-				.lines(Paths.get("src/main/java/com/example/java8inaction/ch05/data.txt"), Charset.defaultCharset())
+				.lines(Paths.get("src/main/java/com/example/ch05/data.txt"), Charset.defaultCharset())
 				.flatMap(line -> Arrays.stream(line.split(" "))).distinct().count();
 
 		System.out.println("There are " + uniqueWords + " unique words in data.txt");
