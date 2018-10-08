@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.*;
 
-public class BuildingStreams {
+public class IterateStream {
 	public static void main(String[] args) throws IOException {
 		test11();
 	}

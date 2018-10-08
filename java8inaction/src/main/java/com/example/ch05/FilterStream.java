@@ -5,9 +5,9 @@ import com.example.Dish;
 import java.util.*;
 import static java.util.stream.Collectors.toList;
 
-public class DataStream {
+public class FilterStream {
 	public static void main(String[] args) {
-		test04();
+		test05();
 	}
 
 	public static void test01() {
@@ -42,5 +42,15 @@ public class DataStream {
 		.skip(2)
 		.collect(toList())
 		.forEach(System.out::println);
+	}
+	
+	public static void test05() {
+		Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8).stream().filter(n -> {
+			System.out.println("filtering " + n);
+			return n % 2 == 0;
+		}).map(n -> {
+			System.out.println("mapping " + n);
+			return n * n;
+		}).limit(2).collect(toList());
 	}
 }

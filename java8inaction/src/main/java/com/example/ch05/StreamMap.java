@@ -4,7 +4,7 @@ import java.util.*;
 import com.example.Dish;
 import static java.util.stream.Collectors.toList;
 
-public class Mapping {
+public class StreamMap {
 	public static void main(String[] args) {
 		test04();
 	}
