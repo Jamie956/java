@@ -9,7 +9,7 @@ import java.nio.file.*;
 
 public class BuildingStreams {
 	public static void main(String[] args) throws IOException {
-		test11();
+		test01();
 	}
 
 	public static void test01() {

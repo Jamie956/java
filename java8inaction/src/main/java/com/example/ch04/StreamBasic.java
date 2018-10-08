@@ -1,6 +1,7 @@
 package com.example.ch04;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import com.example.Dish;
 
@@ -9,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 
 public class StreamBasic {
 	public static void main(String[] args) {
-		test02();
+		test03();
 	}
 
 	// java7写法
@@ -38,8 +39,20 @@ public class StreamBasic {
 
 	// Java 8写法
 	public static void test02() {
-		List<String> rs = Dish.menu.stream().filter(d -> d.getCalories() < 400).sorted(comparing(Dish::getCalories))
-				.map(Dish::getName).collect(toList());
+		List<String> rs = Dish.menu.stream()
+				.filter(d -> d.getCalories() < 400)
+				.sorted(comparing(Dish::getCalories))
+				.map(Dish::getName)
+				.collect(toList());
 		rs.forEach(System.out::println);
+	}
+	
+	public static void test03() {
+    	//Arrays -> List
+        List<String> names = Arrays.asList("Java8", "Lambdas", "In", "Action");
+        //List -> Stream
+        Stream<String> s = names.stream();
+        //Stream foreach
+        s.forEach(System.out::println);
 	}
 }
