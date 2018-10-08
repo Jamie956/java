@@ -9,7 +9,7 @@ import java.nio.file.*;
 
 public class BuildingStreams {
 	public static void main(String[] args) throws IOException {
-		test01();
+		test04();
 	}
 
 	public static void test01() {
@@ -17,12 +17,11 @@ public class BuildingStreams {
 	}
 
 	public static void test02() {
-		Stream<String> stream = Stream.empty();
+		Stream.empty();
 	}
 
 	public static void test03() {
-		int[] numbers = { 2, 3, 5, 7, 11, 13 };
-		int rs = Arrays.stream(numbers).sum();
+		int rs = Arrays.stream(new int[] { 2, 3, 5, 7, 11, 13 }).sum();
 		System.out.println(rs);
 	}
 
