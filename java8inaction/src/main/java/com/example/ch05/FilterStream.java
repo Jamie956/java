@@ -3,11 +3,13 @@ package com.example.ch05;
 import com.example.Dish;
 
 import java.util.*;
+
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 public class FilterStream {
 	public static void main(String[] args) {
-		test05();
+		test06();
 	}
 
 	public static void test01() {
@@ -52,5 +54,14 @@ public class FilterStream {
 			System.out.println("mapping " + n);
 			return n * n;
 		}).limit(2).collect(toList());
+	}
+	
+	public static void test06() {
+		List<String> rs = Dish.menu.stream()
+				.filter(d -> d.getCalories() < 400)
+				.sorted(comparing(Dish::getCalories))
+				.map(Dish::getName)
+				.collect(toList());
+		rs.forEach(System.out::println);
 	}
 }

@@ -3,7 +3,7 @@ package com.example.ch05;
 import com.example.Dish;
 import java.util.*;
 
-public class Reducing {
+public class StreamReduce {
 	public static void main(String[] args) {
 		test05();
 	}
