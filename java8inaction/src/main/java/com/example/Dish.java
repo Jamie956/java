@@ -4,7 +4,6 @@ import java.util.*;
 import static java.util.Arrays.asList;
 
 public class Dish {
-
 	private final String name;
 	private final boolean vegetarian;
 	private final int calories;

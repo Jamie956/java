@@ -1,7 +1,7 @@
 package com.example.ch05;
 
 import com.example.Dish;
-
+import static com.example.Dish.menu;
 import java.util.*;
 
 import static java.util.Comparator.comparing;
@@ -9,19 +9,19 @@ import static java.util.stream.Collectors.toList;
 
 public class FilterStream {
 	public static void main(String[] args) {
-		test06();
+		test05();
 	}
 
 	public static void test01() {
-		// Filtering with predicate
-		Dish.menu.stream()
+		// filter: get it if return true
+		menu.stream()
 		.filter(Dish::isVegetarian)
 		.collect(toList())
 		.forEach(System.out::println);
 	}
 
 	public static void test02() {
-		// Filtering unique elements
+		// distinct: 去重
 		Arrays.asList(1, 2, 1, 3, 3, 2, 4).stream()
 		.filter(i -> i % 2 == 0)
 		.distinct()
@@ -29,8 +29,8 @@ public class FilterStream {
 	}
 
 	public static void test03() {
-		// Truncating a stream
-		Dish.menu.stream()
+		// limit: count limit
+		menu.stream()
 		.filter(d -> d.getCalories() > 300)
 		.limit(3)
 		.collect(toList())
@@ -38,8 +38,8 @@ public class FilterStream {
 	}
 
 	public static void test04() {
-		// Skipping elements from begin
-		Dish.menu.stream()
+		// skip: remove it from begin
+		menu.stream()
 		.filter(d -> d.getCalories() > 300)
 		.skip(2)
 		.collect(toList())
@@ -47,21 +47,12 @@ public class FilterStream {
 	}
 	
 	public static void test05() {
-		Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8).stream().filter(n -> {
-			System.out.println("filtering " + n);
-			return n % 2 == 0;
-		}).map(n -> {
-			System.out.println("mapping " + n);
-			return n * n;
-		}).limit(2).collect(toList());
-	}
-	
-	public static void test06() {
-		List<String> rs = Dish.menu.stream()
-				.filter(d -> d.getCalories() < 400)
-				.sorted(comparing(Dish::getCalories))
-				.map(Dish::getName)
-				.collect(toList());
-		rs.forEach(System.out::println);
+		// sorted: sort
+		menu.stream()
+		.filter(d -> d.getCalories() < 400)
+		.sorted(comparing(Dish::getCalories))
+		.map(Dish::getName)
+		.collect(toList())
+		.forEach(System.out::println);
 	}
 }
