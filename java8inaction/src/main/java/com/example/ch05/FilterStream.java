@@ -47,7 +47,7 @@ public class FilterStream {
 	}
 	
 	public static void test05() {
-		// sorted: sort
+		// sorted: 排序
 		menu.stream()
 		.filter(d -> d.getCalories() < 400)
 		.sorted(comparing(Dish::getCalories))
