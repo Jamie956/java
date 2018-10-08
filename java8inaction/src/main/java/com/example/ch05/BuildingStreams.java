@@ -13,8 +13,7 @@ public class BuildingStreams {
 	}
 
 	public static void test01() {
-		Stream<String> stream = Stream.of("Java 8", "Lambdas", "In", "Action");
-		stream.map(String::toUpperCase).forEach(System.out::println);
+		Stream.of("Java 8", "Lambdas", "In", "Action").map(String::toUpperCase).forEach(System.out::println);
 	}
 
 	public static void test02() {

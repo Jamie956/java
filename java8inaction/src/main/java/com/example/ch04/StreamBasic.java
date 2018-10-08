@@ -1,10 +1,7 @@
 package com.example.ch04;
 
 import java.util.*;
-import java.util.stream.Stream;
-
 import com.example.Dish;
-
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
@@ -48,11 +45,7 @@ public class StreamBasic {
 	}
 	
 	public static void test03() {
-    	//Arrays -> List
-        List<String> names = Arrays.asList("Java8", "Lambdas", "In", "Action");
-        //List -> Stream
-        Stream<String> s = names.stream();
-        //Stream foreach
-        s.forEach(System.out::println);
+    	//Arrays -> Stream
+        Arrays.asList("Java8", "Lambdas", "In", "Action").stream().forEach(System.out::println);
 	}
 }
