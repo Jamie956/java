@@ -1,6 +1,7 @@
 package com.example.ch05;
 
 import com.example.Dish;
+import static com.example.Dish.menu;
 import java.util.*;
 
 public class StreamReduce {
@@ -16,22 +17,16 @@ public class StreamReduce {
 	}
 
 	public static void test02() {
-		int sum2 = numbers.stream().reduce(0, Integer::sum);
-		System.out.println(sum2);
-	}
-
-	public static void test03() {
-		int max = numbers.stream().reduce(0, (a, b) -> Integer.max(a, b));
-		System.out.println(max);
+		int sum = numbers.stream().reduce(0, Integer::sum);
+		System.out.println(sum);
 	}
 
 	public static void test04() {
-		Optional<Integer> min = numbers.stream().reduce(Integer::min);
-		min.ifPresent(System.out::println);
+		numbers.stream().reduce(Integer::min).ifPresent(System.out::println);
 	}
 
 	public static void test05() {
-		int calories = Dish.menu.stream().map(Dish::getCalories).reduce(0, Integer::sum);
-		System.out.println("Number of calories:" + calories);
+		int i = menu.stream().map(Dish::getCalories).reduce(0, Integer::sum);
+		System.out.println(i);
 	}
 }
