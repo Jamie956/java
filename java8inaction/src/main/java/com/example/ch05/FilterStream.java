@@ -10,61 +10,44 @@ import static java.util.stream.Collectors.toList;
 
 public class FilterStream {
 	public static void main(String[] args) {
-		test02();
+		test04();
 	}
 	
-	public static void test01() {
+	public static void test00() {
 		//List -> Stream
 		Stream<Dish> stream = menu.stream();
-		//Stream filter
-		stream = stream.filter(Dish::isVegetarian);
 		//Stream -> List
 		List<Dish> list = stream.collect(toList());
 		//List forEach
 		list.forEach(System.out::println);
 	}
+	
+	public static void test01() {
+		Stream<Dish> stream = menu.stream();
+		//Stream filter
+		stream = stream.filter(Dish::isVegetarian);
+		stream.forEach(System.out::println);
+	}
 
 	public static void test02() {
+		List<Integer> list = Arrays.asList(1, 2, 1, 3, 3, 2, 4);
+		Stream<Integer> stream = list.stream();
 		// distinct: 去重
-//		Arrays.asList(1, 2, 1, 3, 3, 2, 4)
-//		.stream()
-//		.filter(i -> i % 2 == 0)
-//		.distinct()
-//		.forEach(System.out::println);
-		
-		// distinct: 去重
-		Arrays.asList(1, 2, 1, 3, 3, 2, 4)
-		.stream()
-		.filter(i -> i % 2 == 0)
-		.distinct()
-		.forEach(System.out::println);
+		stream = stream.distinct();
+		stream.forEach(System.out::println);
 	}
 
 	public static void test03() {
-		// limit: count limit
-		menu.stream()
-		.filter(d -> d.getCalories() > 300)
-		.limit(3)
-		.collect(toList())
-		.forEach(System.out::println);
-	}
-
-	public static void test04() {
-		// skip: remove it from begin
-		menu.stream()
-		.filter(d -> d.getCalories() > 300)
-		.skip(2)
-		.collect(toList())
-		.forEach(System.out::println);
+		Stream<Dish> stream = menu.stream();
+		//skip: 跳过开头的元素
+		stream = stream.skip(2);
+		stream.forEach(System.out::println);
 	}
 	
-	public static void test05() {
+	public static void test04() {
+		Stream<Dish> stream = menu.stream();
 		// sorted: 排序
-		menu.stream()
-		.filter(d -> d.getCalories() < 400)
-		.sorted(comparing(Dish::getCalories))
-		.map(Dish::getName)
-		.collect(toList())
-		.forEach(System.out::println);
+		stream = stream.sorted(comparing(Dish::getCalories));
+		stream.forEach(System.out::println);
 	}
 }
