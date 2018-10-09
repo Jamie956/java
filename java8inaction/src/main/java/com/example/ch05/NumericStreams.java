@@ -3,49 +3,47 @@ package com.example.ch05;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
+import static com.example.Dish.menu;
 import com.example.Dish;
 
 public class NumericStreams {
 	public static void main(String[] args) {
-		test05();
+		test04();
 	}
 
 	public static void test01() {
-		List<Integer> numbers = Arrays.asList(3, 4, 5, 1, 2);
-		Arrays.stream(numbers.toArray()).forEach(System.out::println);
+		int[] array = new int[] {3, 4, 5, 1, 2};
+		//Array -> IntStream
+		IntStream stream = Arrays.stream(array);
+		stream.forEach(System.out::println);
 	}
 
 	public static void test02() {
-		int calories = Dish.menu.stream().mapToInt(Dish::getCalories).sum();
-		System.out.println("Number of calories:" + calories);
+		Stream<Dish> stream = menu.stream();
+		IntStream intStream = stream.mapToInt(Dish::getCalories);
+		//intStream sum
+		int i = intStream.sum();
+		System.out.println(i);
 	}
 
 	public static void test03() {
-		// max and OptionalInt
-		OptionalInt maxCalories = Dish.menu.stream().mapToInt(Dish::getCalories).max();
-
+		Stream<Dish> stream = menu.stream();
+		IntStream intStream = stream.mapToInt(Dish::getCalories);
+		//intStream max
+		OptionalInt maxOp = intStream.max();
+		
 		int max;
-		if (maxCalories.isPresent()) {
-			max = maxCalories.getAsInt();
+		if (maxOp.isPresent()) {
+			max = maxOp.getAsInt();
 		} else {
-			// we can choose a default value
 			max = 1;
 		}
 		System.out.println(max);
 	}
 
 	public static void test04() {
-		// numeric ranges
-		IntStream evenNumbers = IntStream.rangeClosed(1, 100).filter(n -> n % 2 == 0);
-		System.out.println(evenNumbers.count());
-	}
-
-	public static void test05() {
-		Stream<int[]> pythagoreanTriples = IntStream.rangeClosed(1, 100).boxed()
-				.flatMap(a -> IntStream.rangeClosed(a, 100).filter(b -> Math.sqrt(a * a + b * b) % 1 == 0).boxed()
-						.map(b -> new int[] { a, b, (int) Math.sqrt(a * a + b * b) }));
-
-		pythagoreanTriples.forEach(t -> System.out.println(t[0] + ", " + t[1] + ", " + t[2]));
+		// IntStream rangeClosed
+		IntStream intStream = IntStream.rangeClosed(1, 100);
+		intStream.forEach(System.out::println);
 	}
 }
