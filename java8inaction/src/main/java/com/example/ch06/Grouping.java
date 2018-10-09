@@ -11,16 +11,18 @@ public class Grouping {
 	enum CaloricLevel { DIET, NORMAL, FAT };
 	
 	public static void main(String[] args) {
-		test09();
+		test01();
 	}
 	
 	public static void test01() {
-		Map<Dish.Type, List<Dish>> rs = menu.stream().collect(groupingBy(Dish::getType));
+		Map<Dish.Type, List<Dish>> rs = menu.stream()
+				.collect(groupingBy(Dish::getType));
 		System.out.println("Dishes grouped by type: " + rs);
 	}
     
 	public static void test02() {
-	    Map<Dish.Type, List<String>> rs = menu.stream().collect(groupingBy(Dish::getType, mapping(Dish::getName, toList())));
+	    Map<Dish.Type, List<String>> rs = menu.stream()
+	    		.collect(groupingBy(Dish::getType, mapping(Dish::getName, toList())));
 		System.out.println("Dish names grouped by type: " + rs);
 	}
 	
