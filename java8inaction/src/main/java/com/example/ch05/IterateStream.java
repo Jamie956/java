@@ -46,9 +46,16 @@ public class IterateStream {
 	}
 
 	public static void test05() throws IOException {
-		long uniqueWords = Files
-				.lines(Paths.get("src/main/java/com/example/ch05/data.txt"), Charset.defaultCharset())
-				.flatMap(line -> Arrays.stream(line.split(" "))).distinct().count();
-		System.out.println("There are " + uniqueWords + " unique words in data.txt");
+		Path path = Paths.get("src/main/java/com/example/ch05/data.txt");
+		Charset cs = Charset.defaultCharset();
+		
+		// File -> Stream
+		Stream<String> stream = Files.lines(path, cs);
+		//stream flatMap
+		stream = stream.flatMap(line -> Arrays.stream(line.split(" ")));
+		stream = stream.distinct();
+		//stream count
+		Long count = stream.count();
+		System.out.println(count);
 	}
 }
