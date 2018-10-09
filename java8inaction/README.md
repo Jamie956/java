@@ -30,6 +30,22 @@ intStream.sum();
 
 
 
+//List -> Stream
+Stream<Dish> stream = menu.stream();
+//Stream filter
+stream = stream.filter(Dish::isVegetarian);
+//Stream -> List
+List<Dish> list = stream.collect(toList());
+//List forEach
+list.forEach(System.out::println);
+
+
+
+
+
+
+
+
 
 
 ```

@@ -3,26 +3,38 @@ package com.example.ch05;
 import com.example.Dish;
 import static com.example.Dish.menu;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 public class FilterStream {
 	public static void main(String[] args) {
-		test05();
+		test02();
 	}
-
+	
 	public static void test01() {
-		// filter: get it if return true
-		menu.stream()
-		.filter(Dish::isVegetarian)
-		.collect(toList())
-		.forEach(System.out::println);
+		//List -> Stream
+		Stream<Dish> stream = menu.stream();
+		//Stream filter
+		stream = stream.filter(Dish::isVegetarian);
+		//Stream -> List
+		List<Dish> list = stream.collect(toList());
+		//List forEach
+		list.forEach(System.out::println);
 	}
 
 	public static void test02() {
 		// distinct: 去重
-		Arrays.asList(1, 2, 1, 3, 3, 2, 4).stream()
+//		Arrays.asList(1, 2, 1, 3, 3, 2, 4)
+//		.stream()
+//		.filter(i -> i % 2 == 0)
+//		.distinct()
+//		.forEach(System.out::println);
+		
+		// distinct: 去重
+		Arrays.asList(1, 2, 1, 3, 3, 2, 4)
+		.stream()
 		.filter(i -> i % 2 == 0)
 		.distinct()
 		.forEach(System.out::println);
