@@ -10,11 +10,13 @@ public class FilteringApples {
 		test00();
 	}
 
-	public static List<Apple> as = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"),
-			new Apple(120, "red"));
+	public static List<Apple> as = Arrays.asList(
+		new Apple(80, "green"),
+		new Apple(155, "green"),
+		new Apple(120, "red")
+	);
 
 	public static void test00() {
-		// 获取boolean方法
 		Predicate<Apple> p = FilteringApples::isGreenApple;
 		boolean rs = p.test(new Apple(80, "red"));
 		System.out.println(rs);
