@@ -12,7 +12,8 @@ public class Partitioning {
 	}
 
 	public static void test01() {
-		Map<Boolean, List<Dish>> rs = menu.stream().collect(partitioningBy(Dish::isVegetarian));
+		Map<Boolean, List<Dish>> rs = menu.stream()
+				.collect(partitioningBy(Dish::isVegetarian));
 		System.out.println("Dishes partitioned by vegetarian: " + rs);
 	}
 
@@ -23,8 +24,8 @@ public class Partitioning {
 	}
 
 	public static void test03() {
-		Object rs = menu.stream().collect(partitioningBy(Dish::isVegetarian,
-				collectingAndThen(maxBy(comparingInt(Dish::getCalories)), Optional::get)));
+		Object rs = menu.stream()
+				.collect(partitioningBy(Dish::isVegetarian, collectingAndThen(maxBy(comparingInt(Dish::getCalories)), Optional::get)));
 		System.out.println("Most caloric dishes by vegetarian: " + rs);
 	}
 }
