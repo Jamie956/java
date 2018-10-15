@@ -14,6 +14,6 @@ public class ModemB extends Modem {
 
 	@Override
 	public String toString() {
-		return "modem b";
+		return "ModemB";
 	}
 }

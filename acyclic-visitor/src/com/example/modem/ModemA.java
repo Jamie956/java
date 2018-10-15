@@ -3,7 +3,6 @@ package com.example.modem;
 import com.example.visitor.*;
 
 public class ModemA extends Modem {
-
 	@Override
 	public void accept(ModemVisitor modemVisitor) {
 		try {
@@ -15,6 +14,8 @@ public class ModemA extends Modem {
 
 	@Override
 	public String toString() {
-		return "modem a";
+		return "ModemA";
 	}
 }
+
+
