@@ -1,32 +1,24 @@
-# Builder Pattern
+<img src="https://www.dofactory.com/images/diagrams/net/builder.gif">
 
 
 
-## 概念
-
-是一种对象构建模式。它可以将复杂对象的建造过程抽象出来（抽象类别），使这个抽象过程的不同实现方法可以构造出不同表现（属性）的对象
 
 
+### Participants
 
-## 好处
+The classes and objects participating in this pattern are:             
 
-- 隐藏细节，将产品本身与产品的创建过程解耦
-- 每一个具体builder都相对独立
-- 增加新的具体builder无须修改原有类库的代码
+- **Builder (VehicleBuilder)**
+  - specifies an abstract interface for creating parts of a Product object
+- **ConcreteBuilder (MotorCycleBuilder, CarBuilder, ScooterBuilder)**
+  - constructs and assembles parts of the product by implementing the Builder interface
+  - defines and keeps track of the representation it creates
+  - provides an interface for retrieving the product
+- **Director (Shop)**
+  - constructs an object using the Builder interface
+- **Product (Vehicle)**
+  - represents the complex object under construction. ConcreteBuilder builds the product's internal representation and defines the process by which it's assembled
+  - includes classes that define the constituent parts, including interfaces for assembling the parts into the final result
 
 
 
-## 抽象工厂模式VS建造者模式 
-
-抽象工厂模式实现对产品家族的创建，一个产品家族是这样的一系列产品：具有不同分类维度的产品组合，采用抽象工厂模式不需要关心构建过程，只关心什么产品由什么工厂生产即可。而建造者模式则是要求按照指定的蓝图建造产品，它的主要目的是通过组装零配件而产生一个新产品
-
-
-
-## 结构
-
-1. 定义实体类，拥有多个属性
-
-2. 定义抽象builder类，负责创建实体，定义装配属性的抽象方法
-
-3. 定义builder子类，继承2.抽象类，是具体的一个实体的builder
-4. 定义director，调用builder的方法来构建实体
