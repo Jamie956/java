@@ -1,4 +1,4 @@
-package com.example;
+package com.example.v1;
 
 public class Hammer implements Weapon {
 	private final Enchantment enchantment;
