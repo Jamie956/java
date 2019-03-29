@@ -14,15 +14,13 @@ public class Main {
 
 		llist.printList();
 		
-		System.out.println();
-		
 		llist.push(4);
 		llist.printList();
 		
-		System.out.println();
-		
 		llist.append(5);
+		llist.printList();
 		
+		llist.deleteNode(2);
 		llist.printList();
 	}
 }
