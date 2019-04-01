@@ -1,4 +1,4 @@
-package com.example.linkedlist;
+package com.example.ds;
 
 public class DoublyLinkedList {
 	Node head;
