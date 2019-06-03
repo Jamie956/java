@@ -7,28 +7,26 @@ import java.lang.reflect.Modifier;
 
 public class MyReflect {
 	public static void main(String[] args) {
-		test08();
+		test02();
 	}
 	
 	public static void test01() {
-		MyInstance myInstance = new MyInstance();
-		// 获取实例的包名类名
-		System.out.println(myInstance.getClass().getName());
+		// 实例 -> 包名类名
+		System.out.println(new MyInstance().getClass().getName());
 	}
 	
 	public static void test02() {
 		Class<?> classInstance = null;
 		try {
-			// 包名类名 -> Class实例
+			// 包名类名 -> Class
 			classInstance = Class.forName("com.example.MyInstance");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println(classInstance.getName());
 		
 		MyInstance myInstance = null;
 		try {
-			// Class实例 -> 创建具体实例
+			// Class -> 实例
 			myInstance = (MyInstance) classInstance.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -45,13 +43,13 @@ public class MyReflect {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		// Class实例 -> 获取构造函数
+		// Class -> 获取构造函数
 		Constructor<?>[] constructors = classInstance.getConstructors();
 		
 		MyInstance myInstance1 = null;
 		MyInstance myInstance2 = null;
 		try {
-			// 构造函数 -> 创建具体实例
+			// 构造函数 -> 实例
 			myInstance1 = (MyInstance) constructors[0].newInstance();
 			myInstance2 =  (MyInstance) constructors[1].newInstance("tom");
 		} catch (Exception e) {
@@ -68,7 +66,7 @@ public class MyReflect {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		// Class实例 -> 获取实现的接口
+		// Class -> 接口
 		Class<?>[] interfaces = classInstance.getInterfaces();
 		for (int i = 0; i < interfaces.length; i++) {
 			System.out.println(interfaces[i].getName());
