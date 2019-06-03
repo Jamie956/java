@@ -1,15 +1,13 @@
-package com.example.socket.v1;
+package com.example.socket;
 
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class SocketClient {
+public class C {
 	public static void main(String args[]) throws Exception {
-		String host = "127.0.0.1";
-		int port = 55533;
-		Socket socket = new Socket(host, port);
+		Socket socket = new Socket("127.0.0.1", 8080);
 		OutputStream outputStream = socket.getOutputStream();
-		outputStream.write("This is from client".getBytes("UTF-8"));
+		outputStream.write("Say hi to Server".getBytes("UTF-8"));
 		outputStream.close();
 		socket.close();
 	}
