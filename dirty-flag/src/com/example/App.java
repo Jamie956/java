@@ -1,29 +1,27 @@
 package com.example;
 
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class App {
-	public void run() {
-
+	private static List<String> countries = new ArrayList<String>();
+	private static DataFetcher dataFetcher = new DataFetcher();
+	
+	public static void main(String[] args) {
 		final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+		
 		executorService.scheduleAtFixedRate(new Runnable() {
 			@Override
 			public void run() {
-				World world = new World();
-				List<String> countries = world.fetch();
-				System.out.println("Our world currently has the following countries:-");
-				for (String country : countries) {
-					System.out.println("\t" + country);
-				}
+				
+				List<String> data = dataFetcher.fetch();
+				countries = data.isEmpty() ? countries : data;
+				System.out.println(countries);
+				
 			}
-		}, 0, 15, TimeUnit.SECONDS); // Run at every 15 seconds.
-	}
-
-	public static void main(String[] args) {
-		App app = new App();
-		app.run();
+		}, 0, 10, TimeUnit.SECONDS);
+		
 	}
 }
