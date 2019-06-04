@@ -1,6 +1,6 @@
 package com.example;
 
-public class DwarvenGoldDigger extends DwarvenMineWorker {
+public class A extends Worker {
 
 	@Override
 	public void work() {
@@ -9,6 +9,6 @@ public class DwarvenGoldDigger extends DwarvenMineWorker {
 
 	@Override
 	public String name() {
-		return "Dwarf gold digger";
+		return "A";
 	}
 }
