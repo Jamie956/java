@@ -1,13 +1,13 @@
 package com.example;
 
 public class Cat {
-	private ISoundBehaviour sound = new MeowSound();
+	private Sound sound;
 
 	public void makeSound() {
-		this.sound.makeSound();
+		this.sound.make();
 	}
 
-	public void setSoundBehaviour(ISoundBehaviour newsound) {
-		this.sound = newsound;
+	public void setSound(Sound sound) {
+		this.sound = sound;
 	}
 }
