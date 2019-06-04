@@ -1,11 +1,6 @@
 package com.example;
 
-import java.util.logging.Logger;
-
 public class ClubbedTroll implements Troll {
-
-	private static final Logger LOGGER = Logger.getLogger("ClubbedTroll");
-
 	private Troll decorated;
 
 	public ClubbedTroll(Troll decorated) {
@@ -15,7 +10,7 @@ public class ClubbedTroll implements Troll {
 	@Override
 	public void attack() {
 		decorated.attack();
-		LOGGER.info("The troll swings at you with a club!");
+		System.out.println("C");
 	}
 
 	@Override
