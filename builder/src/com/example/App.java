@@ -1,8 +1,6 @@
-<img src="https://www.dofactory.com/images/diagrams/net/builder.gif">
+package com.example;
 
-
-
-
+/*
 
 ### Participants
 
@@ -19,6 +17,14 @@ The classes and objects participating in this pattern are:
 - **Product (Vehicle)**
   - represents the complex object under construction. ConcreteBuilder builds the product's internal representation and defines the process by which it's assembled
   - includes classes that define the constituent parts, including interfaces for assembling the parts into the final result
-
-
-
+  
+ * */
+public class App {
+	public static void main(String[] args) {
+		Builder builder = new Builder();
+		new Director(builder);
+		Product product = builder.get();
+		product.show();
+	}
+	
+}

@@ -1,7 +1,18 @@
 package com.example;
 
-public abstract class Builder {
-	public abstract void buildPartA();
-	public abstract void buildPartB();
-	public abstract Product getResult();
+public class Builder{
+	private Product product = new Product();
+	
+	public void buildA() {
+		product.add("Item A");
+	}
+
+	public void buildB() {
+		product.add("Item B");
+	}
+
+	public Product get() {
+		return product;
+	}
+
 }

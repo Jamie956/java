@@ -3,15 +3,15 @@ package com.example;
 import java.util.ArrayList;
 
 public class Product {
-	private ArrayList<String> parts = new ArrayList<String>();
+	private ArrayList<String> items = new ArrayList<String>();
 	
-	public void add(String part) {
-		parts.add(part);
+	public void add(String item) {
+		items.add(item);
 	}
 	
 	public void show () {
-		for (String part : parts) {
-			System.out.println(part);
+		for (String item : items) {
+			System.out.println(item);
 		}
 	}
 }
