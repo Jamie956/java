@@ -1,4 +1,4 @@
-package com.example.factory;
+package com.example;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -9,17 +9,17 @@ public class ObjectFactory {
 		props = new Properties();
 		try {
 			props.load(
-					ObjectFactory.class.getClassLoader().getResourceAsStream("com//example//config//app.properties"));
+					ObjectFactory.class.getClassLoader().getResourceAsStream("com//example//app.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static Object getInstance(String logicalclassName) {
+	public static Object getInstance(String key) {
 		Object obj = null;
-		String originalclassName = props.getProperty(logicalclassName);
+		String value = props.getProperty(key);
 		try {
-			obj = Class.forName(originalclassName).newInstance();
+			obj = Class.forName(value).newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

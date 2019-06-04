@@ -1,6 +1,6 @@
-package com.example.bean;
+package com.example;
 
-public class Deer implements Animal {
+public class Deer {
 	public void sayhi() {
 		System.out.println("Lovely deer.");
 	}
