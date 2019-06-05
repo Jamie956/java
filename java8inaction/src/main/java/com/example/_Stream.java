@@ -1,15 +1,14 @@
 package com.example;
 
-import java.util.*;
 import java.util.stream.Stream;
 
 public class _Stream {
 	public static void main(String[] args) {
-		test04();
+		test01();
 	}
 	
-	private static Stream<String> stream = Arrays.asList("a", "b", "c", "a").stream();
-
+	private static Stream<String> stream = Stream.of("a", "b", "c", "a");
+	
 	public static void test01() {
 		// Stream filter
 		stream = stream.filter((x) -> x == "a" );

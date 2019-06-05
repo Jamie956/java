@@ -8,7 +8,7 @@ import java.nio.file.*;
 
 public class IterateStream {
 	public static void main(String[] args) throws IOException {
-		test05();
+		test01();
 	}
 	
 	public static void test01() {
