@@ -1,4 +1,4 @@
-package com.example;
+package com;
 
 public class Color {
 	private String name;
