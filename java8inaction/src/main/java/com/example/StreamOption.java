@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 public class StreamOption {
 	public static void main(String[] args) {
-		test01();
+		test09();
 	}
 	
 	public static void test01() {
@@ -58,4 +58,17 @@ public class StreamOption {
 		Stream.generate(Math::random).limit(10).forEach(System.out::println);
 	}
 	
+	public static void test09() {
+		Stream<String> stream = Stream.of("s", "b", "c");
+		//allMatch
+//		System.out.println(stream.allMatch(x -> x == "s"));
+		//anyMatch
+		System.out.println(stream.anyMatch(x -> x == "s"));
+	}
+	
+	public static void test10() {
+		IntStream intStream = IntStream.of(1, 2, 3);
+		// reduce
+		System.out.println(intStream.reduce(0, (a, b) -> a + b));
+	}
 }
