@@ -1,8 +1,6 @@
-package com.example.ch08;
+package com.example;
 
 import java.util.function.Supplier;
-
-import com.example.Color;
 
 public class LambdaNew {
 	public static void main(String[] args) {
