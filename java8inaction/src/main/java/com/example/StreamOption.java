@@ -1,5 +1,7 @@
 package com.example;
 
+import static java.util.stream.Collectors.groupingBy;
+
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -71,4 +73,11 @@ public class StreamOption {
 		// reduce
 		System.out.println(intStream.reduce(0, (a, b) -> a + b));
 	}
+	
+	public static void test11() {
+		// collect groupingBy
+		Stream<String> stream = Stream.of("a", "b", "c", "a");
+		System.out.println(stream.collect(groupingBy(x -> x == "a")));
+	}
+	
 }
