@@ -1,13 +1,14 @@
 package com.example;
 
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class StreamOption {
 	public static void main(String[] args) {
-		test09();
+		test12();
 	}
 	
 	public static void test01() {
@@ -78,6 +79,16 @@ public class StreamOption {
 		// collect groupingBy
 		Stream<String> stream = Stream.of("a", "b", "c", "a");
 		System.out.println(stream.collect(groupingBy(x -> x == "a")));
+	}
+	
+	public static void test12() {
+		Stream.of(2, 3)
+			.peek(x -> System.out.println(x))
+			.map(x -> x + 17)
+			.peek(x -> System.out.println("after map: " + x))
+			.filter(x -> x % 2 == 0)
+			.peek(x -> System.out.println("after filter: " + x))
+			.collect(toList());
 	}
 	
 }
