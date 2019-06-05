@@ -1,12 +1,9 @@
-package com.example.ch04;
+package com.example;
 
 import java.util.*;
 
 public class ArrayStream {
 	public static void main(String[] args) {
-		test01();
-	}
-	public static void test01() {
 		//List -> stream
         Arrays.asList("Java8", "Lambdas", "In", "Action").stream().forEach(System.out::println);
 	}
