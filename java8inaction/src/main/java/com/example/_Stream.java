@@ -3,7 +3,7 @@ package com.example;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class FilterStream {
+public class _Stream {
 	public static void main(String[] args) {
 		test04();
 	}
@@ -11,25 +11,25 @@ public class FilterStream {
 	private static Stream<String> stream = Arrays.asList("a", "b", "c", "a").stream();
 
 	public static void test01() {
-		//Stream filter
+		// Stream filter
 		stream = stream.filter((x) -> x == "a" );
 		stream.forEach(System.out::println);
 	}
 
 	public static void test02() {
-		// Stream distinct: 去重
+		// Stream distinct
 		stream = stream.distinct();
 		stream.forEach(System.out::println);
 	}
 
 	public static void test03() {
-		//skip: 跳过前两个元素
+		// Stream skip
 		stream = stream.skip(2);
 		stream.forEach(System.out::println);
 	}
 	
 	public static void test04() {
-		// sorted
+		// Stream sorted
 		stream = stream.sorted((a, b) -> a.compareTo(b));
 		stream.forEach(System.out::println);
 	}
