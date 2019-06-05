@@ -1,4 +1,4 @@
-package com.example;
+package com;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
