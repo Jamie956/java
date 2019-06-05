@@ -35,12 +35,6 @@ public class GuavaTests {
 		System.out.println(rs);
 	}
 	
-	// LOWER_CAMEL – 以小写字母开头的驼峰命名规则。例如： lowerCamel。这个规则符合表示 Java 属性以及 Java 方法的命名规则。
-	// LOWER_HYPHEN – 将单词的小写形式以连接符( - )连接的。例如： lower-hyphen。
-	// LOWER_UNDERSCORE – 将单词的小写形式以连接符( _ )连接的。例如： lower_underscore。
-	// UPPER_CAMEL – 以大写字母开头的驼峰命名规则。例如： UpperCamel。这个规则符合表示 Java 或 C++ 类名的命名规则。
-	// UPPER_UNDERSCORE – 将单词的大写形式以连接符( _ )连接的。例如： UPPER_UNDERSCORE。这个规则符合表示 Java 或
-	// C++ 常量的命名规则。
 	public static void test03() {
 		String rs = "";
 		// lowerCamel -> lower-camel

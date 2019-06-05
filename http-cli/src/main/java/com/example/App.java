@@ -8,17 +8,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-
-
 public class App {
 	public static void main(String[] args) {
-		try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-			String url = "https://api.github.com/search/repositories?q=java+user:jamie956+language:java";
-			HttpGet httpGet = new HttpGet(url);
-			try (CloseableHttpResponse httpResponse = httpClient.execute(httpGet)) {
-				String res = EntityUtils.toString(httpResponse.getEntity());
-				System.out.println(res);
-			}
+		String url = "https://api.github.com/users/Jamie956/repos";
+		try (CloseableHttpClient httpClient = HttpClients.createDefault();
+				CloseableHttpResponse httpResponse = httpClient
+						.execute(new HttpGet(url))
+						) {
+			String httpEntityStr = EntityUtils.toString(httpResponse.getEntity());
+			System.out.println(httpEntityStr);
 		} catch (IOException e) {
 			System.err.println(e);
 		}
