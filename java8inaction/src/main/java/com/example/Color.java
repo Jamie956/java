@@ -3,8 +3,11 @@ package com.example;
 public class Color {
 	private String name;
 	
+	public Color() {
+		System.err.println("Color Construct");
+	}
+	
 	public Color(String name) {
-		super();
 		this.name = name;
 	}
 	
