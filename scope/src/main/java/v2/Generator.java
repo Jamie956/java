@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WindowGenerator {
+public class Generator {
 	@Lookup
-	protected Window newWindow() {
+	protected Window create() {
 		throw new UnsupportedOperationException();
 	}
 }

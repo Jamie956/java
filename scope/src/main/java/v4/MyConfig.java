@@ -9,6 +9,6 @@ public class MyConfig {
 	@Bean
 	@Scope("prototype")
 	public User userBean() {
-		return new User("tom");
+		return new User();
 	}
 }

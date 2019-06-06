@@ -13,7 +13,7 @@ public class MyConfig {
 	@Bean
 	@Lazy
 	@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public Window windowBean() {
+	public Window randomasyoulike() {
 		return new Window();
 	}
 
