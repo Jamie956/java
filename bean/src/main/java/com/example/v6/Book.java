@@ -1,4 +1,4 @@
-package com.example.v8;
+package com.example.v6;
 
 public class Book {
 	public Book(String name) {

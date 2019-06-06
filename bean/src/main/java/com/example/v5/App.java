@@ -7,9 +7,8 @@ public class App {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 		context.scan("com.example.v5");
 		context.refresh();
-
-		Animal animal = context.getBean(Animal.class);
-		animal.say();
+		
+		context.getBean(Item.class);
 		
 		context.close();
 	}
