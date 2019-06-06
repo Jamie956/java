@@ -7,5 +7,6 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 public class IsActive implements Condition {
 	public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
 		return true;
+//		return false;
 	}
 }

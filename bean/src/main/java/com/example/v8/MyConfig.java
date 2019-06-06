@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Lazy;
 public class MyConfig {
 	@Bean
 	public Book bookBean() {
-		return new Book("Java");
+		return new Book("A");
 	}
 
-	// @Lazy 表示在getBean时才去实例化
+	// getBean时才实例化
 	@Bean
 	@Lazy
 	public Book bookBeanLazy() {
-		return new Book("JS");
+		return new Book("B");
 	}
 }
