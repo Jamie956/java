@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Generator {
+public abstract class Generator {
 	@Lookup
-	protected Window create() {
-		throw new UnsupportedOperationException();
-	}
+	protected abstract Window create();
 }

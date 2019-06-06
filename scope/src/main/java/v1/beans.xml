@@ -4,9 +4,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 	
-	<bean id="window" class="v1.Window" scope="prototype" lazy-init="true" />
+	<bean id="windowBean" class="v1.Window" scope="prototype" />
 	
-	<bean id="windowGenerator" class="v1.WindowGenerator">
-		<lookup-method name="createWindow" bean="window" />
+	<bean id="generatorBean" class="v1.Generator">
+		<lookup-method name="create" bean="windowBean" />
 	</bean>
 </beans>
