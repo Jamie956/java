@@ -8,11 +8,10 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
-public class Demo {
+public class RW {
 	
 	public static void main(String[] args) throws Exception {
 		read();
-		
 	}
 	
 	public static void write() throws Exception {
