@@ -19,11 +19,10 @@ import com.example.pojo.Product;
 
 public class Testing {
 	public static void main(String[] args) {
-		String resource = "mybatis-config.xml";
 		InputStream inputStream = null;
 		SqlSession session = null;
 		try {
-			inputStream = Resources.getResourceAsStream(resource);
+			inputStream = Resources.getResourceAsStream("mybatis-config.xml");
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sqlSessionFactory.openSession();
 
