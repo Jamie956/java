@@ -1,59 +1,42 @@
 package com.example;
 
 import java.io.File;
-import java.io.IOException;
-
-import org.junit.Test;
 
 import jxl.Sheet;
 import jxl.Workbook;
-import jxl.read.biff.BiffException;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
 
 public class Demo {
 	
-	public void write() throws Exception {
-		File xlsFile = new File("jxl.xls");
-		WritableWorkbook workbook = Workbook.createWorkbook(xlsFile);
+	public static void main(String[] args) throws Exception {
+		read();
+		
+	}
+	
+	public static void write() throws Exception {
+		WritableWorkbook workbook = Workbook.createWorkbook(new File("demo.xls"));
 		WritableSheet sheet1 = workbook.createSheet("mySheet1", 0);
-
-		for (int row = 0; row < 10; row++) {
-			for (int col = 0; col < 10; col++) {
-				sheet1.addCell(new Label(col, row, "data" + row + col));
-			}
-		}
-
+		WritableSheet sheet2 = workbook.createSheet("mySheet2", 1);
+		
+		sheet1.addCell(new Label(0, 0, "row0,col0"));
+		sheet1.addCell(new Label(1, 0, "row0,col1"));
+		
+		sheet2.addCell(new Label(0, 0, "sheet2"));
+		
 		workbook.write();
 		workbook.close();
 	}
 
-	public void write2() throws Exception {
-		File xlsFile = new File("jxl.xls");
-		WritableWorkbook workbook = Workbook.createWorkbook(xlsFile);
-		WritableSheet sheet1 = workbook.createSheet("mySheet1", 0);
-		WritableSheet sheet2 = workbook.createSheet("mySheet2", 0);
-
-		for (int row = 0; row < 10; row++) {
-			for (int col = 0; col < 10; col++) {
-				sheet1.addCell(new Label(col, row, "data" + row + col));
-				sheet2.addCell(new Label(col, row, "2data" + row + col));
-			}
-		}
-
-		workbook.write();
-		workbook.close();
-	}
-
-	public void read() throws Exception {
-		File xlsFile = new File("jxl.xls");
-		Workbook workbook = Workbook.getWorkbook(xlsFile);
+	public static void read() throws Exception {
+		Workbook workbook = Workbook.getWorkbook(new File("demo.xls"));
 		Sheet[] sheets = workbook.getSheets();
+		
 		if (sheets != null) {
 			for (Sheet sheet : sheets) {
-				System.out.println("sheet => " + sheet.getName());
+				System.out.println(sheet.getName());
+				
 				int rows = sheet.getRows();
 				int cols = sheet.getColumns();
 				for (int row = 0; row < rows; row++) {

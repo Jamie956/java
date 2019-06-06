@@ -25,11 +25,6 @@ public class JdbcUtils {
 		}
 	}
 
-	/**
-	 * Connection to mysql
-	 * 
-	 * @return
-	 */
 	public static Connection getConnection() {
 		try {
 			Connection conn = DriverManager.getConnection(URL, NAME, PASSWORD);
@@ -40,34 +35,16 @@ public class JdbcUtils {
 		return null;
 	}
 
-	/**
-	 * Close all
-	 * 
-	 * @param rs
-	 * @param stmt
-	 * @param conn
-	 */
-	public static void closeAll(ResultSet rs, Statement stmt, Connection conn) {
+	public static void close(ResultSet rs, Statement stmt, Connection conn) {
 		close(rs);
+		close(stmt, conn);
+	}
+	
+	public static void close(Statement stmt, Connection conn) {
 		close(stmt);
 		close(conn);
 	}
 	
-	/**
-	 * Close Statement and Connection
-	 * @param stmt
-	 * @param conn
-	 */
-	public static void closeAll(Statement stmt, Connection conn) {
-		close(stmt);
-		close(conn);
-	}
-	
-	/**
-	 * Close ResultSet
-	 * 
-	 * @param rs
-	 */
 	public static void close(ResultSet rs) {
 		try {
 			if (rs != null) {
@@ -78,11 +55,6 @@ public class JdbcUtils {
 		}
 	}
 
-	/**
-	 * Close Statement
-	 * 
-	 * @param stmt
-	 */
 	public static void close(Statement stmt) {
 		try {
 			if (stmt != null) {
@@ -93,11 +65,6 @@ public class JdbcUtils {
 		}
 	}
 	
-	/**
-	 * Close Connection
-	 * 
-	 * @param conn
-	 */
 	public static void close(Connection conn) {
 		try {
 			if (conn != null) {
@@ -108,12 +75,6 @@ public class JdbcUtils {
 		}
 	}
 	
-	/**
-	 * 	Query
-	 * @param sql
-	 * @param rowMapper
-	 * @return
-	 */
 	public static <T> List<T> query(String sql, RowMapper<T> rowMapper) {
 		Connection conn = null;
 		Statement stmt = null;
@@ -131,15 +92,11 @@ public class JdbcUtils {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeAll(rs, stmt, conn);
+			close(rs, stmt, conn);
 		}
 		return null;
 	}
 	
-	/**
-	 * 
-	 * Update ( insert, update, delete )
-	 */
 	public static int update(String sql) {
 		Connection conn = getConnection();
 		Statement stmt = null;
@@ -150,17 +107,11 @@ public class JdbcUtils {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeAll(stmt, conn);
+			close(stmt, conn);
 		}
 		return 0;
 	}
 	
-	/**
-	 * Query With Pstmt
-	 * @param sql
-	 * @param rowMapper
-	 * @return
-	 */
 	public static <T> List<T> queryWithPstmt(String sql, RowMapper<T> rowMapper) {
 		Connection conn = getConnection();
 		PreparedStatement pstmt = null;
@@ -178,17 +129,11 @@ public class JdbcUtils {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
-			closeAll(rs, pstmt, conn);
+			close(rs, pstmt, conn);
 		}
 		return null;
 	}
 	
-	/**
-	 * Update With Pstmt
-	 * @param sql
-	 * @param param
-	 * @return
-	 */
 	public static int updateWithPstmt(String sql, Object[] param) {
 		Connection conn = getConnection();
 		PreparedStatement pstmt = null;
@@ -204,7 +149,7 @@ public class JdbcUtils {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeAll(pstmt, conn);
+			close(pstmt, conn);
 		}
 		return 0;
 	}
