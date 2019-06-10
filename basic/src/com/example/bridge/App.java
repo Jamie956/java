@@ -1,4 +1,4 @@
-package com.example;
+package com.example.bridge;
 
 public class App {
 	public static void main(String[] args) {

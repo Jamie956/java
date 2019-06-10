@@ -1,4 +1,4 @@
-package com.example;
+package com.example.builder;
 
 public class Director {
 	public Director(Builder builder) {

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.builder;
 
 public class Builder{
 	private Product product = new Product();

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.bridge;
 
 public class SoulEatingEnchantment {
 	public void onActivate() {
