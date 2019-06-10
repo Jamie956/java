@@ -5,10 +5,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class App {
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
-
-		Generator g = context.getBean(Generator.class);
-		System.out.println(g.create() == g.create());
-
+		
+		System.out.println(context.getBean("userBean") == context.getBean("userBean"));
+		
 		context.close();
 	}
 }

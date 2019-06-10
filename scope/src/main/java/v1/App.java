@@ -1,13 +1,12 @@
 package v1;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class App {
 	public static void main(String[] args) {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("v1/beans.xml");
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
 
-		Generator wg = (Generator) context.getBean("generatorBean");
-		System.out.println(wg.create() == wg.create());
+		System.out.println(context.getBean("windowBean") == context.getBean("windowBean"));
 		
 		context.close();
 	}
