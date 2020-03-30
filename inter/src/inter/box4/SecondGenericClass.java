@@ -8,8 +8,8 @@ public class SecondGenericClass {
 			The method getName() from the type FirstClass is not visible
 			The field FirstClass.name is not visible
     	 */
-        FirstClass first = new FirstClass("random name");
-        System.out.println("FirstClass name is "+ first.getName());
-        first.name = "new name";
+//        FirstClass first = new FirstClass("random name");
+//        System.out.println("FirstClass name is "+ first.getName());
+//        first.name = "new name";
     }
 }
