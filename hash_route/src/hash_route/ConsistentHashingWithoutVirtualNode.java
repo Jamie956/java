@@ -2,6 +2,13 @@ package hash_route;
 
 import java.util.*;
 
+/**
+ * 一致性hash环，根据用户ip路由到不同服务器地址（不带虚拟节点）
+ * 1. 初始化加载服务器地址，装在treemap里，key->hash, value->真实地址
+ * 2. 用户根据ip得到对应hash，treemap.get(hash(userIp)) 获取服务器列表，获取顺时针最靠近的值
+ * @author jamie
+ *
+ */
 public class ConsistentHashingWithoutVirtualNode {
 
 	private static String[] servers = { "192.168.0.0:111", "192.168.0.1:111", "192.168.0.2:111", "192.168.0.3:111",
@@ -16,9 +23,6 @@ public class ConsistentHashingWithoutVirtualNode {
 		}
 	}
 
-	/**
-	 * FNV1_32_HASH算法计算服务器的Hash值
-	 */
 	private static int getHash(String str) {
 		final int p = 16777619;
 		int hash = (int) 2166136261L;
