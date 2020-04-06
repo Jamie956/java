@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class S {
+public class Server {
 	public static void main(String[] args) throws Exception {
 		ServerSocket server = new ServerSocket(8080);
 

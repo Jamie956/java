@@ -1,4 +1,4 @@
-package com.example.execute_order2;
+package com.example;
 
 public class Parent {
 	Parent(){
