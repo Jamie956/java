@@ -8,10 +8,9 @@ public class Test {
 //        invokeRPC();
     }
 
-
     public static void invokeRPCByProxy() {
-        Hello hello = (Hello) Proxy.newProxyInstance(Hello.class.getClassLoader(), new Class<?>[]{Hello.class}, new ConsumerProxy<>());
-        System.out.println(hello.sayHello("tim"));
+        Hello service = (Hello) Proxy.newProxyInstance(Hello.class.getClassLoader(), new Class<?>[]{Hello.class}, new ConsumerProxy<>());
+        System.out.println(service.sayHello("tim"));
     }
     public static void invokeRPC() {
         System.out.println(new Consumer().invoke());

@@ -12,13 +12,13 @@ public class Consumer {
 
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
+            out.writeUTF("com.HelloImpl");
             out.writeUTF("sayHello");
             out.writeObject(Hello.class.getMethod("sayHello", String.class).getParameterTypes());
             Object[] arg = {"tom"};
             out.writeObject(arg);
 
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-
             Object ret = in.readObject();
             return ret;
         } catch (Exception e) {

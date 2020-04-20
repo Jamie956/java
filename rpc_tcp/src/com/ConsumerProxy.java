@@ -1,5 +1,6 @@
 package com;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationHandler;
@@ -10,32 +11,29 @@ import java.net.Socket;
 
 public class ConsumerProxy<T> implements InvocationHandler {
 
-	@Override
-	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) {
 
-		Socket socket = null;
-		ObjectOutputStream output = null;
-		ObjectInputStream input = null;
-//		try {
-			socket = new Socket();
-			socket.connect(new InetSocketAddress("localhost", 6666));
+        try {
+            Socket socket = new Socket("localhost", 6666);
 
-			// 将远程服务调用所需的接口类、方法名、参数列表等编码后发送给服务提供者
-			output = new ObjectOutputStream(socket.getOutputStream());
-			output.writeUTF(method.getName());
-			output.writeObject(method.getParameterTypes());
-			output.writeObject(args);
-			// 同步阻塞等待服务器返回应答，获取应答后返回
-			input = new ObjectInputStream(socket.getInputStream());
-			return input.readObject();
-//		}catch ()
-	}
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-//	public static void main(String[] args) {
-//		RpcClientProxy<IHello> handler = new RpcClientProxy<>();
-//		IHello hello = (IHello) Proxy.newProxyInstance(IHello.class.getClassLoader(), new Class<?>[] { IHello.class },
-//				handler);
-//
-//		System.out.println(hello.sayHello("socket rpc"));
-//	}
+            out.writeUTF("com.HelloImpl");
+            out.writeUTF(method.getName());
+            out.writeObject(method.getParameterTypes());
+            out.writeObject(args);
+
+            // 同步阻塞等待响应
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            return in.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
 }
