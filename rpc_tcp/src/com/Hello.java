@@ -1,6 +1,6 @@
 package com;
 
  
- public interface IHello {
+ public interface Hello {
       String sayHello(String string);
  }

@@ -8,7 +8,7 @@ import java.lang.reflect.Proxy;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-public class RpcClientProxy<T> implements InvocationHandler {
+public class ConsumerProxy<T> implements InvocationHandler {
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -16,7 +16,7 @@ public class RpcClientProxy<T> implements InvocationHandler {
 		Socket socket = null;
 		ObjectOutputStream output = null;
 		ObjectInputStream input = null;
-		try {
+//		try {
 			socket = new Socket();
 			socket.connect(new InetSocketAddress("localhost", 6666));
 
@@ -28,21 +28,14 @@ public class RpcClientProxy<T> implements InvocationHandler {
 			// 同步阻塞等待服务器返回应答，获取应答后返回
 			input = new ObjectInputStream(socket.getInputStream());
 			return input.readObject();
-		} finally {
-			if (socket != null)
-				socket.close();
-			if (output != null)
-				output.close();
-			if (input != null)
-				input.close();
-		}
+//		}catch ()
 	}
 
-	public static void main(String[] args) {
-		RpcClientProxy<IHello> handler = new RpcClientProxy<>();
-		IHello hello = (IHello) Proxy.newProxyInstance(IHello.class.getClassLoader(), new Class<?>[] { IHello.class },
-				handler);
-
-		System.out.println(hello.sayHello("socket rpc"));
-	}
+//	public static void main(String[] args) {
+//		RpcClientProxy<IHello> handler = new RpcClientProxy<>();
+//		IHello hello = (IHello) Proxy.newProxyInstance(IHello.class.getClassLoader(), new Class<?>[] { IHello.class },
+//				handler);
+//
+//		System.out.println(hello.sayHello("socket rpc"));
+//	}
 }

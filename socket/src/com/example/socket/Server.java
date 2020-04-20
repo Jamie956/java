@@ -1,26 +1,22 @@
 package com.example.socket;
 
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-	public static void main(String[] args) throws Exception {
-		ServerSocket server = new ServerSocket(8080);
+    public static void main(String[] args) throws Exception {
+        System.out.println("Start Server");
 
-		Socket socket = server.accept();
-		InputStream inputStream = socket.getInputStream();
-		byte[] bytes = new byte[1024];
-		int len;
-		StringBuilder sb = new StringBuilder();
-		while ((len = inputStream.read(bytes)) != -1) {
-			// S/C统一编码
-			sb.append(new String(bytes, 0, len, "UTF-8"));
-		}
-		System.out.println(sb);
-		
-		inputStream.close();
-		socket.close();
-		server.close();
-	}
+        ServerSocket server = new ServerSocket(8080);
+        Socket socket = server.accept();
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        System.out.println(in.readUTF());
+
+        in.close();
+        server.close();
+        socket.close();
+    }
 }

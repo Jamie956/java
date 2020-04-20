@@ -1,6 +1,6 @@
 package com;
 
-public class HelloImpl implements IHello {
+public class HelloImpl implements Hello {
 
 	@Override
 	public String sayHello(String string) {
