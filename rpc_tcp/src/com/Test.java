@@ -4,8 +4,8 @@ import java.lang.reflect.Proxy;
 
 public class Test {
     public static void main(String[] args) {
-        invokeRPCByProxy();
-//        invokeRPC();
+//        invokeRPCByProxy();
+        invokeRPC();
     }
 
     public static void invokeRPCByProxy() {
@@ -13,7 +13,7 @@ public class Test {
         System.out.println(service.sayHello("tim"));
     }
     public static void invokeRPC() {
-        System.out.println(new Consumer().invoke());
+        System.out.println(new Consumer().invoke("com.HelloService", "sayHi"));
     }
 
 }

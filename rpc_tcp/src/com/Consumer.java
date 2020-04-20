@@ -6,15 +6,15 @@ import java.net.Socket;
 
 public class Consumer {
 
-    public Object invoke() {
+    public Object invoke(String clazz, String methodName) {
         try {
             Socket socket = new Socket("127.0.0.1", 6666);
 
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-            out.writeUTF("com.HelloImpl");
-            out.writeUTF("sayHello");
-            out.writeObject(Hello.class.getMethod("sayHello", String.class).getParameterTypes());
+            out.writeUTF(clazz);
+            out.writeUTF(Hello.class.getMethod(methodName, String.class).getName());
+            out.writeObject(Hello.class.getMethod(methodName, String.class).getParameterTypes());
             Object[] arg = {"tom"};
             out.writeObject(arg);
 
