@@ -26,6 +26,7 @@ public class ConditionTest {
     public void continueWork() {
         lock.lock();
         try {
+            System.out.println("Signal All");
             condition.signalAll();
         } finally {
             lock.unlock();

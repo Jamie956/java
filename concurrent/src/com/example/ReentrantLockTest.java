@@ -9,7 +9,7 @@ public class ReentrantLockTest {
     private String content = "Old";
 
     public void write() {
-//        lock.lock();
+        lock.lock();
         System.out.println(Thread.currentThread() + " LOCK");
         try {
             try {
@@ -21,12 +21,12 @@ public class ReentrantLockTest {
             System.out.println(Thread.currentThread() + " Write content to: " + content);
         } finally {
             System.out.println(Thread.currentThread() + " UNLOCK");
-//            lock.unlock();
+            lock.unlock();
         }
     }
 
     public void read() {
-//        lock.lock();
+        lock.lock();
         System.out.println(Thread.currentThread() + " LOCK");
         try {
             try {
@@ -37,7 +37,7 @@ public class ReentrantLockTest {
             System.out.println(Thread.currentThread() + " Read content is: " + content);
         } finally {
             System.out.println(Thread.currentThread() + " UNLOCK");
-//            lock.unlock();
+            lock.unlock();
         }
     }
 
