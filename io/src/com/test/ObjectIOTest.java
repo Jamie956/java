@@ -1,8 +1,8 @@
-package com.example;
+package com.test;
 
 import java.io.*;
 
-public class SerialTest {
+public class ObjectIOTest {
     public static void main(String[] args) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -17,5 +17,24 @@ public class SerialTest {
             e.printStackTrace();
         }
     }
+    static class Person implements Serializable {
+        public String name;
 
+        public Person(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "Person{" + "name='" + name + '\'' + '}';
+        }
+    }
 }
