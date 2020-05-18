@@ -1,6 +1,6 @@
 package com.example;
 
-public class MyDoubleLinked<E> {
+public class DoubleLinked<E> {
     transient int size = 0;
     transient Node<E> first;
     transient Node<E> last;
@@ -55,7 +55,7 @@ public class MyDoubleLinked<E> {
     }
 
     public static void main(String[] args) {
-        MyDoubleLinked link = new MyDoubleLinked();
+        DoubleLinked link = new DoubleLinked();
         link.add(1);
         link.add(2);
         link.add(3);
