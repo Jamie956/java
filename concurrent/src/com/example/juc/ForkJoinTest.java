@@ -7,7 +7,7 @@ import java.util.concurrent.RecursiveTask;
 public class ForkJoinTest {
 
     static class Sum extends RecursiveTask<Long> {
-        private static final int THRESHOLD = 10;//可直接求解的临界值
+        private static final int THRESHOLD = 10;
         private final long from;
         private final long to;
 
@@ -19,18 +19,18 @@ public class ForkJoinTest {
         @Override
         protected Long compute() {
             long sum = 0;
-            if ((to - from) < THRESHOLD) {//达到直接求解的临界点，直接进行计算
+            if ((to - from) < THRESHOLD) {
                 for (long i = from; i <= to; i++) {
                     sum = sum + i;
                 }
-            } else {//递归分解计算
-                long mid = (from + to) >>> 1;//取中间值
-                //以中间值为界将计算任务分解执行
+            } else {
+                long mid = (from + to) >>> 1;
+
                 Sum left = new Sum(from, mid);
                 left.fork();
                 Sum right = new Sum(mid + 1, to);
                 right.fork();
-                //合并计算结果
+
                 sum = left.join() + right.join();
             }
             return sum;
@@ -39,7 +39,7 @@ public class ForkJoinTest {
 
     public static void main(String[] args) throws Exception {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        Future<Long> result = forkJoinPool.submit(new Sum(1, 10000));
-        System.out.println("Sum：" + result.get());//Sum：50005000
+        Future<Long> future = forkJoinPool.submit(new Sum(1, 10000));
+        System.out.println("Sum：" + future.get());//Sum：50005000
     }
 }

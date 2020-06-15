@@ -11,13 +11,11 @@ public class AtomicIntegerTest {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        int maxThreads = 10000;
-        for (int i = 0; i < maxThreads; i++) {
-            Thread thread = new Thread(() -> increment());
-            thread.start();
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            new Thread(() -> increment()).start();
         }
-        Thread.sleep(3000);
-        System.out.println(sharedValue.get() == 10000 * 10);
+
+        System.out.println(sharedValue.get());
     }
 }

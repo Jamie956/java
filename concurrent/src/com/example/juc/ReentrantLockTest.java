@@ -1,5 +1,6 @@
 package com.example.juc;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -13,10 +14,10 @@ public class ReentrantLockTest {
         System.out.println(Thread.currentThread() + " LOCK");
         try {
             try {
-                Thread.sleep(100);
+                TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+             }
             content = "New";
             System.out.println(Thread.currentThread() + " Write content to: " + content);
         } finally {
@@ -30,7 +31,7 @@ public class ReentrantLockTest {
         System.out.println(Thread.currentThread() + " LOCK");
         try {
             try {
-                Thread.sleep(100);
+                TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -47,22 +48,5 @@ public class ReentrantLockTest {
         new Thread(() -> test.read()).start();
         new Thread(() -> test.read()).start();
 
-        /**
-         without lock：
-         Thread[Thread-1,5,main] Read content is: Old
-         Thread[Thread-2,5,main] Read content is: Old
-         Thread[Thread-0,5,main] Write content to: New
-
-         using lock：
-         Thread[Thread-0,5,main] LOCK
-         Thread[Thread-0,5,main] Write content to: New
-         Thread[Thread-0,5,main] UNLOCK
-         Thread[Thread-1,5,main] LOCK
-         Thread[Thread-1,5,main] Read content is: New
-         Thread[Thread-1,5,main] UNLOCK
-         Thread[Thread-2,5,main] LOCK
-         Thread[Thread-2,5,main] Read content is: New
-         Thread[Thread-2,5,main] UNLOCK
-         **/
     }
 }

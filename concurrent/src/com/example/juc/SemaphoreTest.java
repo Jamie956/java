@@ -6,29 +6,27 @@ import java.util.concurrent.TimeUnit;
 public class SemaphoreTest {
     static Semaphore semaphore = new Semaphore(3);
 
-    public static void main(String[] args) {
-        Work work = new Work();
-        new Thread(() -> work.task()).start();
-        new Thread(() -> work.task()).start();
-        new Thread(() -> work.task()).start();
-
-        new Thread(() -> work.task()).start();
-        new Thread(() -> work.task()).start();
-    }
-
-    static class Work {
-        public void task() {
-            try {
-                semaphore.acquire();
-                System.out.println(Thread.currentThread().getName() + " start");
-                TimeUnit.SECONDS.sleep(2);
-                System.out.println(Thread.currentThread().getName() + " end");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                semaphore.release();
-            }
+    static void task(int sec) {
+        try {
+            semaphore.acquire();
+            System.out.println(Thread.currentThread().getName() + " start");
+            TimeUnit.SECONDS.sleep(sec);
+            System.out.println(Thread.currentThread().getName() + " end");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            semaphore.release();
         }
     }
+
+    public static void main(String[] args) {
+        new Thread(() -> task(2)).start();
+        new Thread(() -> task(2)).start();
+        new Thread(() -> task(6)).start();
+
+        new Thread(() -> task(2)).start();
+        new Thread(() -> task(2)).start();
+    }
+
 }
 

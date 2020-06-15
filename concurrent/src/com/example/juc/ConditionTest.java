@@ -1,5 +1,6 @@
 package com.example.juc;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -12,9 +13,9 @@ public class ConditionTest {
         lock.lock();
         try {
             try {
-                System.out.println("Begin Work");
+                System.out.println("Begin");
                 condition.await();
-                System.out.println("Begin End");
+                System.out.println("End");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -37,7 +38,7 @@ public class ConditionTest {
         ConditionTest test = new ConditionTest();
         new Thread(() -> test.work()).start();
 
-        Thread.sleep(3000);
+        TimeUnit.SECONDS.sleep(3);
         test.continueWork();
     }
 }
