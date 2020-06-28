@@ -17,8 +17,8 @@ public class JoinTest {
         Thread t = new Thread(() -> work());
         t.start();
 
-//        t.join();//waits for thread t to die
-        t.join(1000);
+        t.join();//waits for thread t to die
+//        t.join(1000);
         System.out.println("end");
     }
 }

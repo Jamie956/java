@@ -1,52 +1,54 @@
 package com.example.juc;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ReentrantLockTest {
 
-    private final Lock lock = new ReentrantLock();
-    private String content = "Old";
-
-    public void write() {
+    public static void work(ReentrantLock lock) {
         lock.lock();
-        System.out.println(Thread.currentThread() + " LOCK");
         try {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-             }
-            content = "New";
-            System.out.println(Thread.currentThread() + " Write content to: " + content);
+            for (int i = 0; i < 10; i++) {
+                System.out.println(Thread.currentThread().getName() + " " + i);
+            }
         } finally {
-            System.out.println(Thread.currentThread() + " UNLOCK");
             lock.unlock();
         }
     }
 
-    public void read() {
-        lock.lock();
-        System.out.println(Thread.currentThread() + " LOCK");
-        try {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+    public static void test1() {
+        ReentrantLock lock = new ReentrantLock();
+
+        new Thread(() -> work(lock)).start();
+        new Thread(() -> work(lock)).start();
+        new Thread(() -> work(lock)).start();
+    }
+
+    //可重入锁实验，state>1
+    public static void test2() {
+        ReentrantLock lock = new ReentrantLock();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    lock.lock();//state==1
+                    try {
+                        lock.lock();//state==2
+                        try {
+                            lock.lock();//state==3
+                        } finally {
+                            lock.unlock();
+                        }
+                    } finally {
+                        lock.unlock();
+                    }
+                } finally {
+                    lock.unlock();
+                }
             }
-            System.out.println(Thread.currentThread() + " Read content is: " + content);
-        } finally {
-            System.out.println(Thread.currentThread() + " UNLOCK");
-            lock.unlock();
-        }
+        }).start();
     }
 
     public static void main(String[] args) {
-        final ReentrantLockTest test = new ReentrantLockTest();
-        new Thread(() -> test.write()).start();
-        new Thread(() -> test.read()).start();
-        new Thread(() -> test.read()).start();
-
+        test2();
     }
 }
