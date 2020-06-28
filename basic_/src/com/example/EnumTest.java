@@ -1,4 +1,4 @@
-import java.util.concurrent.TimeUnit;
+package com.example;
 
 public enum EnumTest {
     HOURS {
