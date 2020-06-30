@@ -4,22 +4,32 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 public class CyclicBarrierTest {
-    static CyclicBarrier barrier = new CyclicBarrier(3, () -> System.out.println("condition call back"));
 
-    static void go() {
-        System.out.println(Thread.currentThread().getName() + " ready");
+    public static void task(CyclicBarrier barrier) {
         try {
+            System.out.println(Thread.currentThread().getName() + " before wait");
             barrier.await();
+            System.out.println(Thread.currentThread().getName() + " after wait");
         } catch (InterruptedException | BrokenBarrierException e) {
             e.printStackTrace();
         }
-        System.out.println(Thread.currentThread().getName() + " breakout");
     }
 
     public static void main(String[] args) {
+        CyclicBarrier barrier = new CyclicBarrier(3, new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("barrier action");
+            }
+        });
 
-        new Thread(() -> go()).start();
-        new Thread(() -> go()).start();
-        new Thread(() -> go()).start();
+        new Thread(() -> task(barrier)).start();
+        new Thread(() -> task(barrier)).start();
+        new Thread(() -> task(barrier)).start();
+
+//        new Thread(() -> task(barrier)).start();
+//        new Thread(() -> task(barrier)).start();
+//        new Thread(() -> task(barrier)).start();
+
     }
 }

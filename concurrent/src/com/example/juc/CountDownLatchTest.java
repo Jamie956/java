@@ -1,30 +1,26 @@
 package com.example.juc;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 public class CountDownLatchTest {
-    static CountDownLatch latch = new CountDownLatch(4);
 
-    static void work(int sec) {
+    static void work(CountDownLatch lock) {
+        System.out.println(Thread.currentThread().getName() + " ok");
+        lock.countDown();
+    }
+
+    public static void main(String[] args) {
+        CountDownLatch lock = new CountDownLatch(3);
+
+        new Thread(() -> work(lock)).start();
+        new Thread(() -> work(lock)).start();
+        new Thread(() -> work(lock)).start();
+
         try {
-            TimeUnit.SECONDS.sleep(sec);
-
-            System.out.println(Thread.currentThread().getName() + " Working...");
-            latch.countDown();
+            lock.await();
+            System.out.println("1");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        System.out.println("start");
-        new Thread(() -> work(3)).start();
-        new Thread(() -> work(3)).start();
-        new Thread(() -> work(3)).start();
-        new Thread(() -> work(5)).start();
-
-        latch.await();//count==0
-        System.out.println("end");
     }
 }

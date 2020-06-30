@@ -1,6 +1,8 @@
 package com.example.juc;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class FutureTest {
     static class work implements Callable {

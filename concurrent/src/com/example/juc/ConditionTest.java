@@ -6,10 +6,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConditionTest {
-    private final Lock lock = new ReentrantLock();
-    private final Condition condition = lock.newCondition();
-
-    public void work() {
+    public static void work(ReentrantLock lock, Condition condition) {
         lock.lock();
         try {
             try {
@@ -24,21 +21,24 @@ public class ConditionTest {
         }
     }
 
-    public void continueWork() {
+    public static void continueWork(ReentrantLock lock, Condition condition) {
         lock.lock();
         try {
             System.out.println("Signal All");
-            condition.signalAll();
+//            condition.signalAll();
+            condition.signal();
         } finally {
             lock.unlock();
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
-        ConditionTest test = new ConditionTest();
-        new Thread(() -> test.work()).start();
+        ReentrantLock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
+
+        new Thread(() -> work(lock, condition)).start();
 
         TimeUnit.SECONDS.sleep(3);
-        test.continueWork();
+        continueWork(lock, condition);
     }
 }
