@@ -1,4 +1,4 @@
-package com.example.juc;
+package com.example.juc.collections;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
