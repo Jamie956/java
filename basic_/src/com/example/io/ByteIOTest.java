@@ -1,11 +1,11 @@
-package com.test;
+package com.example.io;
 
 import java.io.*;
 
 public class ByteIOTest {
     public static void main(String[] args) {
-//        test1();
-        test2();
+        test1();
+//        test2();
     }
 
     //file output
