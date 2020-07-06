@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 
-public class Testing {
+public class BasicTesting {
     public static SqlSession session = null;
 
     static {
