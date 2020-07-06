@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 
-public class CondictionTesting {
+public class DynamicSQLTesting {
 	public static SqlSession session = null;
 	
 	static {

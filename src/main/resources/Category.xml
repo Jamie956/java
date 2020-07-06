@@ -7,7 +7,7 @@
 	</delete>
 
     <insert id="add" parameterType="Category">
-		insert into category_ ( name ) values (#{name})
+		insert into category_ ( id, name ) values (#{id}, #{name})
 	</insert>
 
     <select id="list" resultType="Category">
@@ -30,5 +30,30 @@
             resultType="Category">
 		select * from category_ where id> #{id} and name like
 		concat('%',#{name},'%')
+	</select>
+
+
+
+
+
+
+    <resultMap type="Category" id="categoryBean">
+        <id column="cid" property="id"/>
+        <result column="cname" property="name"/>
+        <collection property="products" ofType="Product">
+            <id column="pid" property="id"/>
+            <result column="pname" property="name"/>
+            <result column="price" property="price"/>
+        </collection>
+    </resultMap>
+
+    <!-- list one to many -->
+    <select id="listOneToMany" resultMap="categoryBean">
+		select c.*, p.*, c.id
+		'cid',
+		p.id 'pid', c.name 'cname', p.name 'pname' from
+		category_ c left
+		join
+		product_ p on c.id = p.cid
 	</select>
 </mapper>

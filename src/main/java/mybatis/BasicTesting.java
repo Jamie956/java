@@ -30,8 +30,14 @@ public class BasicTesting {
 
 
     public static void main(String[] args) {
-        session.insert("add", new Category("new category1"));
-        session.insert("add", new Category("new category2"));
+        Category c1 = new Category();
+        c1.setId(1);
+        c1.setName("new category1");
+        Category c2 = new Category();
+        c2.setId(2);
+        c2.setName("new category2");
+        session.insert("add", c1);
+        session.insert("add", c2);
 
         List<Category> cs = session.selectList("list");
 
