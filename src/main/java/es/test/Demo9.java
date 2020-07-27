@@ -6,6 +6,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.BoostingQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -15,6 +16,28 @@ import java.io.IOException;
 
 public class Demo9 {
     RestHighLevelClient client = ESClient.getClient();
+
+    @Test
+    public void boostingQuery() throws IOException {
+        BoostingQueryBuilder boostingQuery = QueryBuilders.boostingQuery(
+                QueryBuilders.matchQuery("interests", "喝"),
+                QueryBuilders.matchQuery("name", "zhaoming")
+        ).negativeBoost(0.5f);
+
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+        builder.query(boostingQuery);
+
+        SearchRequest request = new SearchRequest();
+        request.indices("lib");
+        request.types("user");
+        request.source(builder);
+
+        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+        for (SearchHit hit : response.getHits().getHits()) {
+            System.out.println(hit.getSourceAsMap());
+        }
+    }
+
 
     @Test
     public void boolQuery() throws IOException {
