@@ -47,7 +47,7 @@ public class Demo9 {
         # 年龄不是26
         # 爱好包含唱，吃
          */
-        BoolQueryBuilder boolQuery = new BoolQueryBuilder();
+        BoolQueryBuilder boolQuery =QueryBuilders.boolQuery();
         boolQuery.should(QueryBuilders.termQuery("name", "zhangsan"));
         boolQuery.should(QueryBuilders.termQuery("name", "lisi"));
         boolQuery.should(QueryBuilders.termQuery("name", "wangwu"));
