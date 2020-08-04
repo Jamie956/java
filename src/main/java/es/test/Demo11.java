@@ -1,5 +1,6 @@
 package es.test;
 
+import com.google.protobuf.Field;
 import es.utils.ESClient;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -7,6 +8,9 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.metrics.cardinality.Cardinality;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.junit.Test;
@@ -37,5 +41,20 @@ public class Demo11 {
             System.out.println(hit.getHighlightFields().get("interests"));
 
         }
+    }
+
+    @Test
+    public void aggCardinality() throws IOException {
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+        builder.aggregation(AggregationBuilders.cardinality("group_birthday").field("birthday"));
+
+        SearchRequest request = new SearchRequest();
+        request.indices("lib");
+        request.types("user");
+        request.source(builder);
+
+        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+        Cardinality birthdayAgg = response.getAggregations().get("group_birthday");
+        System.out.println(birthdayAgg.getValue());
     }
 }
