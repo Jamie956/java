@@ -7,9 +7,11 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.range.Range;
 import org.elasticsearch.search.aggregations.metrics.cardinality.Cardinality;
+import org.elasticsearch.search.aggregations.metrics.stats.extended.ExtendedStats;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.junit.Test;
@@ -18,6 +20,21 @@ import java.io.IOException;
 
 public class Demo11 {
     RestHighLevelClient client = ESClient.getClient();
+
+    @Test
+    public void aggExtends() throws IOException {
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+        builder.aggregation(AggregationBuilders.extendedStats("myagg").field("age"));
+
+        SearchRequest request = new SearchRequest();
+        request.indices("lib");
+        request.types("user");
+        request.source(builder);
+        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+
+        ExtendedStats agg = response.getAggregations().get("myagg");
+        System.out.println(agg.getMax());
+    }
 
     @Test
     public void aggRange() throws IOException {
@@ -40,7 +57,6 @@ public class Demo11 {
             long docCount = bucket.getDocCount();
             System.out.println(String.format("key=%s, docCount=%s, from=%s to=%s", key, docCount, from, to));
         }
-
     }
 
     @Test
