@@ -1,13 +1,22 @@
 package pattern.strategy;
 
-public class Context {
-    private Strategy strategy;
+import java.util.HashMap;
+import java.util.Map;
 
-    public Context(Strategy strategy){
-        this.strategy = strategy;
+public class Context {
+    private static final Map<Integer, Strategy> map = new HashMap<>();
+
+    static {
+        map.put(1, new OperationAdd());
+        map.put(2, new OperationMultiply());
+        map.put(3, new OperationSubtract());
     }
 
-    public int executeStrategy(int num1, int num2){
-        return strategy.doOperation(num1, num2);
+    public int executeOperation(int type, int num1, int num2){
+        return map.get(type).doOperation(num1, num2);
+    }
+
+    public int executeDoubleOperation(int type, int num1, int num2){
+        return map.get(type).doDoubleOperation(num1, num2);
     }
 }

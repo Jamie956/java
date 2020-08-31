@@ -2,13 +2,12 @@ package pattern.strategy;
 
 public class StrategyPatternDemo {
     public static void main(String[] args) {
-        Context context = new Context(new OperationAdd());
-        System.out.println("10 + 5 = " + context.executeStrategy(10, 5));
+        Context context = new Context();
+        System.out.println(context.executeOperation(1, 2, 3));
+        System.out.println(context.executeDoubleOperation(1, 2, 3));
 
-        context = new Context(new OperationSubtract());
-        System.out.println("10 - 5 = " + context.executeStrategy(10, 5));
 
-        context = new Context(new OperationMultiply());
-        System.out.println("10 * 5 = " + context.executeStrategy(10, 5));
+        System.out.println(context.executeOperation(2, 8, 3));
+        System.out.println(context.executeDoubleOperation(2, 8, 3));
     }
 }

@@ -1,7 +1,11 @@
 package basic;
 
 public enum EnumTest {
+    /**
+     *
+     */
     HOURS {
+        @Override
         public long toMinutes(long d) {
             System.out.println(d * 60);
 
@@ -11,6 +15,7 @@ public enum EnumTest {
     },
 
     DAYS {
+        @Override
         public long toHours(long d) {
             System.out.println(d * 24);
 
