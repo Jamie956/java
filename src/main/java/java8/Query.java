@@ -6,16 +6,16 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class Query {
-    private static Map<String, Consumer<QueryWrapper>> map = new HashMap<>();
+    private static Map<String, Consumer<QueryWrapper>> queryWrapperMap = new HashMap<>();
 
     public Map<String, Consumer<QueryWrapper>> getMap() {
-        return map;
+        return queryWrapperMap;
     }
 
     static {
-        System.out.println("init map");
-        map.put("eq", (queryWrapper) -> queryWrapper.setEq("setting default eq"));
-        map.put("lt", (queryWrapper) -> queryWrapper.setLt("setting default lt"));
+        System.out.println("init queryWrapperMap");
+        queryWrapperMap.put("eq", (queryWrapper) -> queryWrapper.setEq("setting default eq"));
+        queryWrapperMap.put("lt", (queryWrapper) -> queryWrapper.setLt("setting default lt"));
 
     }
 
@@ -24,10 +24,10 @@ public class Query {
         for (String exp : Arrays.asList("eq", "lt")) {
             switch (exp) {
                 case "eq":
-                    map.get("eq").accept(queryWrapper);
+                    queryWrapperMap.get("eq").accept(queryWrapper);
                     break;
                 case "lt":
-                    map.get("lt").accept(queryWrapper);
+                    queryWrapperMap.get("lt").accept(queryWrapper);
                     break;
                 default:
                     break;

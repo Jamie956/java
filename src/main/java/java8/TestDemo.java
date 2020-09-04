@@ -42,8 +42,9 @@ public class TestDemo {
     public void queryTest() {
         Query query = new Query();
         //覆盖默认的处理方法
+        String str = "a new eq";
         query.getMap().put("eq", (queryWrapper) -> {
-            queryWrapper.setEq("a new eq");
+            queryWrapper.setEq(str);
         });
 
         QueryWrapper queryWrapper = query.getWrapper();
