@@ -1,29 +1,33 @@
 package java8;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
 public class Query {
-    public QueryWrapper getWrapper(Map<String, Consumer> map) {
+    private static Map<String, Consumer<QueryWrapper>> map = new HashMap<>();
+
+    public Map<String, Consumer<QueryWrapper>> getMap() {
+        return map;
+    }
+
+    static {
+        System.out.println("init map");
+        map.put("eq", (queryWrapper) -> queryWrapper.setEq("setting default eq"));
+        map.put("lt", (queryWrapper) -> queryWrapper.setLt("setting default lt"));
+
+    }
+
+    public QueryWrapper getWrapper() {
         QueryWrapper queryWrapper = new QueryWrapper();
         for (String exp : Arrays.asList("eq", "lt")) {
             switch (exp) {
                 case "eq":
-                    Consumer consumer = map.get("eq");
-                    if (consumer != null) {
-                        consumer.accept(queryWrapper);
-                    } else {
-                        queryWrapper.setEq("default eq");
-                    }
+                    map.get("eq").accept(queryWrapper);
                     break;
                 case "lt":
-                    Consumer consumer2 = map.get("lt");
-                    if (consumer2 != null) {
-                        consumer2.accept(queryWrapper);
-                    } else {
-                        queryWrapper.setLt("default eq");
-                    }
+                    map.get("lt").accept(queryWrapper);
                     break;
                 default:
                     break;
