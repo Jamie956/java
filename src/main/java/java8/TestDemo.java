@@ -1,8 +1,10 @@
 package java8;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -60,6 +62,13 @@ public class TestDemo {
         list.add(new Apple("yellow"));
 
         List<Apple> result = PredicateFactory.filterApples(list, Apple::isGreenApple);
+    }
+
+    @Test
+    public void asdasd(){
+        String[] permitRegionArray = StringUtils.split("440000|320000|440100", "|");
+        Map<String, List<String>> a = Arrays.stream(permitRegionArray).collect(Collectors.groupingBy(ValuesUtils::getRegionType, Collectors.toList()));
+
     }
 
 }
