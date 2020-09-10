@@ -3,10 +3,7 @@ package java8;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -14,61 +11,45 @@ public class TestDemo {
 
     @Test
     public void streamTest() {
-        List<Integer> list = new ArrayList();
-        list.add(3);
-        list.add(2);
-        list.add(7);
-
-//        int i = list.stream().max(Comparator.comparing(a -> a)).orElse(null);
-
-        List<Apple> appleList = new ArrayList();
-        appleList.add(new Apple("a", "green"));
-        appleList.add(new Apple("b", "blue"));
-
-        Map<String, String> appleMap = appleList.stream().collect(Collectors.toMap(Apple::getName, Apple::getColor));
-
-//        int j = list.stream().filter(o -> 0 == 3).findAny().orElse(null);
+        //从数组对象，指定kv构建map
+        Map<String, String> appleMap = Apple.list.stream().collect(Collectors.toMap(Apple::getName, Apple::getColor));
     }
 
     @Test
     public void biConsumerTest() {
-        BiConsumer<String, String> biConsumer = (a, b) -> {
-            System.out.println(a);
-            System.out.println(b);
-        };
+        BiConsumer<String, String> biConsumer = (a, b)-> System.out.println(a + b);
         biConsumer.accept("aaa", "bbb");
     }
 
-    //函数做参数，变量
     @Test
     public void queryTest() {
         Query query = new Query();
+        //函数做参数，变量
         //覆盖默认的处理方法
-        String str = "a new eq";
-        query.getMap().put("eq", (queryWrapper) -> {
-            queryWrapper.setEq(str);
-        });
+        query.setMap(1, x -> System.out.println("1覆盖: " + x));
+        query.getWrapper();
+    }
 
-        QueryWrapper queryWrapper = query.getWrapper();
-
-        System.out.println(queryWrapper);
+    private static String getType(String code) {
+        if ("440000".equals(code)) {
+            return "1";
+        }
+        if ("320000".equals(code)) {
+            return "2";
+        }
+        return "0";
+    }
+    @Test
+    public void asdasd() {
+        //按类型分组，相同类型元素放在一组
+        String[] permitRegionArray = StringUtils.split("440000|320000", "|");
+        Map<String, List<String>> ret = Arrays.stream(permitRegionArray).collect(Collectors.groupingBy(TestDemo::getType, Collectors.toList()));
     }
 
     @Test
-    public void predicateTest() {
-        List<Apple> list = new ArrayList<>();
-        list.add(new Apple("green"));
-        list.add(new Apple("red"));
-        list.add(new Apple("yellow"));
-
-        List<Apple> result = PredicateFactory.filterApples(list, Apple::isGreenApple);
-    }
-
-    @Test
-    public void asdasd(){
-        String[] permitRegionArray = StringUtils.split("440000|320000|440100", "|");
-        Map<String, List<String>> a = Arrays.stream(permitRegionArray).collect(Collectors.groupingBy(ValuesUtils::getRegionType, Collectors.toList()));
-
+    public void asdasdas() {
+        Runnable runnable = () -> System.out.println("hello lambda");
+        runnable.run();
     }
 
 }

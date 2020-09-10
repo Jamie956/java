@@ -6,33 +6,22 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class Query {
-    private static Map<String, Consumer<QueryWrapper>> queryWrapperMap = new HashMap<>();
+    private static Map<Integer, Consumer<Integer>> map = new HashMap<>();
 
-    public Map<String, Consumer<QueryWrapper>> getMap() {
-        return queryWrapperMap;
+    public void setMap(int type, Consumer<Integer> consumer) {
+        map.put(type, consumer);
     }
 
     static {
-        System.out.println("init queryWrapperMap");
-        queryWrapperMap.put("eq", (queryWrapper) -> queryWrapper.setEq("setting default eq"));
-        queryWrapperMap.put("lt", (queryWrapper) -> queryWrapper.setLt("setting default lt"));
+        System.out.println("初始map");
+        map.put(1, x -> System.out.println("1执行默认方法: " + x));
+        map.put(2, x -> System.out.println("2执行默认方法: " + x));
 
     }
 
-    public QueryWrapper getWrapper() {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        for (String exp : Arrays.asList("eq", "lt")) {
-            switch (exp) {
-                case "eq":
-                    queryWrapperMap.get("eq").accept(queryWrapper);
-                    break;
-                case "lt":
-                    queryWrapperMap.get("lt").accept(queryWrapper);
-                    break;
-                default:
-                    break;
-            }
+    public void getWrapper() {
+        for (int type : Arrays.asList(1, 2)) {
+            map.get(type).accept(type);
         }
-        return queryWrapper;
     }
 }
