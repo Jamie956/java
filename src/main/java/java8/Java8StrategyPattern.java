@@ -1,11 +1,16 @@
 package java8;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class Query {
+/**
+ * java8 consumer lambda 实现策略模式
+ */
+public class Java8StrategyPattern {
     private static Map<Integer, Consumer<Integer>> map = new HashMap<>();
 
     public void setMap(int type, Consumer<Integer> consumer) {
@@ -24,4 +29,15 @@ public class Query {
             map.get(type).accept(type);
         }
     }
+
+
+    @Test
+    public void queryTest() {
+        Java8StrategyPattern query = new Java8StrategyPattern();
+        //函数做参数，变量
+        //覆盖默认的处理方法
+        query.setMap(1, x -> System.out.println("1覆盖: " + x));
+        query.getWrapper();
+    }
+
 }

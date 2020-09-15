@@ -19,7 +19,6 @@ public class TestDemo {
     public void test1() {
         Predicate<Integer> tester = (Integer i) -> i > 10;
         boolean ret = tester.test(11);
-        System.out.println(ret);
     }
 
     /**
@@ -38,7 +37,6 @@ public class TestDemo {
     public void test3() {
         Function<String, String> mapper = str -> str + "...";
         String data = mapper.apply("arg");
-        System.out.println(data);
     }
 
 
@@ -57,9 +55,15 @@ public class TestDemo {
     @Test
     public void test4() {
         List<Integer> list = Arrays.asList(1, 2, 5, 6);
-        processElements(list, (Integer i) -> i > 3, (Integer i) -> i + 1, System.out::println);
+        Predicate<Integer> tester = i -> i > 3;
+        Function<Integer, Integer> mapper = i -> i + 1;
+        Consumer<Integer> block = System.out::println;
+        processElements(list, tester, mapper, block);
     }
 
+    /**
+     * 与consumer相似，不同的是传2个参数
+     */
     @Test
     public void biConsumerTest() {
         BiConsumer<String, String> biConsumer = (a, b) -> System.out.println(a + b);
@@ -72,94 +76,58 @@ public class TestDemo {
         runnable.run();
     }
 
-    @Test
-    public void queryTest() {
-        Query query = new Query();
-        //函数做参数，变量
-        //覆盖默认的处理方法
-        query.setMap(1, x -> System.out.println("1覆盖: " + x));
-        query.getWrapper();
-    }
-
 
     /**
-     * stream
+     * stream 元素控制处理
      */
     @Test
     public void test5() {
-        Stream.of(1, 5, 6, 7).filter(i -> i > 5).forEach(System.out::println);
+        List<Integer> a = Stream.of(1, 5, 6, 7).filter(i -> i > 5).collect(Collectors.toList());
+        List<Integer> b = Stream.of(1, 1, 6, 7).distinct().collect(Collectors.toList());
+        List<Integer> c = Stream.of(1, 1, 6, 7).limit(2).collect(Collectors.toList());
+        List<Integer> d = Stream.of(1, 1, 6, 7).map(i -> i + 1).collect(Collectors.toList());
+        List<Integer> e = Stream.of(6, 1, 7, 9, 3).sorted().collect(Collectors.toList());
+        List<Integer> f = Stream.of(6, 1, 7, 9, 3).skip(2).collect(Collectors.toList());
 
-        Stream.of(1, 5, 6, 7).filter(i -> i > 5).map(i -> i + 1).forEach(System.out::println);
+        List<Integer> g = Stream.iterate(0, n -> n + 2).limit(10).collect(Collectors.toList());
+        List<Double> h = Stream.generate(Math::random).limit(10).collect(Collectors.toList());
 
-        Stream.of(1, 1, 6, 7).distinct().forEach(System.out::println);
-
-        Stream.of(1, 1, 6, 7).limit(2).forEach(System.out::println);
-
-        Stream.of(1, 1, 6, 7).map(i -> i + 1).forEach(System.out::println);
-
-        Stream.of(6, 1, 7, 9, 3).sorted().forEach(System.out::println);
-
+        Integer i = Stream.of(6, 1, 7, 9, 3).reduce(0, Integer::sum);
     }
 
     @Test
-    public void asd(){
-        Predicate<Integer> tester = (Integer i) -> i > 5;
-        List<Integer> list = Arrays.asList(1,1,6,7);
+    public void asd() {
+        Predicate<Integer> tester = i -> i > 5;
+        List<Integer> list = Arrays.asList(1, 1, 6, 7);
         boolean a = list.stream().allMatch(tester);
         boolean b = list.stream().anyMatch(tester);
         boolean c = list.stream().noneMatch(tester);
 
+        int e = list.stream().findFirst().get();
+        int f = list.stream().findAny().get();
 
-//        List<Integer> list = Arrays.asList(1,1,6,7);
-//        Optional<Integer> op1 = list.stream().findFirst();
-//        Optional<Integer> op2 = list.stream().findAny();
-//
-//
-//        System.out.println(op1.get());
-//        System.out.println(op2.get());
-//
-//
-//        long count = list.stream().count();
-//        System.out.println(count);
-//
-//
-//        Optional<Integer> op3 = list.stream().max((a, b) -> b-a);
-//        Optional<Integer> op4 = list.stream().min((a, b) -> b-a);
-//
-//        System.out.println(op3.get());
-//        System.out.println(op4.get());
+        long count = list.stream().count();
 
+        int g = list.stream().max((x, y) -> y - x).get();
+        int h = list.stream().min((x, y) -> y - x).get();
     }
 
     /**
-     * 表达式指定kv构建map
+     * 收集器
      */
     @Test
     public void streamTest() {
-        List<Integer> list = Arrays.asList(1, 4, 6, 8);
-        Map<Integer, Integer> ret = list.stream().collect(Collectors.toMap(i -> i, i -> i + 1));
-        System.out.println(ret);
-    }
+        //合成map
+        Map<Integer, Integer> a = Stream.of(1, 4, 6, 8).collect(Collectors.toMap(i -> i, i -> i + 1));
 
-    /**
-     * 分组
-     */
-    @Test
-    public void asdasd() {
+        //分组
         Function<Integer, String> mapper = i -> i > 5 ? "great then 5" : "less than 5";
-        List<Integer> list = Arrays.asList(1, 4, 7, 9);
-        Map<String, List<Integer>> ret = list.stream().collect(Collectors.groupingBy(mapper, Collectors.toList()));
-        System.out.println(ret);
+        Map<String, List<Integer>> b = Stream.of(1, 4, 7, 9).collect(Collectors.groupingBy(mapper, Collectors.toList()));
+
+
+        //分组之后通过mapper修改参数，再组成map
+        Function<Integer, String> mapper2 = i -> i + "..";
+        Map<String, List<String>> c = Stream.of(1, 4, 7, 9).collect(Collectors.groupingBy(mapper, Collectors.mapping(mapper2, Collectors.toList())));
     }
-
-    @Test
-    public void asdfrg() {
-//        Map<String, List<String>> groupRegion = regions.stream().collect(Collectors.groupingBy(region -> regionTypes.get(region.getType() - 1), Collectors.mapping(SysRegionInfoResponse::getCode, Collectors.toList())));
-
-        List<Integer> ret = Stream.of(1, 4, 6, 8).collect(Collectors.mapping(i -> i+1, Collectors.toList()));
-        System.out.println(ret);
-
-    }
-
 
 }
