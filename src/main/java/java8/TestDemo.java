@@ -87,17 +87,17 @@ public class TestDemo {
      */
     @Test
     public void test5() {
-//        Stream.of(1, 5, 6, 7).filter(i -> i > 5).forEach(System.out::println);
-//
-//        Stream.of(1, 5, 6, 7).filter(i -> i > 5).map(i -> i + 1).forEach(System.out::println);
-//
-//        Stream.of(1, 1, 6, 7).distinct().forEach(System.out::println);
-//
-//        Stream.of(1, 1, 6, 7).limit(2).forEach(System.out::println);
-//
-//        Stream.of(1, 1, 6, 7).map(i -> i + 1).forEach(System.out::println);
-//
-//        Stream.of(6, 1, 7, 9, 3).sorted().forEach(System.out::println);
+        Stream.of(1, 5, 6, 7).filter(i -> i > 5).forEach(System.out::println);
+
+        Stream.of(1, 5, 6, 7).filter(i -> i > 5).map(i -> i + 1).forEach(System.out::println);
+
+        Stream.of(1, 1, 6, 7).distinct().forEach(System.out::println);
+
+        Stream.of(1, 1, 6, 7).limit(2).forEach(System.out::println);
+
+        Stream.of(1, 1, 6, 7).map(i -> i + 1).forEach(System.out::println);
+
+        Stream.of(6, 1, 7, 9, 3).sorted().forEach(System.out::println);
 
     }
 
@@ -150,6 +150,15 @@ public class TestDemo {
         List<Integer> list = Arrays.asList(1, 4, 7, 9);
         Map<String, List<Integer>> ret = list.stream().collect(Collectors.groupingBy(mapper, Collectors.toList()));
         System.out.println(ret);
+    }
+
+    @Test
+    public void asdfrg() {
+//        Map<String, List<String>> groupRegion = regions.stream().collect(Collectors.groupingBy(region -> regionTypes.get(region.getType() - 1), Collectors.mapping(SysRegionInfoResponse::getCode, Collectors.toList())));
+
+        List<Integer> ret = Stream.of(1, 4, 6, 8).collect(Collectors.mapping(i -> i+1, Collectors.toList()));
+        System.out.println(ret);
+
     }
 
 
