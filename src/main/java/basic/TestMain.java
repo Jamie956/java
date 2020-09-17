@@ -14,5 +14,11 @@ public class TestMain{
         MyAnnotation a = method.getAnnotation(MyAnnotation.class);
         System.out.println(a.value());
     }
+
+    @Test
+    public void asd() {
+        System.out.println(String.format("halo %s ", 1));
+
+    }
 }
 
