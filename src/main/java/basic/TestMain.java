@@ -173,7 +173,7 @@ public class TestMain{
      * 2.容量参数，创建指定大小object实例
      */
     @Test
-    private void test1() {
+    public void test1() {
 
         new ArrayList<>();
         new ArrayList<>(5);
@@ -356,6 +356,17 @@ public class TestMain{
 
         SortedMap<Integer, String> subMap = sortedMap.tailMap(hash("127.0.0.1:1111"));
         String a = subMap.get(subMap.firstKey());
+    }
+
+    /**
+     * JDK代理
+     */
+    @Test
+    public void proxytest() {
+        DynamicProxy dp = new DynamicProxy(new HelloImpl());
+        IHello helloProxy = dp.getProxy();
+
+        helloProxy.greeting();
     }
 }
 

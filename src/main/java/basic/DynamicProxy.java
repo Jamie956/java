@@ -31,17 +31,10 @@ public class DynamicProxy implements InvocationHandler {
     public <T> T getProxy() {
         return (T) Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
     }
-
-
-    public static void main(String[] args) {
-        DynamicProxy dp = new DynamicProxy(new HelloImpl());
-        IHello helloProxy = dp.getProxy();
-
-        helloProxy.greeting();
-    }
 }
 
 class HelloImpl implements IHello {
+    @Override
     public void greeting() {
         System.out.println("hi");
     }
