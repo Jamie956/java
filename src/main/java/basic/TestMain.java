@@ -12,8 +12,6 @@ import java.util.*;
 public class TestMain{
     private int i = 1;
 
-
-
     /**
      * 泛型类
      */
@@ -42,7 +40,6 @@ public class TestMain{
         }
         return max;
     }
-
 
     /**
      * 接口泛型
@@ -164,6 +161,7 @@ public class TestMain{
     /**
      * 泛型擦除
      */
+    @Test
     public void genClean() {
         Class<?> class1 = new ArrayList<String>().getClass();
         Class<?> class2 = new ArrayList<Integer>().getClass();
@@ -174,7 +172,8 @@ public class TestMain{
      * 1.无参，初始共享空数组实例
      * 2.容量参数，创建指定大小object实例
      */
-    private static void test1() {
+    @Test
+    private void test1() {
 
         new ArrayList<>();
         new ArrayList<>(5);
@@ -191,7 +190,8 @@ public class TestMain{
      * 1.第一次添加元素，使用默认容量10
      * 2.超过容量扩容增加原来的0.5倍
      */
-    public static void test2() {
+    @Test
+    public void test2() {
         ArrayList list = new ArrayList<>();
         list.add(1);
         list.add(1);
@@ -212,7 +212,8 @@ public class TestMain{
      * 1.边界检测
      * 2.数组复制, from index+1, length size-index
      */
-    public static void test3() {
+    @Test
+    public void test3() {
         ArrayList list = new ArrayList();
         list.add(1);
         list.add(2);
@@ -226,7 +227,8 @@ public class TestMain{
      * 1.指针检测是否还有下一个元素
      * 2.读取指针元素，移动指针
      */
-    public static void test4() {
+    @Test
+    public void test4() {
         ArrayList list = new ArrayList();
         list.add(1);
         list.add(2);
@@ -241,7 +243,8 @@ public class TestMain{
     /**
      * linked list 构造函数
      */
-    public static void test5() {
+    @Test
+    public void test5() {
         new LinkedList();
     }
 
@@ -251,7 +254,8 @@ public class TestMain{
      * 2.节点数据结构，前后双指针
      * 3.移除，断开连接
      */
-    public static void test6() {
+    @Test
+    public void test6() {
         LinkedList list = new LinkedList<>();
         list.add(1);
         list.add(2);
@@ -266,7 +270,8 @@ public class TestMain{
      * 3.集合参数，size小于12时使用默认容量16
      * 4.容量，加载因子参数
      */
-    public static void test7() {
+    @Test
+    public void test7() {
         new HashSet<>();
         new HashSet<>(Arrays.asList(1,2,3));
         new HashSet<>(12, 0.8f);
@@ -275,7 +280,8 @@ public class TestMain{
     /**
      * set add element
      */
-    public static void test8(){
+    @Test
+    public void test8(){
         HashSet set = new HashSet();
         set.add(1);
         set.add(2);
@@ -286,7 +292,8 @@ public class TestMain{
      * tree set 构造函数测试
      * 1.创建tree map
      */
-    public static void test9(){
+    @Test
+    public void test9(){
         new TreeSet<>();
 
     }
@@ -297,7 +304,8 @@ public class TestMain{
      * 2.元素储存在table数组
      * 3.节点结构，hash, key, val, next
      */
-    public static void test10(){
+    @Test
+    public void test10(){
         HashMap map = new HashMap<>();
         map.put("k1","v1");
         map.put("k2","v2");
