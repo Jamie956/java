@@ -1,11 +1,16 @@
 package basic;
 
+import basic.aenum.Season;
+import basic.entity.Address;
+import basic.entity.InitOrder;
+import basic.entity.InitOrderB;
+import basic.entity.User;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import java.awt.*;
 import java.awt.List;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -313,6 +318,7 @@ public class TestMain{
 
     /**
      * 静态代码块、代码块、构造方法 执行顺序
+     * 执行父类子类的静态代码块 -> 父类代码块，构造方法 -> 子类代码块，构造方法
      */
     @Test
     public void tesasd() {
@@ -368,32 +374,56 @@ public class TestMain{
 
         helloProxy.greeting();
     }
+
+    /**
+     * 深克隆，引用类型也会被克隆
+     */
+    @Test
+    public void deepCloneTest () {
+        try {
+            User user = new User(new Address("stress1"));
+            User clone = (User) TestMain.deepClone(user);
+
+            System.out.println(user == clone);
+            System.out.println(user.getAddress() == clone.getAddress());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object deepClone(Object object) throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(object);
+
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
+        return ois.readObject();
+    }
+
+    @Test
+    public void enumTest () {
+        for(Season season : Season.values()){
+            switch(season){
+                case SPRING :
+                    System.out.println("name: "+season.name()+" code: "+season.getCode());
+                    break;
+                case AUTUMN :
+                    System.out.println("name: "+season.name()+" code: "+season.getCode());
+                    break;
+                case SUMMER :
+                    System.out.println("name: "+season.name()+" code: "+season.getCode());
+                    break;
+                case WINTER :
+                    System.out.println("name: "+season.name()+" code: "+season.getCode());
+                    break;
+                default :
+                    break;
+            }
+        }
+
+    }
 }
 
-class InitOrder {
-    static {
-        System.out.println("1");
-    }
 
-    {
-        System.out.println("2");
-    }
 
-    InitOrder() {
-        System.out.println("3");
-    }
-}
-
-class InitOrderB extends InitOrder {
-    static {
-        System.out.println("4");
-    }
-
-    {
-        System.out.println("5");
-    }
-
-    InitOrderB() {
-        System.out.println("6");
-    }
-}
