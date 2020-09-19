@@ -448,6 +448,22 @@ public class TestMain{
         nameField.set(person, "jim");
         String b = (String) nameField.get(person);
     }
+
+    /**
+     * 浅克隆，不克隆引用类型
+     */
+    @Test
+    public void shallowClone() {
+        try {
+            Student student = new Student(new Address("stress"));
+            Student clone = (Student) student.clone();
+
+            System.out.println(student == clone);
+            System.out.println(student.getAddress() == clone.getAddress());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 
