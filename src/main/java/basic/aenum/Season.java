@@ -5,7 +5,7 @@ package basic.aenum;
 //}
 
 /**
- *
+ * 枚举类型（enum type）是指由一组固定的常量组成合法的类型。
  */
 public enum Season {
     /**

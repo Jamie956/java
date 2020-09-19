@@ -1,16 +1,15 @@
 package basic;
 
 import basic.aenum.Season;
-import basic.entity.Address;
-import basic.entity.InitOrder;
-import basic.entity.InitOrderB;
-import basic.entity.User;
+import basic.entity.*;
+import io.netty.util.Signal;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import java.awt.*;
 import java.awt.List;
 import java.io.*;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -401,6 +400,9 @@ public class TestMain{
         return ois.readObject();
     }
 
+    /**
+     * values()，获取全部枚举成员数组
+     */
     @Test
     public void enumTest () {
         for(Season season : Season.values()){
@@ -421,7 +423,30 @@ public class TestMain{
                     break;
             }
         }
+    }
 
+    /**
+     * valueOf()，根据枚举名字，获取指定的枚举实例
+     * ordinal()，获取枚举的索引
+     */
+    @Test
+    public void enumTest2() {
+        Season a = Season.valueOf("SPRING");
+        int b = Season.valueOf("SUMMER").ordinal();
+    }
+
+    /**
+     * 反射获取成员变量、修改成员变量
+     */
+    @Test
+    public void reflectFields() throws NoSuchFieldException, IllegalAccessException {
+        Person person = new Person();
+        Field nameField = person.getClass().getDeclaredField("name");
+        nameField.setAccessible(true);
+
+        String a = (String) nameField.get(person);
+        nameField.set(person, "jim");
+        String b = (String) nameField.get(person);
     }
 }
 

@@ -1,4 +1,4 @@
-package basic;
+package basic.aenum;
 
 public enum EnumTest {
     /**
@@ -11,7 +11,6 @@ public enum EnumTest {
 
             return d * 60;
         }
-
     },
 
     DAYS {
