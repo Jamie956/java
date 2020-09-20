@@ -29,7 +29,9 @@ public class Demo3 {
     String index = "person";
     String type = "man";
 
-
+    /**
+     * 批量删除
+     */
     @Test
     public void bulkDelete() throws IOException {
         BulkRequest request = new BulkRequest();
@@ -42,6 +44,9 @@ public class Demo3 {
         System.out.println(response);
     }
 
+    /**
+     * 批量创建
+     */
     @Test
     public void bulkCreate() throws IOException {
         Person p1 = new Person(1, "Alis", 20, new Date());
@@ -61,7 +66,9 @@ public class Demo3 {
         System.out.println(response.toString());
     }
 
-
+    /**
+     * 删除文档
+     */
     @Test
     public void deleteDoc() throws IOException {
         DeleteRequest request = new DeleteRequest(index, type, "1");
@@ -71,6 +78,9 @@ public class Demo3 {
         System.out.println(respond.getResult().toString());
     }
 
+    /**
+     * 更新文档
+     */
     @Test
     public void updateDoc() throws IOException {
         HashMap map = new HashMap();
@@ -84,9 +94,11 @@ public class Demo3 {
 
     }
 
+    /**
+     * 创建索引
+     */
     @Test
     public void createIndex() throws IOException {
-
         Person person = new Person(1, "jamie", 27, new Date());
         mapper.writeValueAsString(person);
 
@@ -97,7 +109,5 @@ public class Demo3 {
         IndexResponse reponse = client.index(request, RequestOptions.DEFAULT);
 
         System.out.println(reponse.getResult().toString());
-
-
     }
 }

@@ -10,7 +10,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-public class NonBlockingIOServerTest {
+public class NonBlockingIOServer {
     public static void main(String[] args) {
         try {
             ServerSocketChannel ssc = ServerSocketChannel.open();

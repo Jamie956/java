@@ -4,6 +4,10 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+/**
+ * 实现InvocationHandler接口
+ * 重写invoke方法，负载调用代理类
+ */
 public class DynamicProxy implements InvocationHandler {
     private Object target;
 

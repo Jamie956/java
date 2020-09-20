@@ -9,9 +9,11 @@ import org.junit.Test;
 import java.awt.List;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.*;
 
-public class TestMain{
+public class TestMain {
     private int i = 1;
 
     /**
@@ -19,6 +21,7 @@ public class TestMain{
      */
     static class Point<T> {
         public T x;
+
         public void setX(T x) {
             this.x = x;
         }
@@ -27,7 +30,8 @@ public class TestMain{
     /**
      * 泛型方法
      */
-    public static <E> void test2(E[] x) {}
+    public static <E> void test2(E[] x) {
+    }
 
     /**
      * 泛型方法 extends
@@ -64,9 +68,10 @@ public class TestMain{
      *
      * @return
      */
-    public List test() {
+    public List innerClass() {
         class C extends List {
             private int i = 2;
+
             C() {
                 System.out.println(i);
             }
@@ -88,7 +93,7 @@ public class TestMain{
      *
      * @return
      */
-    public static List innerClass() {
+    public static List staticInnerClass() {
         class C extends List {
             C() {
                 System.out.println("create C");
@@ -97,19 +102,20 @@ public class TestMain{
         return new C();
     }
 
-    @MyAnnotation(value="a")
-    static class TestAnno{}
+    @MyAnnotation(value = "a")
+    static class TestAnno {
+    }
 
 
     @Test
     public void testStatic() {
         //非静态
         new TestMain().new A();
-        new TestMain().test();
+        new TestMain().innerClass();
 
         //静态
         new B();
-        TestMain.innerClass();
+        TestMain.staticInnerClass();
     }
 
     /**
@@ -123,18 +129,12 @@ public class TestMain{
 
     /**
      * 字符串格式化
-     */
-    @Test
-    public void asd() {
-        String a = String.format("halo %s ", 1);
-    }
-
-    /**
      * 补零
      */
     @Test
-    public void asasdasdd() {
-        String a = StringUtils.rightPad("440", 8, "0");
+    public void stringMethod() {
+        String a = String.format("halo %s ", 1);
+        String b = StringUtils.rightPad("440", 8, "0");
     }
 
     /**
@@ -142,7 +142,7 @@ public class TestMain{
      * 1.比如校验数据不正确，在运行时抛出异常
      */
     @Test
-    public void extest() {
+    public void runtimeException() {
         throw new RuntimeException();
 //        throw new IndexOutOfBoundsException("111");
     }
@@ -152,7 +152,7 @@ public class TestMain{
      * 1.编译时检查，需要捕获的异常，可能发生的异常
      */
     @Test
-    public void extest22() {
+    public void checkException() {
         try {
             throw new IOException();
         } catch (IOException e) {
@@ -169,13 +169,14 @@ public class TestMain{
         Class<?> class2 = new ArrayList<Integer>().getClass();
         System.out.println(class1.equals(class2));
     }
+
     /**
      * ArrayList 构造函数测试
      * 1.无参，初始共享空数组实例
      * 2.容量参数，创建指定大小object实例
      */
     @Test
-    public void test1() {
+    public void listInit() {
 
         new ArrayList<>();
         new ArrayList<>(5);
@@ -193,7 +194,7 @@ public class TestMain{
      * 2.超过容量扩容增加原来的0.5倍
      */
     @Test
-    public void test2() {
+    public void listCapacity() {
         ArrayList list = new ArrayList<>();
         list.add(1);
         list.add(1);
@@ -215,7 +216,7 @@ public class TestMain{
      * 2.数组复制, from index+1, length size-index
      */
     @Test
-    public void test3() {
+    public void listIndex() {
         ArrayList list = new ArrayList();
         list.add(1);
         list.add(2);
@@ -230,7 +231,7 @@ public class TestMain{
      * 2.读取指针元素，移动指针
      */
     @Test
-    public void test4() {
+    public void listForeach() {
         ArrayList list = new ArrayList();
         list.add(1);
         list.add(2);
@@ -246,7 +247,7 @@ public class TestMain{
      * linked list 构造函数
      */
     @Test
-    public void test5() {
+    public void listConstruct() {
         new LinkedList();
     }
 
@@ -257,7 +258,7 @@ public class TestMain{
      * 3.移除，断开连接
      */
     @Test
-    public void test6() {
+    public void listRemove() {
         LinkedList list = new LinkedList<>();
         list.add(1);
         list.add(2);
@@ -273,9 +274,9 @@ public class TestMain{
      * 4.容量，加载因子参数
      */
     @Test
-    public void test7() {
+    public void setConstruct() {
         new HashSet<>();
-        new HashSet<>(Arrays.asList(1,2,3));
+        new HashSet<>(Arrays.asList(1, 2, 3));
         new HashSet<>(12, 0.8f);
     }
 
@@ -283,7 +284,7 @@ public class TestMain{
      * set add element
      */
     @Test
-    public void test8(){
+    public void setAdd() {
         HashSet set = new HashSet();
         set.add(1);
         set.add(2);
@@ -295,7 +296,7 @@ public class TestMain{
      * 1.创建tree map
      */
     @Test
-    public void test9(){
+    public void test9() {
         new TreeSet<>();
 
     }
@@ -307,10 +308,10 @@ public class TestMain{
      * 3.节点结构，hash, key, val, next
      */
     @Test
-    public void test10(){
+    public void mapPut() {
         HashMap map = new HashMap<>();
-        map.put("k1","v1");
-        map.put("k2","v2");
+        map.put("k1", "v1");
+        map.put("k2", "v2");
     }
 
     /**
@@ -318,7 +319,7 @@ public class TestMain{
      * 执行父类子类的静态代码块 -> 父类代码块，构造方法 -> 子类代码块，构造方法
      */
     @Test
-    public void tesasd() {
+    public void testOrder() {
         new InitOrderB();
     }
 
@@ -347,7 +348,7 @@ public class TestMain{
      * 2. 用户根据ip得到对应hash，treemap.get(hash(userIp)) 获取服务器列表，获取顺时针最靠近的值
      */
     @Test
-    public void consistentHashingWithoutVirtualNode() {
+    public void consistentHashing() {
         SortedMap<Integer, String> sortedMap = new TreeMap<>();
 
         String[] servers = {"192.168.0.0:111", "192.168.0.1:111", "192.168.0.2:111", "192.168.0.3:111", "192.168.0.4:111"};
@@ -376,7 +377,7 @@ public class TestMain{
      * test cglib
      */
     @Test
-    public void testcglib() {
+    public void cglib() {
         basic.entity.IHello helloProxy = CGLibProxy.getInstance().getProxy(basic.entity.HelloImpl.class);
         helloProxy.greeting();
     }
@@ -385,7 +386,7 @@ public class TestMain{
      * 深克隆，引用类型也会被克隆
      */
     @Test
-    public void deepCloneTest () {
+    public void deepClone() {
         try {
             User user = new User(new Address("stress1"));
             User clone = (User) TestMain.deepClone(user);
@@ -411,22 +412,22 @@ public class TestMain{
      * values()，获取全部枚举成员数组
      */
     @Test
-    public void enumTest () {
-        for(Season season : Season.values()){
-            switch(season){
-                case SPRING :
-                    System.out.println("name: "+season.name()+" code: "+season.getCode());
+    public void enumTest() {
+        for (Season season : Season.values()) {
+            switch (season) {
+                case SPRING:
+                    System.out.println("name: " + season.name() + " code: " + season.getCode());
                     break;
-                case AUTUMN :
-                    System.out.println("name: "+season.name()+" code: "+season.getCode());
+                case AUTUMN:
+                    System.out.println("name: " + season.name() + " code: " + season.getCode());
                     break;
-                case SUMMER :
-                    System.out.println("name: "+season.name()+" code: "+season.getCode());
+                case SUMMER:
+                    System.out.println("name: " + season.name() + " code: " + season.getCode());
                     break;
-                case WINTER :
-                    System.out.println("name: "+season.name()+" code: "+season.getCode());
+                case WINTER:
+                    System.out.println("name: " + season.name() + " code: " + season.getCode());
                     break;
-                default :
+                default:
                     break;
             }
         }
@@ -477,6 +478,171 @@ public class TestMain{
             System.out.println(student == clone);
             System.out.println(student.getAddress() == clone.getAddress());
         } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void objectIO() {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(new Person("tom"));
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            Person person = (Person) ois.readObject();
+            System.out.println(person);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void charO() {
+        Writer out = null;
+        try {
+            out = new FileWriter("a");
+            out.write("hi");
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != out) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Test
+    public void charIO2() {
+        Reader in = null;
+        Writer out = null;
+        try {
+            in = new FileReader("a");
+            out = new FileWriter("b");
+            char[] cbuf = new char[10];
+            int len = -1;
+
+            while ((len = in.read(cbuf)) != -1) {
+                out.write(cbuf, 0, len);
+            }
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != in) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //file output
+    @Test
+    public void fileOut() {
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream("a");
+            out.write(new byte[]{65, 66, 67});
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != out) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //file input and output
+    @Test
+    public void fileIO() {
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = new FileInputStream("a");
+            out = new FileOutputStream("b");
+            /**
+             * way1, read byte by byte
+             */
+            int b = 0;
+            while ((b = in.read()) != -1) {
+                out.write(b);
+            }
+            /**
+             * way2, read by bytes[]
+             */
+//            byte[] b = new byte[20];
+//            int len = -1;
+//            while ((len = in.read(b)) != -1) {
+//                out.write(b, 0, len);
+//            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != out) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != in) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Test
+    public void notBlockingServer() {
+        try {
+            ServerSocket ss = new ServerSocket(8081);
+
+            while (true) {
+                Socket socket = ss.accept();
+                OutputStream out = socket.getOutputStream();
+                out.write("hi".getBytes());
+
+                out.close();
+                socket.close();
+            }
+
+//            ss.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void notBlockingClient() {
+        try {
+            Socket socket = new Socket("127.0.0.1", 8081);
+            InputStream in = socket.getInputStream();
+            Scanner scan = new Scanner(in);
+
+            while (scan.hasNext()) {
+                System.out.println(scan.next());
+            }
+
+            in.close();
+            socket.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

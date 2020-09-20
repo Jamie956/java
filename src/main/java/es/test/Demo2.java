@@ -21,6 +21,9 @@ public class Demo2 {
     String index = "person";
     String type = "man";
 
+    /**
+     * 删除索引
+     */
     @Test
     public void delete() throws IOException {
         DeleteIndexRequest request = new DeleteIndexRequest();
@@ -31,6 +34,9 @@ public class Demo2 {
         System.out.println(response.isAcknowledged());
     }
 
+    /**
+     * 索引是否存在
+     */
     @Test
     public void exist() throws IOException {
         GetIndexRequest request = new GetIndexRequest();
@@ -40,11 +46,12 @@ public class Demo2 {
 
         System.out.println(exists);
     }
-    
+
+    /**
+     * 创建索引
+     */
     @Test
     public void createIndex() throws IOException  {
-
-
         Settings.Builder settings = Settings.builder()
                 .put("number_of_shards", 3)
                 .put("number_of_replicas", 1);
