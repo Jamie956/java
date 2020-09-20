@@ -1,5 +1,6 @@
 package basic;
 
+import basic.aenum.Color;
 import basic.aenum.Season;
 import basic.entity.*;
 import io.netty.util.Signal;
@@ -433,6 +434,15 @@ public class TestMain{
     public void enumTest2() {
         Season a = Season.valueOf("SPRING");
         int b = Season.valueOf("SUMMER").ordinal();
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void enumtest3() {
+
+        String value = Color.getValueByName("red");
     }
 
     /**
