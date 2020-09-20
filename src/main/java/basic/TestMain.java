@@ -3,15 +3,12 @@ package basic;
 import basic.aenum.Color;
 import basic.aenum.Season;
 import basic.entity.*;
-import io.netty.util.Signal;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import java.awt.*;
 import java.awt.List;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.*;
 
 public class TestMain{

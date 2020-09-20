@@ -2,11 +2,7 @@ package basic;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class RegexpTest {
-
 
     public static void pr(String[] words, String[] patterns) {
         for (String pattern : patterns) {
@@ -75,94 +71,67 @@ public class RegexpTest {
         pr(words, patterns);
     }
 
-    public static void test04() {
-        List<String> list = Arrays.asList("kava", "sava", "lava", "tava", "java");
-
-        //[xyz] 字符集合。匹配所包含的任意一个字符
-        //[^xyz] 负值字符集合。匹配未包含的任意字符。
-
-//		String pattern = "[kj]ava";// [kj]ava k 或 j 连接ava
-        String pattern = "[^kj]ava";// [^kj]ava 除了 k 或 j 连接ava
-
-        for (String s : list) {
-            if (s.matches(pattern)) {
-                System.out.println("MATCHES");
-            } else {
-                System.out.println("NOT MATCHES");
-            }
-        }
+    /**
+     * [xyz] 字符集合。匹配所包含的任意一个字符
+     * [^xyz] 负值字符集合。匹配未包含的任意字符。
+     * <p>
+     * [kj]ava k 或 j 连接ava
+     * [^kj]ava 除了 k 或 j 连接ava
+     */
+    @Test
+    public void test04() {
+        String[] words = {"kava", "sava", "lava", "tava", "java"};
+        String[] pattern = {"[kj]ava", "[^kj]ava"};
+        pr(words, pattern);
 
     }
 
-    public static void test05() {
-        List<String> list = Arrays.asList("Robert", "book", "cat", "job", "Todor", "+ob 123? @ p", "Boooob", "jjobss");
-        //. 匹配除“\n”之外的任何单个字符
-
-//		String pattern = ".[o][b].*";// .[o][b].* 第1个任意，第2个是o，第3个是b，后面0或多个任意
-//		String pattern = ".ob.*";// 同上
-        String pattern = ".*";// .* 0个或多个 任意
-
-        for (String s : list) {
-            if (s.matches(pattern)) {
-                System.out.println("MATCHES");
-            } else {
-                System.out.println("NOT MATCHES");
-            }
-        }
-
+    /**
+     * . 匹配除“\n”之外的任何单个字符
+     * <p>
+     * .[o][b].* 第1个任意，第2个是o，第3个是b，后面0或多个任意
+     * .ob.*  同上
+     * .* 0个或多个 任意
+     */
+    @Test
+    public void test05() {
+        String[] words = {"Robert", "book", "cat", "job", "Todor", "+ob 123? @ p", "Boooob", "jjobss"};
+        String[] pattern = {".[o][b].*", ".ob.*", ".*"};
+        pr(words, pattern);
     }
 
-    public static void test06() {
-        List<String> list = Arrays.asList("abc135gf", "string '123'", "int a = 5247;", "int A = 5247;", "int b = 5247;", "1int a = 5247;", "string '");
-
-//		String pattern = "\\w+";
-//		String pattern = "\\w+\\s\\'.+";// \w+\s\'.+ 一个或多个字母或数字 + 一个空格 + 一个' + 一个或多个任意
-//		String pattern = "\\w+\\sa.+";// \w+\sa.+ 一个或多个字母或数字 + 一个空格 + 一个字母a + 一个或多个任意
-//		String pattern = "\\D+\\sa.+";// \D+\sa.+" 1个或多个(排除数字) + 一个空格 + 一个字母a + 一个或多个任意
-//		String pattern = "\\D+\\s.+";// \D+\s.+ 1个或多个(排除数字) + 一个空格 + 一个或多个任意
-//		String pattern = "\\w+\\s?\\'?\\d{0,3}\\'?";// \w+\s?\'?\d{0,3}\'?  一个或多个字母或数字 + 0或1个空格 + 0或1个' + 0-3个数字 + 0或1个'
-//		String pattern = "\\w+(\\s\\')?\\d{0,3}\\'?";//同上
-        String pattern = "\\w+(\\s\\'(\\d*)\\')?";
-
-        for (String s : list) {
-            if (s.matches(pattern)) {
-                System.out.println("MATCHES");
-            } else {
-                System.out.println("NOT MATCHES");
-            }
-        }
-
+    /**
+     * \w+
+     * \w+\s\'.+ 一个或多个字母或数字 + 一个空格 + 一个' + 一个或多个任意
+     * \w+\sa.+ 一个或多个字母或数字 + 一个空格 + 一个字母a + 一个或多个任意
+     * \D+\sa.+" 1个或多个(排除数字) + 一个空格 + 一个字母a + 一个或多个任意
+     * \D+\s.+ 1个或多个(排除数字) + 一个空格 + 一个或多个任意
+     * \w+\s?\'?\d{0,3}\'?  一个或多个字母或数字 + 0或1个空格 + 0或1个' + 0-3个数字 + 0或1个'
+     * \\w+(\\s\\')?\\d{0,3}\\'? 同上
+     * \\w+(\\s\\'(\\d*)\\')?
+     */
+    @Test
+    public void test06() {
+        String[] words = {"abc135gf", "string '123'", "int a = 5247;", "int A = 5247;", "int b = 5247;", "1int a = 5247;", "string '"};
+        String[] pattern = {"\\w+", "\\w+\\s\\'.+", "\\w+\\sa.+", "\\D+\\sa.+", "\\D+\\s.+", "\\w+\\s?\\'?\\d{0,3}\\'?", "\\w+(\\s\\')?\\d{0,3}\\'?", "\\w+(\\s\\'(\\d*)\\')?"};
+        pr(words, pattern);
     }
 
-    public static void test07() {
-        List<String> list = Arrays.asList("Marko is a good boy.", "Our Marko, is a good boy!", "Nobody is as good as our Marko is!");
-
-//		String pattern = "M.+";
-        String pattern = "^M.+";
-
-        for (String s : list) {
-            if (s.matches(pattern)) {
-                System.out.println("MATCHES");
-            } else {
-                System.out.println("NOT MATCHES");
-            }
-        }
-
+    @Test
+    public void test07() {
+        String[] words = {"Marko is a good boy.", "Our Marko, is a good boy!", "Nobody is as good as our Marko is!"};
+        String[] pattern = {"M.+", "^M.+"};
+        pr(words, pattern);
     }
 
-    public static void test08() {
-        List<String> list = Arrays.asList("2.345,56", "-52.678.110", "235", "128m");
-
-        String pattern = ".+(\\d)$";// 数字结尾
-
-        for (String s : list) {
-            if (s.matches(pattern)) {
-                System.out.println("MATCHES");
-            } else {
-                System.out.println("NOT MATCHES");
-            }
-        }
-
+    /**
+     * 数字结尾
+     */
+    @Test
+    public void test08() {
+        String[] words = {"2.345,56", "-52.678.110", "235", "128m"};
+        String[] pattern = {".+(\\d)$"};
+        pr(words, pattern);
     }
 
     @Test
