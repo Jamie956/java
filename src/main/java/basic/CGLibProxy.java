@@ -1,4 +1,4 @@
-package cglib;
+package basic;
 
 import java.lang.reflect.Method;
 
@@ -9,6 +9,7 @@ import net.sf.cglib.proxy.MethodProxy;
 public class CGLibProxy implements MethodInterceptor{
 	private static CGLibProxy instance = new CGLibProxy();
 
+	@Override
 	public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
 		before();
 		Object ret = proxy.invokeSuper(obj, args);
@@ -18,7 +19,6 @@ public class CGLibProxy implements MethodInterceptor{
 	
 	private void after() {
 		System.out.println("after");
-		
 	}
 
 	private void before() {

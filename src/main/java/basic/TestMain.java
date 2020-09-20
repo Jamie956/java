@@ -365,10 +365,19 @@ public class TestMain{
      * JDK代理
      */
     @Test
-    public void proxytest() {
+    public void jdkproxytest() {
         DynamicProxy dp = new DynamicProxy(new HelloImpl());
         IHello helloProxy = dp.getProxy();
 
+        helloProxy.greeting();
+    }
+
+    /**
+     * test cglib
+     */
+    @Test
+    public void testcglib() {
+        basic.entity.IHello helloProxy = CGLibProxy.getInstance().getProxy(basic.entity.HelloImpl.class);
         helloProxy.greeting();
     }
 
@@ -471,6 +480,8 @@ public class TestMain{
             e.printStackTrace();
         }
     }
+
+
 }
 
 

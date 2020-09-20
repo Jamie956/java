@@ -32,14 +32,3 @@ public class DynamicProxy implements InvocationHandler {
         return (T) Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
     }
 }
-
-class HelloImpl implements IHello {
-    @Override
-    public void greeting() {
-        System.out.println("hi");
-    }
-}
-
-interface IHello {
-    void greeting();
-}
