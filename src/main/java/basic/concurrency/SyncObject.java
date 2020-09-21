@@ -1,7 +1,7 @@
 package basic.concurrency;
 
 public class SyncObject {
-    public void a() {
+    public void syncMethod() {
         synchronized (this) {
             try {
                 for (int i = 0; i < 5; i++) {
@@ -14,7 +14,7 @@ public class SyncObject {
         }
     }
 
-    public void b() {
+    public void notSyncMethod() {
         try {
             for (int i = 0; i < 5; i++) {
                 Thread.sleep(100);
@@ -25,7 +25,7 @@ public class SyncObject {
         }
     }
 
-    public void c() {
+    public void syncMethod2() {
         synchronized (this) {
             try {
                 for (int i = 0; i < 5; i++) {
@@ -38,7 +38,7 @@ public class SyncObject {
         }
     }
 
-    public static synchronized void d() {
+    public static synchronized void staticSyncMethod() {
         try {
             for (int i = 0; i < 5; i++) {
                 Thread.sleep(100);
@@ -49,7 +49,7 @@ public class SyncObject {
         }
     }
 
-    public static synchronized void e() {
+    public static synchronized void staticSyncMethod2() {
         try {
             for (int i = 0; i < 5; i++) {
                 Thread.sleep(100);

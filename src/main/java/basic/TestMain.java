@@ -2,6 +2,7 @@ package basic;
 
 import basic.aenum.Color;
 import basic.aenum.Season;
+import basic.concurrency.SyncObject;
 import basic.entity.*;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import java.lang.reflect.Field;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class TestMain {
     private int i = 1;
@@ -647,6 +649,132 @@ public class TestMain {
         }
     }
 
+    /**
+     * 多线程执行同一实例的带同一把锁的方法，顺序执行
+     */
+    @Test
+    public void synctest1() throws InterruptedException {
+        SyncObject obj = new SyncObject();
+        Thread t1 = new Thread(() -> obj.syncMethod());
+        Thread t2 = new Thread(() -> obj.syncMethod());
+
+        t1.start();
+        t2.start();
+
+        //当前线程等待线程t1和t2执行完成
+        t1.join();
+        t2.join();
+    }
+
+    /**
+     * 多线程执行不同实例的带不同锁的方法，不按顺序执行
+     */
+    @Test
+    public void synctest2() throws InterruptedException {
+        SyncObject x = new SyncObject();
+        SyncObject y = new SyncObject();
+
+        Thread t1 = new Thread(() -> x.syncMethod());
+        Thread t2 = new Thread(() -> y.syncMethod());
+
+        t1.start();
+        t2.start();
+
+        //当前线程等待线程t1和t2执行完成
+        t1.join();
+        t2.join();
+    }
+
+    /**
+     * 多线程执行同一个实例的带锁方法和不带锁方法，不按顺序执行
+     */
+    @Test
+    public void synctest3() throws InterruptedException {
+        SyncObject obj = new SyncObject();
+        Thread t1 = new Thread(() -> obj.syncMethod());
+        Thread t2 = new Thread(() -> obj.notSyncMethod());
+
+        t1.start();
+        t2.start();
+
+        //当前线程等待线程t1和t2执行完成
+        t1.join();
+        t2.join();
+    }
+
+    /**
+     * 多线程执行同一实例的带同一把锁的方法，顺序执行
+     */
+    @Test
+    public void synctest4() throws InterruptedException {
+        SyncObject obj = new SyncObject();
+        Thread t1 = new Thread(() -> obj.syncMethod());
+        Thread t2 = new Thread(() -> obj.syncMethod2());
+
+        t1.start();
+        t2.start();
+
+        //当前线程等待线程t1和t2执行完成
+        t1.join();
+        t2.join();
+    }
+
+    /**
+     * 多线程执行带锁的静态方法，顺序执行
+     * 类锁/全局锁
+     */
+    @Test
+    public void synctest5() throws InterruptedException {
+        Thread t1 = new Thread(() -> SyncObject.staticSyncMethod());
+        Thread t2 = new Thread(() -> SyncObject.staticSyncMethod2());
+
+        t1.start();
+        t2.start();
+
+        //当前线程等待线程t1和t2执行完成
+        t1.join();
+        t2.join();
+    }
+
+    /**
+     * 多线程执行实例的带锁方法和静态带锁方法，不按顺序执行
+     */
+    @Test
+    public void synctest6() throws InterruptedException {
+        SyncObject x = new SyncObject();
+        Thread t1 = new Thread(() -> x.syncMethod2());
+        Thread t2 = new Thread(() -> SyncObject.staticSyncMethod());
+
+        t1.start();
+        t2.start();
+
+        //当前线程等待线程t1和t2执行完成
+        t1.join();
+        t2.join();
+    }
+
+    /**
+     * TimeUnit的 sleep方法
+     */
+    @Test
+    public void timeunitTes() throws InterruptedException {
+        System.out.println("sleep begin");
+        TimeUnit.SECONDS.sleep(3);
+        System.out.println("sleep end");
+    }
+
+    /**
+     * timedWait 带锁方法，获取锁等待
+     */
+    public synchronized void work() {
+        System.out.println("Begin Work");
+        try {
+            TimeUnit.SECONDS.timedWait(this, 5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Work End");
+    }
 
 }
 
