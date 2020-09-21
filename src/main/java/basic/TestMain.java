@@ -442,6 +442,7 @@ public class TestMain {
     @Test
     public void enumTest2() {
         Season a = Season.valueOf("SPRING");
+        Season c = Season.SPRING;
         int b = Season.valueOf("SUMMER").ordinal();
     }
 
