@@ -1,6 +1,6 @@
 package basic.concurrency;
 
-public class SyncTestObject {
+public class SyncObject {
     public void a() {
         synchronized (this) {
             try {

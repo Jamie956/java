@@ -1,133 +1,64 @@
 package basic.concurrency;
 
 public class SyncTest {
-    //    public static void work(){
-//        Object ob = new ObjectThreadMethodTest();
-//        try {
-//            System.out.println(1);
-//            ob.wait(1000);
-//            System.out.println(2);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//    public static void main(String[] args) {
-//        new Thread(()->work()).start();
-//
-//
-//    }
-
-
-    // one object multi Thread sync method
+    /**
+     * 多线程执行同一实例的带同一把锁的方法，顺序执行
+     */
     public static void test1() {
-        SyncTestObject obj = new SyncTestObject();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                obj.a();
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                obj.a();
-            }
-        }).start();
+        SyncObject obj = new SyncObject();
+        new Thread(() -> obj.a()).start();
+        new Thread(() -> obj.a()).start();
     }
 
-    //diff object
+    /**
+     * 多线程执行不同实例的带不同锁的方法，不按顺序执行
+     */
     public static void test2() {
-        SyncTestObject x = new SyncTestObject();
-        SyncTestObject y = new SyncTestObject();
+        SyncObject x = new SyncObject();
+        SyncObject y = new SyncObject();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                x.a();
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                y.a();
-            }
-        }).start();
+        new Thread(() -> x.a()).start();
+        new Thread(() -> y.a()).start();
     }
 
+    /**
+     * 多线程执行同一个实例的带锁方法和不带锁方法，不按顺序执行
+     */
     public static void test3() {
-        SyncTestObject obj = new SyncTestObject();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                obj.a();
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                obj.b();
-            }
-        }).start();
+        SyncObject obj = new SyncObject();
+        new Thread(() -> obj.a()).start();
+        new Thread(() -> obj.b()).start();
     }
 
+    /**
+     * 多线程执行同一实例的带同一把锁的方法，顺序执行
+     */
     public static void test4() {
-        SyncTestObject obj = new SyncTestObject();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                obj.a();
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                obj.c();
-            }
-        }).start();
+        SyncObject obj = new SyncObject();
+        new Thread(() -> obj.a()).start();
+        new Thread(() -> obj.c()).start();
     }
 
+    /**
+     * 多线程执行带锁的静态方法，顺序执行
+     * 类锁/全局锁
+     */
     public static void test5() {
-        SyncTestObject x = new SyncTestObject();
-        SyncTestObject y = new SyncTestObject();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                x.d();
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                y.e();
-            }
-        }).start();
+        new Thread(() -> SyncObject.d()).start();
+        new Thread(() -> SyncObject.e()).start();
     }
 
+    /**
+     * 多线程执行实例的带锁方法和静态带锁方法，不按顺序执行
+     */
     public static void test6() {
-        SyncTestObject x = new SyncTestObject();
+        SyncObject x = new SyncObject();
+        new Thread(() -> x.c()).start();
+        new Thread(() -> SyncObject.d()).start();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                x.c();
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SyncTestObject.d();
-            }
-        }).start();
     }
 
     public static void main(String[] args) {
-        test6();
+        test5();
     }
 }
