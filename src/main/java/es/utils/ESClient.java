@@ -9,7 +9,6 @@ public class ESClient {
     public static RestHighLevelClient getClient(){
         HttpHost http = new HttpHost("localhost", 9200);
         RestClientBuilder builder = RestClient.builder(http);
-        RestHighLevelClient client = new RestHighLevelClient(builder);
-        return client;
+        return new RestHighLevelClient(builder);
     }
 }

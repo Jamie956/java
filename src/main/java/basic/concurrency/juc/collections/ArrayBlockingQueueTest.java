@@ -37,6 +37,6 @@ public class ArrayBlockingQueueTest {
     }
 
     public static void main(String[] args) {
-        test2();
+        test1();
     }
 }

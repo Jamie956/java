@@ -1,20 +1,22 @@
 package basic.concurrency.juc.collections;
 
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class ConcurrentHashMapTest {
-    public static void work(ConcurrentHashMap map) {
+    public static void work(Map map) {
         for (int i = 0; i < 6; i++) {
             map.put(i, Thread.currentThread().getName() + "-" + i);
         }
     }
 
     public static void main(String[] args) {
-        ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<Integer, String>();
+//        ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<>();
+        HashMap<Integer, String> map = new HashMap<>();
 
         new Thread(() -> work(map)).start();
         new Thread(() -> work(map)).start();
