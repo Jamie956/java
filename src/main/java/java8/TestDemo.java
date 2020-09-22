@@ -16,7 +16,7 @@ public class TestDemo {
      * Predicate，返回boolean
      */
     @Test
-    public void test1() {
+    public void testPredicate() {
         Predicate<Integer> tester = (Integer i) -> i > 10;
         boolean ret = tester.test(11);
     }
@@ -25,7 +25,7 @@ public class TestDemo {
      * Consumer，存粹调用，无返回
      */
     @Test
-    public void test2() {
+    public void testConsumer() {
         Consumer<String> block = System.out::println;
         block.accept("halo");
     }
@@ -34,7 +34,7 @@ public class TestDemo {
      * Function，有返回
      */
     @Test
-    public void test3() {
+    public void testFunction() {
         Function<String, String> mapper = str -> str + "...";
         String data = mapper.apply("arg");
     }
@@ -53,7 +53,7 @@ public class TestDemo {
      * 泛型
      */
     @Test
-    public void test4() {
+    public void testPCF() {
         List<Integer> list = Arrays.asList(1, 2, 5, 6);
         Predicate<Integer> tester = i -> i > 3;
         Function<Integer, Integer> mapper = i -> i + 1;
@@ -65,13 +65,13 @@ public class TestDemo {
      * 与consumer相似，不同的是传2个参数
      */
     @Test
-    public void biConsumerTest() {
+    public void testBiConsumer() {
         BiConsumer<String, String> biConsumer = (a, b) -> System.out.println(a + b);
         biConsumer.accept("1", "1");
     }
 
     @Test
-    public void asdasdas() {
+    public void testRunnable() {
         Runnable runnable = () -> System.out.println("hello lambda");
         runnable.run();
     }
@@ -81,7 +81,7 @@ public class TestDemo {
      * stream 元素控制处理
      */
     @Test
-    public void test5() {
+    public void testStream() {
         List<Integer> a = Stream.of(1, 5, 6, 7).filter(i -> i > 5).collect(Collectors.toList());
         List<Integer> b = Stream.of(1, 1, 6, 7).distinct().collect(Collectors.toList());
         List<Integer> c = Stream.of(1, 1, 6, 7).limit(2).collect(Collectors.toList());
@@ -96,7 +96,7 @@ public class TestDemo {
     }
 
     @Test
-    public void asd() {
+    public void testMatch() {
         Predicate<Integer> tester = i -> i > 5;
         List<Integer> list = Arrays.asList(1, 1, 6, 7);
         boolean a = list.stream().allMatch(tester);
@@ -116,7 +116,7 @@ public class TestDemo {
      * 收集器
      */
     @Test
-    public void streamTest() {
+    public void testCollect() {
         //合成map
         Map<Integer, Integer> a = Stream.of(1, 4, 6, 8).collect(Collectors.toMap(i -> i, i -> i + 1));
 
@@ -133,7 +133,7 @@ public class TestDemo {
      * map排序
      */
     @Test
-    public void maporder() {
+    public void mapOrder() {
         Map<String, Integer> wordCounts = new HashMap<>();
         wordCounts.put("USA", 100);
         wordCounts.put("jobs", 200);
