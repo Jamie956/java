@@ -13,7 +13,8 @@ import java.lang.reflect.Field;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TestMain {
     private int i = 1;
@@ -656,15 +657,11 @@ public class TestMain {
     @Test
     public void synctest1() throws InterruptedException {
         SyncObject obj = new SyncObject();
-        Thread t1 = new Thread(() -> obj.syncMethod());
-        Thread t2 = new Thread(() -> obj.syncMethod());
-
-        t1.start();
-        t2.start();
+        new Thread(() -> obj.syncMethod()).start();
+        new Thread(() -> obj.syncMethod()).start();
 
         //当前线程等待线程t1和t2执行完成
-        t1.join();
-        t2.join();
+        Thread.sleep(3000);
     }
 
     /**
@@ -675,15 +672,11 @@ public class TestMain {
         SyncObject x = new SyncObject();
         SyncObject y = new SyncObject();
 
-        Thread t1 = new Thread(() -> x.syncMethod());
-        Thread t2 = new Thread(() -> y.syncMethod());
-
-        t1.start();
-        t2.start();
+        new Thread(() -> x.syncMethod()).start();
+        new Thread(() -> y.syncMethod()).start();
 
         //当前线程等待线程t1和t2执行完成
-        t1.join();
-        t2.join();
+        Thread.sleep(3000);
     }
 
     /**
@@ -692,15 +685,11 @@ public class TestMain {
     @Test
     public void synctest3() throws InterruptedException {
         SyncObject obj = new SyncObject();
-        Thread t1 = new Thread(() -> obj.syncMethod());
-        Thread t2 = new Thread(() -> obj.notSyncMethod());
-
-        t1.start();
-        t2.start();
+        new Thread(() -> obj.syncMethod()).start();
+        new Thread(() -> obj.notSyncMethod()).start();
 
         //当前线程等待线程t1和t2执行完成
-        t1.join();
-        t2.join();
+        Thread.sleep(3000);
     }
 
     /**
@@ -709,15 +698,11 @@ public class TestMain {
     @Test
     public void synctest4() throws InterruptedException {
         SyncObject obj = new SyncObject();
-        Thread t1 = new Thread(() -> obj.syncMethod());
-        Thread t2 = new Thread(() -> obj.syncMethod2());
-
-        t1.start();
-        t2.start();
+        new Thread(() -> obj.syncMethod()).start();
+        new Thread(() -> obj.syncMethod2()).start();
 
         //当前线程等待线程t1和t2执行完成
-        t1.join();
-        t2.join();
+        Thread.sleep(3000);
     }
 
     /**
@@ -726,15 +711,11 @@ public class TestMain {
      */
     @Test
     public void synctest5() throws InterruptedException {
-        Thread t1 = new Thread(() -> SyncObject.staticSyncMethod());
-        Thread t2 = new Thread(() -> SyncObject.staticSyncMethod2());
-
-        t1.start();
-        t2.start();
+        new Thread(() -> SyncObject.staticSyncMethod()).start();
+        new Thread(() -> SyncObject.staticSyncMethod2()).start();
 
         //当前线程等待线程t1和t2执行完成
-        t1.join();
-        t2.join();
+        Thread.sleep(3000);
     }
 
     /**
@@ -743,15 +724,11 @@ public class TestMain {
     @Test
     public void synctest6() throws InterruptedException {
         SyncObject x = new SyncObject();
-        Thread t1 = new Thread(() -> x.syncMethod2());
-        Thread t2 = new Thread(() -> SyncObject.staticSyncMethod());
-
-        t1.start();
-        t2.start();
+        new Thread(() -> x.syncMethod2()).start();
+        new Thread(() -> SyncObject.staticSyncMethod()).start();
 
         //当前线程等待线程t1和t2执行完成
-        t1.join();
-        t2.join();
+        Thread.sleep(3000);
     }
 
     /**
@@ -777,6 +754,51 @@ public class TestMain {
         System.out.println("Work End");
     }
 
+    /**
+     * atom
+     */
+    @Test
+    public void atom () throws InterruptedException {
+        AtomicInteger sharedValue = new AtomicInteger();
+        for (int i = 0; i < 10; i++) {
+            new Thread(() -> {
+                for (int j = 0; j< 10; j++) {
+                    sharedValue.incrementAndGet();
+                }
+            }).start();
+        }
+
+        Thread.sleep(3000);
+        System.out.println(sharedValue.get());
+    }
+
+    /**
+     * future task
+     */
+    @Test
+    public void futureTaskTest() {
+        try {
+            FutureTask<Integer> futureTask = new FutureTask<>(() -> 1);
+            new Thread(futureTask).start();
+            int a = futureTask.get();
+            System.out.println();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void futureTaskTestPool() {
+        try {
+            FutureTask<Integer> futureTask = new FutureTask<>(() -> 1);
+            ExecutorService pool = Executors.newSingleThreadExecutor();
+            pool.submit(futureTask);
+            int a = futureTask.get();
+            pool.shutdown();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 
