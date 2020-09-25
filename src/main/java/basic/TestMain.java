@@ -4,10 +4,11 @@ import basic.aenum.Color;
 import basic.aenum.Season;
 import basic.concurrency.SyncObject;
 import basic.entity.*;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import java.awt.List;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.net.ServerSocket;
@@ -72,14 +73,14 @@ public class TestMain {
      * @return
      */
     public List innerClass() {
-        class C extends List {
+        class C {
             private int i = 2;
 
             C() {
                 System.out.println(i);
             }
         }
-        return new C();
+        return null;
     }
 
     /**
@@ -97,12 +98,12 @@ public class TestMain {
      * @return
      */
     public static List staticInnerClass() {
-        class C extends List {
+        class C {
             C() {
                 System.out.println("create C");
             }
         }
-        return new C();
+        return null;
     }
 
     @MyAnnotation(value = "a")
@@ -294,15 +295,6 @@ public class TestMain {
         set.add(1);
     }
 
-    /**
-     * tree set 构造函数测试
-     * 1.创建tree map
-     */
-    @Test
-    public void test9() {
-        new TreeSet<>();
-
-    }
 
     /**
      * hash map test
@@ -758,11 +750,11 @@ public class TestMain {
      * atom
      */
     @Test
-    public void atom () throws InterruptedException {
+    public void atom() throws InterruptedException {
         AtomicInteger sharedValue = new AtomicInteger();
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
-                for (int j = 0; j< 10; j++) {
+                for (int j = 0; j < 10; j++) {
                     sharedValue.incrementAndGet();
                 }
             }).start();
@@ -798,6 +790,58 @@ public class TestMain {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 排序
+     */
+    @Test
+    public void orderingDouble() {
+        //对象排序
+//        List<Person> ps = Arrays.asList(new Person("Lord of the rings", 8.8), new Person("Back to the future", 8.5), new Person("Carlito's way", 7.9), new Person("Pulp fiction", 8.9));
+//        ps.sort(Comparator.comparingDouble(Person::getLength).reversed());
+//        ps.forEach(System.out::println);
+
+        //数组排序
+//        Double[] doubles = {0.06, 0.01, 0.30, 0.20, 0.25};
+//        Arrays.sort(doubles);
+    }
+
+    /**
+     * 集合排序
+     */
+    public void listdoubleorder() {
+        List<JSONObject> list = new ArrayList<>();
+
+        JSONObject json1 = new JSONObject();
+        json1.put("name", "a");
+        json1.put("value", 0.01d);
+
+        JSONObject json2 = new JSONObject();
+        json2.put("name", "b");
+        json2.put("value", 0.06d);
+
+        JSONObject json3 = new JSONObject();
+        json3.put("name", "c");
+        json3.put("value", 0.30d);
+
+        list.add(json1);
+        list.add(json2);
+        list.add(json3);
+
+//        list.sort((o1, o2) -> {
+//            double value1 = o1.getDoubleValue("value") * 10000;
+//            double value2 = o2.getDoubleValue("value") * 10000;
+//            return (int) (value2 - value1);
+//        });
+
+//        list.sort((a, b) -> (int)(a.getDoubleValue("value") - b.getDoubleValue("value")));
+
+        //升序
+        list.sort(Comparator.comparingDouble(e -> e.getDoubleValue("value")));
+
+        //降序
+//        list.sort(Comparator.comparingDouble((JSONObject e) -> e.getDoubleValue("value")).reversed());
     }
 }
 
