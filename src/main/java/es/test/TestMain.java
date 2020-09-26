@@ -1,11 +1,9 @@
 package es.test;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import es.entity.Person;
+import es.entity.User;
 import es.utils.ESClient;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
-import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -17,17 +15,13 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.*;
-import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.common.xcontent.json.JsonXContent;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.BoostingQueryBuilder;
 import org.elasticsearch.index.query.Operator;
@@ -50,73 +44,90 @@ import java.util.HashMap;
 
 public class TestMain {
     private RestHighLevelClient client = ESClient.getClient();
-    private static final String INDEX = "person";
-    private static final String TYPE = "man";
+    private static final String INDEX = "lib";
+    private static final String TYPE = "user";
 
-    /**
-     * 创建索引
-     */
-    @Test
-    public void createIndex() throws IOException {
-        Settings.Builder settings = Settings.builder().put("number_of_shards", 3).put("number_of_replicas", 1);
+//    /**
+//     * 创建索引
+//     */
+//    @Test
+//    public void createIndex() throws IOException {
+//        Settings.Builder settings = Settings.builder().put("number_of_shards", 3).put("number_of_replicas", 1);
+//        XContentBuilder mapping = JsonXContent.contentBuilder().startObject().startObject("properties").startObject("name").field("type", "text").endObject().startObject("age").field("type", "integer").endObject().startObject("birthday").field("type", "date").field("format", "yyyy-MM-dd").endObject().endObject().endObject();
+//        CreateIndexRequest request = new CreateIndexRequest(INDEX).settings(settings).mapping(TYPE, mapping);
+//        CreateIndexResponse response = client.indices().create(request, RequestOptions.DEFAULT);
+//        System.out.println(response);
+//    }
 
-        XContentBuilder mapping = JsonXContent.contentBuilder().startObject().startObject("properties").startObject("name").field("type", "text").endObject().startObject("age").field("type", "integer").endObject().startObject("birthday").field("type", "date").field("format", "yyyy-MM-dd").endObject().endObject().endObject();
-
-        CreateIndexRequest request = new CreateIndexRequest(INDEX).settings(settings).mapping(TYPE, mapping);
-
-        CreateIndexResponse response = client.indices().create(request, RequestOptions.DEFAULT);
-
-        System.out.println(response);
-    }
-
-    /**
-     * 索引是否存在
-     */
-    @Test
-    public void existIndex() throws IOException {
-        GetIndexRequest request = new GetIndexRequest();
-        request.indices(INDEX);
-
-        boolean exists = client.indices().exists(request, RequestOptions.DEFAULT);
-
-        System.out.println(exists);
-    }
-
-    /**
-     * 删除索引
-     */
-    @Test
-    public void deleteIndex() throws IOException {
-        DeleteIndexRequest request = new DeleteIndexRequest();
-        request.indices(INDEX);
-
-        AcknowledgedResponse response = client.indices().delete(request, RequestOptions.DEFAULT);
-
-        System.out.println(response.isAcknowledged());
-    }
+//    /**
+//     * 索引是否存在
+//     */
+//    @Test
+//    public void existIndex() throws IOException {
+//        GetIndexRequest request = new GetIndexRequest();
+//        request.indices(INDEX);
+//
+//        boolean exists = client.indices().exists(request, RequestOptions.DEFAULT);
+//
+//        System.out.println(exists);
+//    }
+//
+//    /**
+//     * 删除索引
+//     */
+//    @Test
+//    public void deleteIndex() throws IOException {
+//        DeleteIndexRequest request = new DeleteIndexRequest();
+//        request.indices(INDEX);
+//
+//        AcknowledgedResponse response = client.indices().delete(request, RequestOptions.DEFAULT);
+//
+//        System.out.println(response.isAcknowledged());
+//    }
 
     /**
      * 批量创建文档
      * GET /person/man/_search
      */
+//    @Test
+//    public void bulkCreateDoc() throws IOException {
+//        Person p1 = new Person(1, "Alis", 20, new Date());
+//        Person p2 = new Person(2, "Bobs", 20, new Date());
+//        Person p3 = new Person(3, "Cate", 20, new Date());
+//
+//        BulkRequest request = new BulkRequest();
+//        request.add(new IndexRequest(INDEX, TYPE, p1.getId().toString()).source(JSONObject.toJSONString(p1), XContentType.JSON));
+//        request.add(new IndexRequest(INDEX, TYPE, p2.getId().toString()).source(JSONObject.toJSONString(p2), XContentType.JSON));
+//        request.add(new IndexRequest(INDEX, TYPE, p3.getId().toString()).source(JSONObject.toJSONString(p3), XContentType.JSON));
+//        BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
+//
+//        System.out.println(response.toString());
+//    }
+
+    /**
+     * 准备测试数据
+     * GET /lib/user/_search
+     */
     @Test
-    public void bulkCreateDoc() throws IOException {
-        Person p1 = new Person(1, "Alis", 20, new Date());
-        Person p2 = new Person(2, "Bobs", 20, new Date());
-        Person p3 = new Person(3, "Cate", 20, new Date());
+    public void readyTestData() throws IOException {
+        //索引是否存在
+        GetIndexRequest getIndexRequest = new GetIndexRequest().indices("lib");
+        boolean exists = client.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String jons1 = mapper.writeValueAsString(p1);
-        String jons2 = mapper.writeValueAsString(p2);
-        String jons3 = mapper.writeValueAsString(p3);
+        if (exists) {
+            //删除索引
+            DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest().indices("lib");
+            client.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
+        }
 
-        BulkRequest request = new BulkRequest();
-        request.add(new IndexRequest(INDEX, TYPE, p1.getId().toString()).source(jons1, XContentType.JSON));
-        request.add(new IndexRequest(INDEX, TYPE, p2.getId().toString()).source(jons2, XContentType.JSON));
-        request.add(new IndexRequest(INDEX, TYPE, p3.getId().toString()).source(jons3, XContentType.JSON));
-        BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
-
-        System.out.println(response.toString());
+        //批量创建索引
+        BulkRequest bulkRequest = new BulkRequest();
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "1").source(JSONObject.toJSONString(new User("zhaoliu", "hei long jiang sheng tie ling shi", 50, "1970-12-12", "喝酒游泳")), XContentType.JSON));
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "2").source(JSONObject.toJSONString(new User("zhaoming", "bei jing hai dian qu qing he zhen", 20, "1998-10-12", "喝水跑步")), XContentType.JSON));
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "3").source(JSONObject.toJSONString(new User("lisi", "bei jing hai dian qu qing he zhen", 23, "1970-12-12", "散步跳舞")), XContentType.JSON));
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "4").source(JSONObject.toJSONString(new User("wangwu", "步行街", 26, "1998-10-12", "喝奶茶睡觉")), XContentType.JSON));
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "5").source(JSONObject.toJSONString(new User("zhangsan", "bei jing chao yang qu", 29, "1988-10-12", "唱歌吃鸡")), XContentType.JSON));
+        client.bulk(bulkRequest, RequestOptions.DEFAULT);
     }
 
     /**
@@ -139,8 +150,7 @@ public class TestMain {
      */
     @Test
     public void createIndexDoc() throws IOException {
-        Person person = new Person(2, "jamie", 27, new Date());
-        IndexRequest request = new IndexRequest(INDEX, TYPE, person.getId().toString()).source(JSONObject.toJSONString(person), XContentType.JSON);
+        IndexRequest request = new IndexRequest(INDEX, TYPE, "2").source(JSONObject.toJSONString(new Person(2, "jamie", 27, new Date())), XContentType.JSON);
         IndexResponse reponse = client.index(request, RequestOptions.DEFAULT);
         System.out.println(reponse.getResult().toString());
     }
@@ -172,6 +182,9 @@ public class TestMain {
         System.out.println(respond.getResult().toString());
     }
 
+    /**
+     * query 的 term 查询
+     */
     @Test
     public void termsQuery() throws IOException {
         SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -191,6 +204,9 @@ public class TestMain {
         }
     }
 
+    /**
+     * query 的 多字段匹配 查询
+     */
     @Test
     public void multiMatchQuery() throws IOException {
         SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -208,6 +224,9 @@ public class TestMain {
         }
     }
 
+    /**
+     * query 的匹配查询，带操作符
+     */
     @Test
     public void booleanMatchQuery() throws IOException {
         SearchSourceBuilder builder = new SearchSourceBuilder();
