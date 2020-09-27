@@ -85,10 +85,10 @@ public class TestMain {
 //        System.out.println(response.isAcknowledged());
 //    }
 
-    /**
-     * 批量创建文档
-     * GET /person/man/_search
-     */
+//    /**
+//     * 批量创建文档
+//     * GET /person/man/_search
+//     */
 //    @Test
 //    public void bulkCreateDoc() throws IOException {
 //        Person p1 = new Person(1, "Alis", 20, new Date());
@@ -120,7 +120,7 @@ public class TestMain {
             client.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
         }
 
-        //批量创建索引
+        //创建索引和批量创建文档
         BulkRequest bulkRequest = new BulkRequest();
         bulkRequest.add(new IndexRequest(INDEX, TYPE, "1").source(JSONObject.toJSONString(new User("zhaoliu", "hei long jiang sheng tie ling shi", 50, "1970-12-12", "喝酒游泳")), XContentType.JSON));
         bulkRequest.add(new IndexRequest(INDEX, TYPE, "2").source(JSONObject.toJSONString(new User("zhaoming", "bei jing hai dian qu qing he zhen", 20, "1998-10-12", "喝水跑步")), XContentType.JSON));
@@ -131,7 +131,7 @@ public class TestMain {
     }
 
     /**
-     * 批量删除文档
+     * 根据id 批量删除文档
      */
     @Test
     public void bulkDeleteDoc() throws IOException {
@@ -139,10 +139,7 @@ public class TestMain {
         request.add(new DeleteRequest(INDEX, TYPE, "1"));
         request.add(new DeleteRequest(INDEX, TYPE, "2"));
         request.add(new DeleteRequest(INDEX, TYPE, "3"));
-
-        BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
-
-        System.out.println(response);
+        client.bulk(request, RequestOptions.DEFAULT);
     }
 
     /**
@@ -591,4 +588,30 @@ public class TestMain {
         System.out.println(birthdayAgg.getValue());
     }
 
+
+    /**
+     * 准备测试数据
+     * GET /lib/user/_search
+     */
+    @Test
+    public void strNumRange() throws IOException {
+        //索引是否存在
+        GetIndexRequest getIndexRequest = new GetIndexRequest().indices("lib");
+        boolean exists = client.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
+
+        if (exists) {
+            //删除索引
+            DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest().indices("lib");
+            client.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
+        }
+
+        //测试
+        BulkRequest bulkRequest = new BulkRequest();
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "1").source(JSONObject.toJSONString(new User("zhaoliu", "34", 50, "1970-12-12", "喝酒游泳")), XContentType.JSON));
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "2").source(JSONObject.toJSONString(new User("zhaoming", "22", 20, "1998-10-12", "喝水跑步")), XContentType.JSON));
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "3").source(JSONObject.toJSONString(new User("lisi", "10", 23, "1970-12-12", "散步跳舞")), XContentType.JSON));
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "4").source(JSONObject.toJSONString(new User("wangwu", "29", 26, "1998-10-12", "喝奶茶睡觉")), XContentType.JSON));
+        bulkRequest.add(new IndexRequest(INDEX, TYPE, "5").source(JSONObject.toJSONString(new User("zhangsan", "50", 29, "1988-10-12", "唱歌吃鸡")), XContentType.JSON));
+        client.bulk(bulkRequest, RequestOptions.DEFAULT);
+    }
 }
