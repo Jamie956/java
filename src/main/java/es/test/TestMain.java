@@ -109,7 +109,7 @@ public class TestMain {
      * GET /lib/user/_search
      */
     @Test
-    public void readyTestData() throws IOException {
+    public void readyData4Test() throws IOException {
         //索引是否存在
         GetIndexRequest getIndexRequest = new GetIndexRequest().indices("lib");
         boolean exists = client.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
@@ -131,6 +131,12 @@ public class TestMain {
     }
 
     /**
+     * ************************************
+     *                批量操作
+     * ************************************
+     */
+
+    /**
      * 根据id 批量删除文档
      */
     @Test
@@ -142,12 +148,19 @@ public class TestMain {
         client.bulk(request, RequestOptions.DEFAULT);
     }
 
+
+    /**
+     * ************************************
+     *                文档增删改
+     * ************************************
+     */
+
     /**
      * 创建索引和文档
      */
     @Test
-    public void createIndexDoc() throws IOException {
-        IndexRequest request = new IndexRequest(INDEX, TYPE, "2").source(JSONObject.toJSONString(new Person(2, "jamie", 27, new Date())), XContentType.JSON);
+    public void createDoc() throws IOException {
+        IndexRequest request = new IndexRequest(INDEX, TYPE, "20").source(JSONObject.toJSONString(new User("tim", "take that", 50, "1970-12-12", "cd")), XContentType.JSON);
         IndexResponse reponse = client.index(request, RequestOptions.DEFAULT);
         System.out.println(reponse.getResult().toString());
     }
@@ -157,7 +170,7 @@ public class TestMain {
      */
     @Test
     public void updateDoc() throws IOException {
-        HashMap map = new HashMap();
+        HashMap<String, String> map = new HashMap<>();
         map.put("name", "Jamie Zhou");
         String docID = "1";
 
@@ -172,15 +185,36 @@ public class TestMain {
      */
     @Test
     public void deleteDoc() throws IOException {
-        DeleteRequest request = new DeleteRequest(INDEX, TYPE, "1");
-
+        DeleteRequest request = new DeleteRequest(INDEX, TYPE, "20");
         DeleteResponse respond = client.delete(request, RequestOptions.DEFAULT);
-
         System.out.println(respond.getResult().toString());
     }
 
+
+
     /**
-     * query 的 term 查询
+     * ************************************
+     *                文档查询
+     * ************************************
+     */
+
+
+    private void printResult(SearchSourceBuilder builder) throws IOException {
+        SearchRequest request = new SearchRequest();
+        request.indices(INDEX);
+        request.types(TYPE);
+        request.source(builder);
+
+        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+
+        for (SearchHit hit : response.getHits().getHits()) {
+            System.out.println(hit.getSourceAsMap());
+        }
+    }
+
+    /**
+     * query term 查询
+     * birthday 字段等于 1970-12-12 或 1970-10-12
      */
     @Test
     public void termsQuery() throws IOException {
@@ -188,74 +222,75 @@ public class TestMain {
         builder.from(0);
         builder.size(5);
         builder.query(QueryBuilders.termsQuery("birthday", "1970-12-12", "1998-10-12"));
-
-        SearchRequest request = new SearchRequest();
-        request.indices("lib");
-        request.types("user");
-        request.source(builder);
-
-        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
-
-        for (SearchHit hit : response.getHits().getHits()) {
-            System.out.println(hit.getSourceAsMap());
-        }
+        printResult(builder);
     }
 
     /**
      * query 的 多字段匹配 查询
+     * "interests"  或 "address" 字段 包含步字
      */
     @Test
     public void multiMatchQuery() throws IOException {
         SearchSourceBuilder builder = new SearchSourceBuilder();
         builder.query(QueryBuilders.multiMatchQuery("步", "interests", "address"));
-
-        SearchRequest request = new SearchRequest();
-        request.indices("lib");
-        request.types("user");
-        request.source(builder);
-
-        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
-
-        for (SearchHit hit : response.getHits().getHits()) {
-            System.out.println(hit.getSourceAsMap());
-        }
+        printResult(builder);
+//        SearchRequest request = new SearchRequest();
+//        request.indices("lib");
+//        request.types("user");
+//        request.source(builder);
+//
+//        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+//
+//        for (SearchHit hit : response.getHits().getHits()) {
+//            System.out.println(hit.getSourceAsMap());
+//        }
     }
 
     /**
      * query 的匹配查询，带操作符
+     * interests 字段 包含喝和跑字
      */
     @Test
     public void booleanMatchQuery() throws IOException {
         SearchSourceBuilder builder = new SearchSourceBuilder();
         builder.query(QueryBuilders.matchQuery("interests", "喝 跑").operator(Operator.AND));
-
-        SearchRequest request = new SearchRequest();
-        request.indices("lib");
-        request.types("user");
-        request.source(builder);
-
-        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
-
-        for (SearchHit hit : response.getHits().getHits()) {
-            System.out.println(hit.getSourceAsMap());
-        }
+        printResult(builder);
+//        SearchRequest request = new SearchRequest();
+//        request.indices("lib");
+//        request.types("user");
+//        request.source(builder);
+//
+//        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+//
+//        for (SearchHit hit : response.getHits().getHits()) {
+//            System.out.println(hit.getSourceAsMap());
+//        }
     }
 
+    /**
+     * interests字段 被分词，搜索
+     *
+     * GET /lib/_analyze
+     * {
+     *   "field": "interests",
+     *   "text": "喝酒睡觉"
+     * }
+     */
     @Test
     public void matchQuery() throws IOException {
         SearchSourceBuilder builder = new SearchSourceBuilder();
         builder.query(QueryBuilders.matchQuery("interests", "喝酒睡觉"));
-
-        SearchRequest request = new SearchRequest();
-        request.indices("lib");
-        request.types("user");
-        request.source(builder);
-
-        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
-
-        for (SearchHit hit : response.getHits().getHits()) {
-            System.out.println(hit.getSourceAsMap());
-        }
+        printResult(builder);
+//        SearchRequest request = new SearchRequest();
+//        request.indices("lib");
+//        request.types("user");
+//        request.source(builder);
+//
+//        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+//
+//        for (SearchHit hit : response.getHits().getHits()) {
+//            System.out.println(hit.getSourceAsMap());
+//        }
     }
 
     @Test
@@ -263,16 +298,16 @@ public class TestMain {
         SearchSourceBuilder builder = new SearchSourceBuilder();
         builder.query(QueryBuilders.matchAllQuery());
 
-        SearchRequest request = new SearchRequest();
-        request.indices("lib");
-        request.types("user");
-        request.source(builder);
-
-        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
-
-        for (SearchHit hit : response.getHits().getHits()) {
-            System.out.println(hit.getSourceAsMap());
-        }
+//        SearchRequest request = new SearchRequest();
+//        request.indices("lib");
+//        request.types("user");
+//        request.source(builder);
+//
+//        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+//
+//        for (SearchHit hit : response.getHits().getHits()) {
+//            System.out.println(hit.getSourceAsMap());
+//        }
     }
 
 
