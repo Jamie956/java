@@ -95,20 +95,30 @@ public class TestMain {
         }
     }
 
-
     /**
      * 从text中找出匹配正则表达式的字符
+     * <p>
+     * 找出文本的全部中文        [\\u4E00-\\u9FA5]+
      * 我的QQ是:456456 我的电话是:0532214 我的邮箱是:aaa123@aaa.com
+     * <p>
+     * 找出文本的全部数字        \\d+
+     * <p>
+     * 找出指定开头x和结尾y的文本     x.+.y
+     * <p>
+     * 取PIN=为开头的内容      (?<=PIN=).\S*
+     * PIN=1111
+     * PIN=2222
+     * <p>
+     * 取以=开头 以&结尾 取得的中间的内容        (?<==).*?(?=(&|$))
+     * =111&
+     * =222&
+     * <p>
+     * 取某个字符串|开头的内容        (\|.*)
      */
     @Test
     public void findMatchTest() throws IOException {
-        //找出文本的全部中文
-//        String reg = "[\\u4E00-\\u9FA5]+";
-        //找出文本的全部数字
-        String reg = "\\d+";
-
+        String reg = "(\\|.*)";
         Pattern pattern = Pattern.compile(reg);
-
         String text = AllTools.fileTextString("src\\main\\java\\utils\\source");
         Matcher m = pattern.matcher(text);
         while (m.find()) {
