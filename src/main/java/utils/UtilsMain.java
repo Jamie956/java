@@ -29,8 +29,10 @@ public class UtilsMain {
     {
     "key" : "412",
     },
+     */
 
-    source文件的每一行数据转成数组元素，去target文件找是否存
+    /**
+     * source文件的每一行数据转成数组元素，去target文件找是否存
      */
     @Test
     public void myCompare() throws IOException {
@@ -54,14 +56,17 @@ public class UtilsMain {
         System.out.println("notMatchCount: " + notMatchCount);
     }
 
-    //正则表达式解析sql
     /*
-    CREATE TABLE `userinfo` (
-    `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-    `username` varchar(255) NOT NULL COMMENT '用户名',
-    `addtime` datetime NOT NULL COMMENT '创建时间',
-    PRIMARY KEY (`user_id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'
+     CREATE TABLE `userinfo` (
+     `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+     `username` varchar(255) NOT NULL COMMENT '用户名',
+     `addtime` datetime NOT NULL COMMENT '创建时间',
+     PRIMARY KEY (`user_id`)
+     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'
+     */
+
+    /**
+     * 正则表达式解析sql
      */
     @Test
     public void sqlRegParse() throws IOException {
@@ -96,34 +101,63 @@ public class UtilsMain {
         }
     }
 
+    /*
+     我的QQ是:456456 我的电话是:0532214 我的邮箱是:aaa123@aaa.com
+     =111&
+     88=222&99
+     PIN=1111
+     PIN=2222
+     x8465y
+     111x56duy222
+     444d|dffdf|888
+     {
+     "key" : "123",
+     },
+     {
+     "key" : "845",
+     },
+     {
+     "key" : "856",
+     },
+     {
+     "key" : "412",
+     },
+
+     //reg
+    [\\u4E00-\\u9FA5]+
+    \d+
+    x.+.y
+    (?<=PIN=).\S*
+    (?<==).*?(?=(&|$))
+    (?<="key" : ").*?(?=(",|$))
+    (\|.*)
+     */
+
     /**
      * 从text中找出匹配正则表达式的字符
-     * <p>
-     * 找出文本的全部中文                     [\\u4E00-\\u9FA5]+
-     * 找出文本的全部数字                        \\d+
+     * 找出文本的全部中文                         [\\u4E00-\\u9FA5]+
+     * 找出文本的全部数字                        \d+
      * 找出指定开头x和结尾y的文本                 x.+.y
-     * 取PIN=为开头的内容                     (?<=PIN=).\S*
-     * 取以=开头 以&结尾 取得的中间的内容        (?<==).*?(?=(&|$))
-     * 取某个字符串|开头的内容                (\|.*)
-     *
-     * 我的QQ是:456456 我的电话是:0532214 我的邮箱是:aaa123@aaa.com
-     * =111&
-     * 88=222&99
-     * PIN=1111
-     * PIN=2222
-     * x8465y
-     * 111x56duy222
-     * 444d|dffdf|888
+     * 取PIN=为开头的内容                          (?<=PIN=).\S*
+     * 取以=开头 以&结尾 取得的中间的内容            (?<==).*?(?=(&|$))
+     * 取"key" : "开头，",结尾的中间的内容            (?<="key" : ").*?(?=(",|$))
+     * 取某个字符串|开头的内容                      (\|.*)
      */
     @Test
     public void findMatchTest() throws IOException {
-        String reg = "(\\|.*)";
-        Pattern pattern = Pattern.compile(reg);
-        String text = AllTools.fileTextString("src\\main\\java\\utils\\source");
-        Matcher m = pattern.matcher(text);
-        while (m.find()) {
-            System.out.println(m.group());
+        String regsText = AllTools.fileTextString("src\\main\\java\\utils\\source");
+        String[] regs = regsText.split("\r\n");
+
+        for (String reg : regs) {
+            System.out.println(String.format("<<<<<<<<<<<<<<<< reg: %s >>>>>>>>>>>>>>>", reg));
+            Pattern pattern = Pattern.compile(reg);
+            String text = AllTools.fileTextString("src\\main\\java\\utils\\target");
+            Matcher m = pattern.matcher(text);
+            while (m.find()) {
+                System.out.println(m.group());
+            }
         }
+
     }
 
     /**
