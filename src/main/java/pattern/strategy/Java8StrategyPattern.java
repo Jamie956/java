@@ -1,4 +1,4 @@
-package java8;
+package pattern.strategy;
 
 import org.junit.Test;
 

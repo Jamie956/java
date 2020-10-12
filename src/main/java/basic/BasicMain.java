@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TestMain {
+public class BasicMain {
     private int i = 1;
 
     /**
@@ -114,12 +114,12 @@ public class TestMain {
     @Test
     public void testStatic() {
         //非静态
-        new TestMain().new A();
-        new TestMain().innerClass();
+        new BasicMain().new A();
+        new BasicMain().innerClass();
 
         //静态
         new B();
-        TestMain.staticInnerClass();
+        BasicMain.staticInnerClass();
     }
 
     /**
@@ -384,7 +384,7 @@ public class TestMain {
     public void deepClone() {
         try {
             User user = new User(new Address("stress1"));
-            User clone = (User) TestMain.deepClone(user);
+            User clone = (User) BasicMain.deepClone(user);
 
             System.out.println(user == clone);
             System.out.println(user.getAddress() == clone.getAddress());
