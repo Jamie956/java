@@ -419,7 +419,7 @@ public class TestMain {
             Object to = bucket.getTo();
             String key = bucket.getKeyAsString();
             long docCount = bucket.getDocCount();
-            System.out.println(String.format("key=%s, docCount=%s, from=%s to=%s", key, docCount, from, to));
+            System.out.println(String.format("key=%s, docCount=%s, source=%s to=%s", key, docCount, from, to));
         }
     }
 

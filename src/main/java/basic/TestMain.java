@@ -217,7 +217,7 @@ public class TestMain {
     /**
      * 指定索引位置插入
      * 1.边界检测
-     * 2.数组复制, from index+1, length size-index
+     * 2.数组复制, source index+1, length size-index
      */
     @Test
     public void listIndex() {
