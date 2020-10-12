@@ -1,5 +1,6 @@
 package utils;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -98,22 +99,21 @@ public class TestMain {
     /**
      * 从text中找出匹配正则表达式的字符
      * <p>
-     * 找出文本的全部中文        [\\u4E00-\\u9FA5]+
+     * 找出文本的全部中文                     [\\u4E00-\\u9FA5]+
+     * 找出文本的全部数字                        \\d+
+     * 找出指定开头x和结尾y的文本                 x.+.y
+     * 取PIN=为开头的内容                     (?<=PIN=).\S*
+     * 取以=开头 以&结尾 取得的中间的内容        (?<==).*?(?=(&|$))
+     * 取某个字符串|开头的内容                (\|.*)
+     *
      * 我的QQ是:456456 我的电话是:0532214 我的邮箱是:aaa123@aaa.com
-     * <p>
-     * 找出文本的全部数字        \\d+
-     * <p>
-     * 找出指定开头x和结尾y的文本     x.+.y
-     * <p>
-     * 取PIN=为开头的内容      (?<=PIN=).\S*
+     * =111&
+     * 88=222&99
      * PIN=1111
      * PIN=2222
-     * <p>
-     * 取以=开头 以&结尾 取得的中间的内容        (?<==).*?(?=(&|$))
-     * =111&
-     * =222&
-     * <p>
-     * 取某个字符串|开头的内容        (\|.*)
+     * x8465y
+     * 111x56duy222
+     * 444d|dffdf|888
      */
     @Test
     public void findMatchTest() throws IOException {
@@ -125,4 +125,19 @@ public class TestMain {
             System.out.println(m.group());
         }
     }
+
+    /**
+     * 将文本以某个字符分割成数组，再去除某些字符
+     */
+    @Test
+    public void splitAndRemove() throws IOException {
+        String sourceText = AllTools.fileTextString("src\\main\\java\\utils\\source");
+        String[] sourceArr = sourceText.split(" ");
+        for (String s : sourceArr) {
+            String a = StringUtils.remove(s, "\"");
+            String b = StringUtils.remove(a, ",");
+            System.out.println(b);
+        }
+    }
+
 }
