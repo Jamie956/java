@@ -11,17 +11,16 @@ import java.util.function.Consumer;
  * java8 consumer lambda 实现策略模式
  */
 public class Java8StrategyPattern {
-    private static Map<Integer, Consumer<Integer>> map = new HashMap<>();
+    private Map<Integer, Consumer<Integer>> map = new HashMap<>();
 
     public void setMap(int type, Consumer<Integer> consumer) {
         map.put(type, consumer);
     }
 
-    static {
+    {
         System.out.println("初始map");
         map.put(1, x -> System.out.println("1执行默认方法: " + x));
         map.put(2, x -> System.out.println("2执行默认方法: " + x));
-
     }
 
     public void getWrapper() {
@@ -29,7 +28,6 @@ public class Java8StrategyPattern {
             map.get(type).accept(type);
         }
     }
-
 
     @Test
     public void queryTest() {
