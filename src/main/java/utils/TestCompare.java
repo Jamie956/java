@@ -38,16 +38,19 @@ public class TestCompare {
 
         String targetText = getTextString("src\\main\\java\\utils\\target");
 
-        int count = 0;
+        int matchCount = 0;
+        int notMatchCount = 0;
         for (String s : sourceArr) {
             if (targetText.contains(s)) {
-                count++;
+                matchCount++;
                 System.out.println("contain: " + s);
             } else {
+                notMatchCount++;
                 System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>404 not found: "+s);
             }
         }
-        System.out.println(count);
+        System.out.println(matchCount);
+        System.out.println(notMatchCount);
     }
 
     public String getTextString(String path) throws IOException {
