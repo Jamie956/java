@@ -24,6 +24,9 @@ public class WordCountApp {
     private static final String HADOOP_USER_NAME = "jamie";
 
     public static void main(String[] args) throws Exception {
+        //在IDEA测试
+//        args = new String[]{"/wordcount/input.txt", "/wordcount/output/WordCountApp"};
+
         //  文件输入路径和输出路径由外部传参指定
         if (args.length < 2) {
             System.out.println("Input and output paths are necessary!");
