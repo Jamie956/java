@@ -8,6 +8,7 @@ import java.io.IOException;
 
 /**
  * 进行词频统计
+ * 在 Reduce 中进行单词出现次数的统计：
  */
 public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 

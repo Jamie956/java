@@ -16,6 +16,7 @@ import java.net.URI;
 
 /**
  * 组装作业 并提交到集群运行
+ * 组装 MapReduce 作业，并提交到服务器运行
  */
 public class WordCountApp {
     // 这里为了直观显示参数 使用了硬编码，实际开发中可以通过外部传参
