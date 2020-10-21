@@ -39,7 +39,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class TestMain {
+public class ESTestMain {
     private RestHighLevelClient client = ESClient.getClient();
     private static final String INDEX = "lib";
     private static final String TYPE = "user";
