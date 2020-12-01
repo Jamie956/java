@@ -1,5 +1,6 @@
 package basic;
 
+import cn.hutool.core.util.ReUtil;
 import org.junit.Test;
 import utils.AllTools;
 
@@ -153,5 +154,14 @@ public class RegexpTest {
         String[] patterns = patternsText.split("\r\n");
 
         pr(words, patterns);
+    }
+
+    public static void main(String[] args) {
+        String content = "<p>大木大木大木大木大木大牧师的发发三部分撒犯得上发生</p>\n" + "<p>阿松大数据肯定不能喀什觉得愧疚</p>\n" + "<p>士大夫但是比较卡斯克觉得你</p>\n" + "<p>撒旦范德萨范德萨发吧</p>";
+
+//        content = ReUtil.delFirst("<p>", content);
+        content = content.replaceFirst("<p>", "<p>1:  " );
+//        content = content.replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+        System.out.println(content);
     }
 }
