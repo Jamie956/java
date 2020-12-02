@@ -7,8 +7,7 @@ import freemarker.template.TemplateException;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Testss {
 
@@ -48,4 +47,38 @@ public class Testss {
         }
     }
 
+    @Test
+    public void test3() {
+        Configuration configuration = new Configuration();
+        Writer out = null;
+        try {
+            configuration.setDirectoryForTemplateLoading(new File("src/main/java/freemarker"));
+            Map<String, Object> dataMap = new HashMap<String, Object>();
+            dataMap.put("name", "jamie");
+            dataMap.put("dateTime", new Date());
+
+            List<User> users = new ArrayList<User>();
+            users.add(new User(1, "Jamie"));
+            users.add(new User(2, "欢迎"));
+            users.add(new User(3, "You！"));
+            dataMap.put("users", users);
+
+            // step4 加载模版文件
+            Template template = configuration.getTemplate("hihi.ftl");
+            // step5 生成数据
+            out = new OutputStreamWriter(System.out);
+            // step6 输出文件
+            template.process(dataMap, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != out) {
+                    out.flush();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
 }
