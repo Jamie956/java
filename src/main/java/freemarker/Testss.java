@@ -3,7 +3,6 @@ package freemarker;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import org.junit.Test;
 
 import java.io.*;
@@ -81,4 +80,55 @@ public class Testss {
             }
         }
     }
+
+
+    @Test
+    public void test4() throws Exception {
+        Configuration configuration = new Configuration();
+        configuration.setDirectoryForTemplateLoading(new File("src/main/java/freemarker"));
+
+        //遍历
+        Map<String,List<String>> kindsMap  = new HashMap<>();
+        List<String> aList = new ArrayList<String>();
+        aList.add("a1");
+        aList.add("a2");
+
+        List<String> bList = new ArrayList<String>();
+        bList.add("b1");
+        bList.add("b2");
+
+        kindsMap.put("a",aList);
+        kindsMap.put("b", bList);
+
+        //
+        Map<String, List<User>> kindsMap2  = new HashMap<>();
+        List<User> aList2 = new ArrayList<>();
+        aList2.add(new User(1, "tim"));
+        aList2.add(new User(2, "tim"));
+
+        List<User> bList2 = new ArrayList<User>();
+        bList2.add(new User(3, "tim"));
+        bList2.add(new User(4, "tim"));
+
+        kindsMap2.put("a",aList2);
+        kindsMap2.put("b", bList2);
+
+
+        //
+        Map<String, String> kindsMap3  = new HashMap<>();
+//        kindsMap3.put("1", "v1");
+//        kindsMap3.put("2", "v2");
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("kindsMap", kindsMap);
+        dataMap.put("kindsMap2", kindsMap2);
+        dataMap.put("kindsMap3", kindsMap3);
+
+        Template template = configuration.getTemplate("test4.ftl");
+        StringWriter writer = new StringWriter();
+        template.process(dataMap, writer);
+
+        System.out.println(writer.toString());
+    }
+
 }
