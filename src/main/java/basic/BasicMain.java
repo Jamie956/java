@@ -9,6 +9,8 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.net.ServerSocket;
@@ -842,6 +844,48 @@ public class BasicMain {
 
         //降序
 //        list.sort(Comparator.comparingDouble((JSONObject e) -> e.getDoubleValue("value")).reversed());
+    }
+
+    @Test
+    public void asdasf(){
+        String a = HMACSHA256("", "");
+    }
+
+
+    public static String HMACSHA256(String data, String key) {
+        if (data == null || key == null) {
+            return "";
+        }
+        return HMACSHA256(data.getBytes(), key.getBytes());
+    }
+
+    public static String HMACSHA256(byte[] data, byte[] key) {
+        if (data == null || key == null) {
+            return "";
+        }
+        try {
+            SecretKeySpec secretKeySpec = new SecretKeySpec(key, "HmacSHA256");
+            Mac instance = Mac.getInstance("HmacSHA256");
+            instance.init(secretKeySpec);
+            return bytes2hex(instance.doFinal(data));
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static String bytes2hex(byte[] b) {
+        if (b == null || b.length == 0) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (byte b2 : b) {
+            String hexString = Integer.toHexString(b2 & -1);
+            if (hexString.length() == 1) {
+                sb.append('0');
+            }
+            sb.append(hexString);
+        }
+        return sb.toString().toUpperCase();
     }
 }
 
