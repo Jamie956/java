@@ -7,18 +7,16 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-/**
- * 将每行数据按照指定分隔符进行拆分
- *
- * 将每行数据按照指定分隔符进行拆分。这里需要注意在 MapReduce 中必须使用 Hadoop 定义的类型，因为 Hadoop 预定义的类型都是可序列化，可比较的，所有类型均实现了 WritableComparable 接口。
- */
 public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+    Text k = new Text();
+    IntWritable v = new IntWritable(1);
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        String[] words = value.toString().split("\t");
+        String[] words = value.toString().split(" ");
         for (String word : words) {
-            context.write(new Text(word), new IntWritable(1));
+            k.set(word);
+            context.write(k, v);
         }
     }
 

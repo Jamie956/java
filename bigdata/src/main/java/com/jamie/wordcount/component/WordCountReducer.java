@@ -8,16 +8,18 @@ import java.io.IOException;
 
 /**
  * 进行词频统计
- * 在 Reduce 中进行单词出现次数的统计：
  */
 public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+    int count;
+    IntWritable v = new IntWritable();
 
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-        int count = 0;
+        count = 0;
         for (IntWritable value : values) {
             count += value.get();
         }
-        context.write(key, new IntWritable(count));
+        v.set(count);
+        context.write(key, v);
     }
 }

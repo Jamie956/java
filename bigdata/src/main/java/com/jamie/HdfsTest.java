@@ -1,6 +1,5 @@
 package com.jamie;
 
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.FsAction;
@@ -126,8 +125,8 @@ public class HdfsTest {
      */
     @Test
     public void copyFromLocalFile() throws Exception {
-        Path src = new Path("src/main/resources/hi.txt");
-        Path dst = new Path("/hi.txt");
+        Path src = new Path("src/main/resources/hello.txt");
+        Path dst = new Path("/wordcount/hello.txt");
         fileSystem.copyFromLocalFile(src, dst);
     }
 
