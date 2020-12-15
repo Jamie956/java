@@ -1,6 +1,6 @@
-package hadoop.wordcount.component;
+package com.jamie.wordcount.component;
 
-import hadoop.wordcount.utils.WordCountDataUtils;
+import com.jamie.wordcount.utils.WordCountDataUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Partitioner;

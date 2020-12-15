@@ -1,9 +1,9 @@
-package hadoop.wordcount;
+package com.jamie.wordcount;
 
-import hadoop.wordcount.component.CustomPartitioner;
-import hadoop.wordcount.component.WordCountMapper;
-import hadoop.wordcount.component.WordCountReducer;
-import hadoop.wordcount.utils.WordCountDataUtils;
+import com.jamie.wordcount.component.CustomPartitioner;
+import com.jamie.wordcount.component.WordCountMapper;
+import com.jamie.wordcount.component.WordCountReducer;
+import com.jamie.wordcount.utils.WordCountDataUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;

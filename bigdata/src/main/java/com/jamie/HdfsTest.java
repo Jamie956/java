@@ -1,4 +1,4 @@
-package hadoop;
+package com.jamie;
 
 
 import org.apache.hadoop.conf.Configuration;

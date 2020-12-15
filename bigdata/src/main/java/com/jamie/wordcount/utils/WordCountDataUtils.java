@@ -1,4 +1,4 @@
-package hadoop.wordcount.utils;
+package com.jamie.wordcount.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;

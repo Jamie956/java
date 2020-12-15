@@ -1,4 +1,4 @@
-package hadoop;
+package com.jamie;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
@@ -10,20 +10,13 @@ import java.net.URISyntaxException;
 
 public class HDFSClient {
 
-    public static void main(String[] args) throws IOException, Exception, URISyntaxException {
+    //创建文件夹
+    @Test
+    public void mkdirtest() throws IOException, URISyntaxException, InterruptedException {
         Configuration conf = new Configuration();
-//		conf.set("fs.defaultFS", "hdfs://hadoop102:9000");
-
-        // 1 获取hdfs客户端对象
-//		FileSystem fs = FileSystem.get(conf );
         FileSystem fs = FileSystem.get(new URI("hdfs://hadoop102:9000"), conf, "root");
-
-        // 2 在hdfs上创建路径
-        fs.mkdirs(new Path("/0529/dashen/banzhang"));
-
-        // 3 关闭资源
+        fs.mkdirs(new Path("/1215"));
         fs.close();
-
         System.out.println("over");
     }
 

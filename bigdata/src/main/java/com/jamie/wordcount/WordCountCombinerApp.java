@@ -1,8 +1,8 @@
-package hadoop.wordcount;
+package com.jamie.wordcount;
 
 
-import hadoop.wordcount.component.WordCountMapper;
-import hadoop.wordcount.component.WordCountReducer;
+import com.jamie.wordcount.component.WordCountMapper;
+import com.jamie.wordcount.component.WordCountReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -16,17 +16,13 @@ import java.net.URI;
 
 /**
  * 组装作业 并提交到集群运行
- * 组装 MapReduce 作业，并提交到服务器运行
  */
-public class WordCountApp {
-    // 这里为了直观显示参数 使用了硬编码，实际开发中可以通过外部传参
+public class WordCountCombinerApp {
+    // 这里为了直观显示参数 使用了硬编码的形式，实际开发中可以通过外部传参
     private static final String HDFS_URL = "hdfs://192.168.152.129:8020";
     private static final String HADOOP_USER_NAME = "jamie";
 
     public static void main(String[] args) throws Exception {
-        //在IDEA测试
-//        args = new String[]{"/wordcount/input.txt", "/wordcount/output/WordCountApp"};
-
         //  文件输入路径和输出路径由外部传参指定
         if (args.length < 2) {
             System.out.println("Input and output paths are necessary!");
@@ -45,11 +41,14 @@ public class WordCountApp {
         Job job = Job.getInstance(configuration);
 
         // 设置运行的主类
-        job.setJarByClass(WordCountApp.class);
+        job.setJarByClass(WordCountCombinerApp.class);
 
         // 设置Mapper和Reducer
         job.setMapperClass(WordCountMapper.class);
         job.setReducerClass(WordCountReducer.class);
+
+        // 设置Combiner
+        job.setCombinerClass(WordCountReducer.class);
 
         // 设置Mapper输出key和value的类型
         job.setMapOutputKeyClass(Text.class);
@@ -78,6 +77,5 @@ public class WordCountApp {
 
         // 根据作业结果,终止当前运行的Java虚拟机,退出程序
         System.exit(result ? 0 : -1);
-
     }
 }
