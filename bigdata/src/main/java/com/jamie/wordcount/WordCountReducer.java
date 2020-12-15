@@ -1,4 +1,4 @@
-package com.jamie.wordcount.component;
+package com.jamie.wordcount;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;

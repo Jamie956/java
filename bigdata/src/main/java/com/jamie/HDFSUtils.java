@@ -14,7 +14,7 @@ import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class HdfsTest {
+public class HDFSUtils {
     private static final String HDFS_PATH = "hdfs://hadoop102:9000";
     private static final String HDFS_USER = "root";
     private static FileSystem fileSystem;
