@@ -13,6 +13,7 @@
         <module>mybatis</module>
         <module>es</module>
         <module>basic</module>
+        <module>spring</module>
     </modules>
 
     <properties>
@@ -132,6 +133,19 @@
                 <groupId>freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>2.3.8</version>
+            </dependency>
+
+            <!-- Spring IOC -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>4.3.14.RELEASE</version>
+            </dependency>
+            <!-- Spring AOP -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>5.2.4.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
