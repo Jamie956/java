@@ -1,4 +1,4 @@
-package mybatis.pojo;
+package pojo;
 
 public class OrderItem {
     private int id;

@@ -1,16 +1,14 @@
-package mybatis;
-
 import java.io.IOException;
 import java.util.List;
 
-import mybatis.pojo.Category;
-import mybatis.pojo.Order;
-import mybatis.pojo.OrderItem;
-import mybatis.pojo.Product;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import pojo.Category;
+import pojo.Order;
+import pojo.OrderItem;
+import pojo.Product;
 
 public class OneAndManyTesting {
     public static SqlSession session = null;

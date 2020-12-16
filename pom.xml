@@ -10,6 +10,7 @@
 
     <modules>
         <module>bigdata</module>
+        <module>mybatis</module>
     </modules>
 
     <properties>

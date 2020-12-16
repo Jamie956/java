@@ -1,4 +1,4 @@
-package mybatis.pojo;
+package pojo;
 
 public class Product {
     private int id;
