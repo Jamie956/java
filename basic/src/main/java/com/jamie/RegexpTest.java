@@ -7,106 +7,6 @@ import com.jamie.utils.AllTools;
 import java.io.IOException;
 
 public class RegexpTest {
-
-    public static void pr(String[] words, String[] patterns) {
-        for (String pattern : patterns) {
-            System.out.println(">>>>>>>>>>>>>> pattern: " + pattern + " <<<<<<<<<<<<<<");
-            for (String word : words) {
-                if (word.matches(pattern)) {
-                    System.out.println(String.format("MATCHES!          word: %s", word));
-                } else {
-                    System.out.println(String.format("NOT MATCHES!      word: %s", word));
-                }
-            }
-        }
-    }
-
-    /*
-        a
-        1
-        abc
-        abcde987321
-        abcdefg
-        defghij
-
-        abc
-        abc 123
-        abc123
-        abc  123
-        a
-        rt
-        C
-        +
-        RtS
-        8
-        abcdefg
-        a+\\
-        kava
-        sava
-        lava
-        tava
-        java
-        Robert
-        book
-        cat
-        job
-        Todor
-        +ob 123? @ p
-        Boooob
-        jjobss
-        abc135gf
-        string '123'
-        int a = 5247;
-        int A = 5247;
-        int b = 5247;
-        1int a = 5247;
-        string '
-        Marko is a good boy.
-        Our Marko, is a good boy!
-        Nobody is as good as our Marko is!
-        2.345,56
-        -52.678.110
-        235
-        128m
-        2020-08-03
-     */
-
-    /*
-        \w
-        \w*
-        \w+
-        abc\w*
-        \w+\s\d+
-        \w+\s*\d+
-        \w+\s+\d+
-        \w+\s?\d+
-        \D+
-        \W
-        [a-zA-Z0-9]
-        \w{1}
-        \w{1,2}
-        \w{1,3}
-        \w{1,7}
-        \w{0,7}
-        [kj]ava
-        [^kj]ava
-        .[o][b].*
-        .ob.*
-        .*
-        \w+
-        \w+\s\'.+
-        \w+\sa.+
-        \D+\sa.+
-        \D+\s.+
-        \w+\s?\'?\d{0,3}\'?
-        \w+(\s\')?\d{0,3}\'?
-        \w+(\s\'(\d*)\')?
-        M.+
-        ^M.+
-        .+(\d)$
-        \d{4}-\d{2}-\d{2}
-    */
-
     /**
      * \w               一个  数字或字母
      * \w*              0或以上个   数字或字母
@@ -148,20 +48,29 @@ public class RegexpTest {
      */
     @Test
     public void test01() throws IOException {
-        String wordsText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\source");
+        String wordsText = AllTools.fileTextString("src/main/resources/regWords");
         String[] words = wordsText.split("\r\n");
-        String patternsText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\target");
+        String patternsText = AllTools.fileTextString("src/main/resources/regPatterns");
         String[] patterns = patternsText.split("\r\n");
 
-        pr(words, patterns);
+        for (String pattern : patterns) {
+            System.out.println(">>>>>>>>>>>>>> pattern: " + pattern + " <<<<<<<<<<<<<<");
+            for (String word : words) {
+                if (word.matches(pattern)) {
+                    System.out.println(String.format("MATCHES!          word: %s", word));
+                } else {
+                    System.out.println(String.format("NOT MATCHES!      word: %s", word));
+                }
+            }
+        }
     }
 
-    public static void main(String[] args) {
-        String content = "<p>大木大木大木大木大木大牧师的发发三部分撒犯得上发生</p>\n" + "<p>阿松大数据肯定不能喀什觉得愧疚</p>\n" + "<p>士大夫但是比较卡斯克觉得你</p>\n" + "<p>撒旦范德萨范德萨发吧</p>";
+    @Test
+    public void asdasd() {
+        String content = "<p>asdasdas</p>\n" + "<p>sdfsd</p>\n" + "<p>bbb</p>\n" + "<p>cccc</p>";
 
-//        content = ReUtil.delFirst("<p>", content);
-        content = content.replaceFirst("<p>", "<p>1:  " );
-//        content = content.replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
-        System.out.println(content);
+        String a = ReUtil.delFirst("<p>", content);
+        String b = content.replaceFirst("<p>", "<p>1:  " );
+        String c = content.replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
     }
 }

@@ -36,10 +36,10 @@ public class UtilsMain {
      */
     @Test
     public void myCompare() throws IOException {
-        String sourceText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\source");
+        String sourceText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
         String[] sourceArr = sourceText.split("\r\n");
 
-        String targetText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\target");
+        String targetText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regPatterns");
 
         int matchCount = 0;
         int notMatchCount = 0;
@@ -77,7 +77,7 @@ public class UtilsMain {
 
         Pattern ddlPattern = Pattern.compile(ddlReg, Pattern.CASE_INSENSITIVE);
         Pattern colPattern = Pattern.compile(colReg, Pattern.CASE_INSENSITIVE);
-        String sql = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\source");
+        String sql = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
 
         Matcher matcher = ddlPattern.matcher(sql);
         if (matcher.find()) {
@@ -145,13 +145,13 @@ public class UtilsMain {
      */
     @Test
     public void findMatchTest() throws IOException {
-        String regsText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\source");
+        String regsText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
         String[] regs = regsText.split("\r\n");
 
         for (String reg : regs) {
             System.out.println(String.format("<<<<<<<<<<<<<<<< reg: %s >>>>>>>>>>>>>>>", reg));
             Pattern pattern = Pattern.compile(reg);
-            String text = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\target");
+            String text = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regPatterns");
             Matcher m = pattern.matcher(text);
             while (m.find()) {
                 System.out.println(m.group());
@@ -165,7 +165,7 @@ public class UtilsMain {
      */
     @Test
     public void splitAndRemove() throws IOException {
-        String sourceText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\source");
+        String sourceText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
         String[] sourceArr = sourceText.split(" ");
         for (String s : sourceArr) {
             String a = StringUtils.remove(s, "\"");
