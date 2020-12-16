@@ -11,6 +11,8 @@
     <modules>
         <module>bigdata</module>
         <module>mybatis</module>
+        <module>es</module>
+        <module>basic</module>
     </modules>
 
     <properties>

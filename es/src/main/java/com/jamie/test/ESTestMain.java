@@ -1,8 +1,8 @@
-package es.test;
+package com.jamie.test;
 
 import com.alibaba.fastjson.JSONObject;
-import es.entity.User;
-import es.utils.ESClient;
+import com.jamie.entity.User;
+import com.jamie.utils.ESClient;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;

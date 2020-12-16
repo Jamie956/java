@@ -1,4 +1,4 @@
-package es.utils;
+package com.jamie.utils;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
