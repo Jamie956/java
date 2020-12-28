@@ -26,9 +26,11 @@ public class HDFSUtils {
     @Before
     public void prepare() {
         try {
+            System.setProperty("HADOOP_USER_NAME", HDFS_USER);
             configuration = new Configuration();
             // 启动单节点的Hadoop,副本系数可以设置为1,不设置的话默认值为3
             configuration.set("dfs.replication", "1");
+//            configuration.set("fs.defaultFS", HDFS_PATH);
             fileSystem = FileSystem.get(new URI(HDFS_PATH), configuration, HDFS_USER);
         } catch (IOException | URISyntaxException | InterruptedException e) {
             e.printStackTrace();
@@ -56,8 +58,7 @@ public class HDFSUtils {
      */
     @Test
     public void mkDirWithPermission() throws Exception {
-        fileSystem.mkdirs(new Path("/1216"),
-                new FsPermission(FsAction.READ_WRITE, FsAction.READ, FsAction.READ));
+        fileSystem.mkdirs(new Path("/1216"), new FsPermission(FsAction.READ_WRITE, FsAction.READ, FsAction.READ));
     }
 
     /**
@@ -66,8 +67,7 @@ public class HDFSUtils {
     @Test
     public void create() throws Exception {
         // 如果文件存在，默认会覆盖, 可以通过第二个参数进行控制。第三个参数可以控制使用缓冲区的大小
-        FSDataOutputStream out = fileSystem.create(new Path("/a.txt"),
-                true, 4096);
+        FSDataOutputStream out = fileSystem.create(new Path("/a.txt"), true, 4096);
         out.write("hello hadoop!".getBytes());
         out.write("hello spark!".getBytes());
         out.write("hello flink!".getBytes());
@@ -139,17 +139,15 @@ public class HDFSUtils {
         final float fileSize = file.length();
         InputStream in = new BufferedInputStream(new FileInputStream(file));
 
-        FSDataOutputStream out = fileSystem.create(new Path("/kafka5.tgz"),
-                new Progressable() {
-                    long fileCount = 0;
-
-                    @Override
-                    public void progress() {
-                        fileCount++;
-                        // progress方法每上传大约64KB的数据后就会被调用一次
-                        System.out.println("文件上传总进度：" + (fileCount * 64 * 1024 / fileSize) * 100 + " %");
-                    }
-                });
+        FSDataOutputStream out = fileSystem.create(new Path("/kafka5.tgz"), new Progressable() {
+            long fileCount = 0;
+            @Override
+            public void progress() {
+                fileCount++;
+                // progress方法每上传大约64KB的数据后就会被调用一次
+                System.out.println("文件上传总进度：" + (fileCount * 64 * 1024 / fileSize) * 100 + " %");
+            }
+        });
         IOUtils.copyBytes(in, out, 4096);
     }
 
@@ -242,7 +240,7 @@ public class HDFSUtils {
 
     // 从HDFS下载到本地
     @Test
-    public void getFileFromHDFS() throws IOException, InterruptedException, URISyntaxException{
+    public void getFileFromHDFS() throws IOException, InterruptedException, URISyntaxException {
         FSDataInputStream fis = fileSystem.open(new Path("/hi.txt"));
         FileOutputStream fos = new FileOutputStream(new File("src/main/resources/download-hi.txt"));
 
@@ -253,7 +251,7 @@ public class HDFSUtils {
 
     // 分块下载，下载第一块
     @Test
-    public void readFileSeek1() throws IOException, InterruptedException, URISyntaxException{
+    public void readFileSeek1() throws IOException, InterruptedException, URISyntaxException {
         FSDataInputStream fis = fileSystem.open(new Path("/hadoop-2.7.2.tar.gz"));
         FileOutputStream fos = new FileOutputStream(new File("e:/hadoop-2.7.2.tar.gz.part1"));
 
@@ -269,10 +267,10 @@ public class HDFSUtils {
 
     // 分块下载，下载第二块
     @Test
-    public void readFileSeek2() throws IOException, InterruptedException, URISyntaxException{
+    public void readFileSeek2() throws IOException, InterruptedException, URISyntaxException {
         FSDataInputStream fis = fileSystem.open(new Path("/hadoop-2.7.2.tar.gz"));
         // 设置指定读取的起点
-        fis.seek(1024*1024*128);
+        fis.seek(1024 * 1024 * 128);
         FileOutputStream fos = new FileOutputStream(new File("e:/hadoop-2.7.2.tar.gz.part2"));
 
         IOUtils.copyBytes(fis, fos, configuration);
