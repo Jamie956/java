@@ -13,6 +13,7 @@ public class GuaTest {
         Converter<String, String> converter = CaseFormat.LOWER_CAMEL.converterTo(CaseFormat.LOWER_UNDERSCORE);
         // 输出: user_name
         System.out.println(converter.convert("userName"));
+        System.out.println(converter.convert("user_name"));
 
         // 驼峰转连接符, userName -> user-name
         converter = CaseFormat.LOWER_CAMEL.converterTo(CaseFormat.LOWER_HYPHEN);
@@ -28,6 +29,7 @@ public class GuaTest {
         converter = CaseFormat.LOWER_CAMEL.converterTo(CaseFormat.UPPER_UNDERSCORE);
         // 输出: USER_NAME
         System.out.println(converter.convert("userName"));
+
     }
 
 }
