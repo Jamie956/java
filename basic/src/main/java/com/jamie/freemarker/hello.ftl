@@ -31,7 +31,9 @@ ${cname2}
 
 内建函数：
 <#assign data = "abcd1234">
+<#assign data2 = "HiWorld">
 第一个字母大写：${data?cap_first}
+第一个字母小写：${data2?uncap_first}
 所有字母小写：${data?lower_case}
 所有字母大写：${data?upper_case}
 <#assign floatData = 12.34>

@@ -65,9 +65,11 @@ public class Testss {
 
             Configuration configuration = new Configuration();
             configuration.setDirectoryForTemplateLoading(new File("src/main/java/com/jamie/freemarker"));
-            StringWriter writer = new StringWriter();
             Template template = configuration.getTemplate("hello.ftl");
+
+            StringWriter writer = new StringWriter();
             template.process(dataMap, writer);
+
             System.out.println(writer.toString());
         } catch (Exception e) {
             e.printStackTrace();
