@@ -80,37 +80,19 @@ public class UtilsMain {
         }
     }
 
-    /*
-     我的QQ是:456456 我的电话是:0532214 我的邮箱是:aaa123@aaa.com
-     =111&
-     88=222&99
-     PIN=1111
-     PIN=2222
-     x8465y
-     111x56duy222
-     444d|dffdf|888
-     {
-     "key" : "123",
-     },
-     {
-     "key" : "845",
-     },
-     {
-     "key" : "856",
-     },
-     {
-     "key" : "412",
-     },
+    @Test
+    public void isMatchTest() {
+        String[] regs = {"\\w", "\\w*", "\\w+", "abc\\w*", "\\w+\\s\\d+", "\\w+\\s*\\d+", "\\w+\\s+\\d+", "\\w+\\s?\\d+", "\\D+", "\\W", "[a-zA-Z0-9]", "\\w{1}", "\\w{1,2}", "\\w{1,3}", "\\w{1,7}", "\\w{0,7}", "[kj]ava", "[^kj]ava", ".[o][b].*", ".ob.*", ".*", "\\w+", "\\w+\\s\\'.+", "\\w+\\sa.+", "\\D+\\sa.+", "\\D+\\s.+", "\\w+\\s?\\'?\\d{0,3}\\'?", "\\w+(\\s\\')?\\d{0,3}\\'?", "\\w+(\\s\\'(\\d*)\\')?", "M.+", "^M.+", ".+(\\d)$", "\\d{4}-\\d{2}-\\d{2}"};
 
-     //reg
-    [\\u4E00-\\u9FA5]+
-    \d+
-    x.+.y
-    (?<=PIN=).\S*
-    (?<==).*?(?=(&|$))
-    (?<="key" : ").*?(?=(",|$))
-    (\|.*)
-     */
+        String[] words = {"a", "1", "abc", "abcde987321", "abcdefg", "defghij", "", "abc", "abc 123", "abc123", "abc  123", "a", "rt", "C", "+", "RtS", "8", "abcdefg", "a+\\", "kava", "sava", "lava", "tava", "java", "Robert", "book", "cat", "job", "Todor", "+ob 123? @ p", "Boooob", "jjobss", "abc135gf", "string '123'", "int a = 5247;", "int A = 5247;", "int b = 5247;", "1int a = 5247;", "string '", "Marko is a good boy.", "Our Marko, is a good boy!", "Nobody is as good as our Marko is!", "2.345,56", "-52.678.110", "235", "128m", "2020-08-03"};
+        for (String reg : regs) {
+            System.out.println(">>>>>>>>>>>>>> " + reg);
+            for (String word : words) {
+                boolean isMatch = Pattern.matches(reg, word);
+                System.out.println(word + "            is Match " + reg + ": "+ isMatch);
+            }
+        }
+    }
 
     /**
      * 从text中找出匹配正则表达式的字符
@@ -123,35 +105,12 @@ public class UtilsMain {
      * 取某个字符串|开头的内容                      (\|.*)
      */
     @Test
-    public void findMatchTest() throws IOException {
-        String regsText = fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
-        String[] regs = regsText.split("\r\n");
-
-        for (String reg : regs) {
-            System.out.println(String.format("<<<<<<<<<<<<<<<< reg: %s >>>>>>>>>>>>>>>", reg));
-            Pattern pattern = Pattern.compile(reg);
-            String text = fileTextString("src\\main\\java\\com.jamie.utils\\regPatterns");
-            Matcher m = pattern.matcher(text);
-            while (m.find()) {
-                System.out.println(m.group());
-            }
-        }
-
-    }
-
-    /**
-     * 将文本以某个字符分割成数组，再去除某些字符
-     */
-    @Test
-    public void splitAndRemove() throws IOException {
-        String sourceText = fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
-        String[] sourceArr = sourceText.split(" ");
-        for (String s : sourceArr) {
-            String a = StringUtils.remove(s, "\"");
-            String b = StringUtils.remove(a, ",");
-            System.out.println(b);
+    public void findMatch() {
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher("asa1jbjb3");
+        while (m.find()) {
+            System.out.println(m.group());
         }
     }
-
 
 }
