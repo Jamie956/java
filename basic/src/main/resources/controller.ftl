@@ -18,16 +18,16 @@ import javax.annotation.Resource;
 
 @Api(value = "${entity}Controller", tags = "")
 @RestController
-@RequestMapping("/${entity}")
+@RequestMapping("/${entity_first_low}")
 public class ${entity}Controller {
     @Resource
-    private ${entity}Service ${entity?lower_case}Service;
+    private ${entity}Service ${entity_first_low}Service;
 
     @ApiOperation("分页查询")
     @ApiImplicitParam(name = "query", value = "查询封装对象", paramType = "body")
     @PostMapping("/list")
     public Result<IPage<${entity}Model>> list(@RequestBody Query<${entity}Model> query) {
-        IPage<${entity}Model> list = ${entity}Service.list(query);
+        IPage<${entity}Model> list = ${entity_first_low}Service.list(query);
         if (list == null) {
             return new Result<>(10001, "未找到", null);
         }

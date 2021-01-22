@@ -20,11 +20,11 @@ public class GenerateClass {
         String[] arr = {"Guarantee","Violation","Pledge","JudgeDoc","TaxRating","Register","Punish","ConsumeLimit","Executed","StockFreeze"};
 
         for (String entity : arr) {
-            createClass(entity, "Mapper", "com.ccr.qc.company");
-            createClass(entity, "Service", "com.ccr.qc.company");
-            createClass(entity, "Controller", "com.ccr.qc.company");
-            createClass(entity, "Entity", "com.ccr.qc.company");
-            createClass(entity, "Model", "com.ccr.qc.company");
+//            createClass(entity, "Mapper", "com.ccr.qc.business");
+            createClass(entity, "Service", "com.ccr.qc.business");
+//            createClass(entity, "Controller", "com.ccr.qc.business");
+//            createClass(entity, "Entity", "com.ccr.qc.business");
+//            createClass(entity, "Model", "com.ccr.qc.business");
         }
     }
 
@@ -32,6 +32,7 @@ public class GenerateClass {
         try {
             Map<String, Object> dataMap = new HashMap<>(2);
             dataMap.put("entity", entity);
+            dataMap.put("entity_first_low", entity.substring(0, 1).toLowerCase()+entity.substring(1));
             dataMap.put("class_path", classPath);
 
             Configuration configuration = new Configuration();
