@@ -40,10 +40,10 @@ public class GenerateClass {
             dataMap.put("class_path", classPath);
 
             Configuration configuration = new Configuration();
-            configuration.setDirectoryForTemplateLoading(new File("basic/src/main/resources"));
+            configuration.setDirectoryForTemplateLoading(new File(RESOURCES_PATH));
             Template template = configuration.getTemplate(type.toLowerCase() + ".ftl");
 
-            String outDir = "basic/src/main/resources/" + type.toLowerCase();
+            String outDir = RESOURCES_PATH + type.toLowerCase();
 
             File path = new File(outDir);
             if (!path.isDirectory()) {
