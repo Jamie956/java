@@ -7,7 +7,7 @@ import com.google.common.base.Converter;
  * @Author: Zjm
  * @Date: 2021/1/21 14:10
  */
-public class GuaTest {
+public class GuavaTest {
     public static void main(String[] args) {
         // 驼峰转下划线, userName -> user_name
         Converter<String, String> converter = CaseFormat.LOWER_CAMEL.converterTo(CaseFormat.LOWER_UNDERSCORE);

@@ -10,52 +10,38 @@ import java.util.regex.Pattern;
 import static com.jamie.utils.AllTools.fileTextString;
 
 public class UtilsMain {
-    /*
-    //source文件
-    123
-    456
-    789
-    856
-    847
+    private static final String RESOURCES_PATH = "basic/src/main/resources/";
 
-    //target文件
-    {
-    "key" : "123",
-    },
-    {
-    "key" : "845",
-    },
-    {
-    "key" : "856",
-    },
-    {
-    "key" : "412",
-    },
-     */
+    public static void main(String[] args) {
+        myCompare();
+    }
 
     /**
+     * 数据比对
      * source文件的每一行数据转成数组元素，去target文件找是否存
      */
     @Test
-    public void myCompare() throws IOException {
-        String sourceText = fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
-        String[] sourceArr = sourceText.split("\r\n");
+    public static void myCompare() {
+        String text = fileTextString(RESOURCES_PATH + "source");
+        String[] lines = text.split("\r\n");
 
-        String targetText = fileTextString("src\\main\\java\\com.jamie.utils\\regPatterns");
+        String targetText = fileTextString(RESOURCES_PATH + "target");
 
         int matchCount = 0;
         int notMatchCount = 0;
-        for (String s : sourceArr) {
-            if (targetText.contains(s)) {
+        for (String line : lines) {
+            if (targetText.contains(line)) {
                 matchCount++;
-                System.out.println("found: " + s);
+                System.out.println("source文件当前行在target找到匹配数据: " + line);
             } else {
                 notMatchCount++;
-                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>> not found: " + s);
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>source文件当前行在target找不到匹配数据: " + line);
             }
         }
-        System.out.println("matchCount: " + matchCount);
-        System.out.println("notMatchCount: " + notMatchCount);
+
+        System.out.println("---------------总数统计---------------");
+        System.out.println("匹配数目: " + matchCount);
+        System.out.println("不匹配数目: " + notMatchCount);
     }
 
     /**
@@ -169,9 +155,5 @@ public class UtilsMain {
         }
     }
 
-    public static void main(String[] args) {
-        for (int i = 0; i < 100; i++) {
-            System.out.println(i);
-        }
-    }
+
 }
