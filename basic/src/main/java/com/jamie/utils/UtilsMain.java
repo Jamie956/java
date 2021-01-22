@@ -3,6 +3,7 @@ package com.jamie.utils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,22 +11,19 @@ import java.util.regex.Pattern;
 import static com.jamie.utils.AllTools.fileTextString;
 
 public class UtilsMain {
-    private static final String RESOURCES_PATH = "basic/src/main/resources/";
-
-    public static void main(String[] args) {
-        myCompare();
-    }
 
     /**
      * 数据比对
      * source文件的每一行数据转成数组元素，去target文件找是否存
      */
     @Test
-    public static void myCompare() {
-        String text = fileTextString(RESOURCES_PATH + "source");
+    public void myCompare() throws IOException {
+        String resourcePath = new File("").getCanonicalPath() + "/src/main/resources/";
+
+        String text = fileTextString(resourcePath + "/source");
         String[] lines = text.split("\r\n");
 
-        String targetText = fileTextString(RESOURCES_PATH + "target");
+        String targetText = fileTextString(resourcePath + "/target");
 
         int matchCount = 0;
         int notMatchCount = 0;
