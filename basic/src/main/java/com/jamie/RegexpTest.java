@@ -2,9 +2,10 @@ package com.jamie;
 
 import cn.hutool.core.util.ReUtil;
 import org.junit.Test;
-import com.jamie.utils.AllTools;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import java.io.IOException;
+import static com.jamie.project.MyUtils.fileTextString;
 
 public class RegexpTest {
     /**
@@ -47,19 +48,17 @@ public class RegexpTest {
      *
      */
     @Test
-    public void test01() throws IOException {
-        String wordsText = AllTools.fileTextString("src/main/resources/regWords");
-        String[] words = wordsText.split("\r\n");
-        String patternsText = AllTools.fileTextString("src/main/resources/regPatterns");
-        String[] patterns = patternsText.split("\r\n");
+    public void test01() {
+        String[] patterns = {"\\w", "\\w*", "\\w+", "abc\\w*", "\\w+\\s\\d+", "\\w+\\s*\\d+", "\\w+\\s+\\d+", "\\w+\\s?\\d+", "\\D+", "\\W", "[a-zA-Z0-9]", "\\w{1}", "\\w{1,2}", "\\w{1,3}", "\\w{1,7}", "\\w{0,7}", "[kj]ava", "[^kj]ava", ".[o][b].*", ".ob.*", ".*", "\\w+", "\\w+\\s\\'.+", "\\w+\\sa.+", "\\D+\\sa.+", "\\D+\\s.+", "\\w+\\s?\\'?\\d{0,3}\\'?", "\\w+(\\s\\')?\\d{0,3}\\'?", "\\w+(\\s\\'(\\d*)\\')?", "M.+", "^M.+", ".+(\\d)$", "\\d{4}-\\d{2}-\\d{2}"};
+        String[] words = {"a", "1", "abc", "abcde987321", "abcdefg", "defghij", "", "abc", "abc 123", "abc123", "abc  123", "a", "rt", "C", "+", "RtS", "8", "abcdefg", "a+\\", "kava", "sava", "lava", "tava", "java", "Robert", "book", "cat", "job", "Todor", "+ob 123? @ p", "Boooob", "jjobss", "abc135gf", "string '123'", "int a = 5247;", "int A = 5247;", "int b = 5247;", "1int a = 5247;", "string '", "Marko is a good boy.", "Our Marko, is a good boy!", "Nobody is as good as our Marko is!", "2.345,56", "-52.678.110", "235", "128m", "2020-08-03"};
 
         for (String pattern : patterns) {
             System.out.println(">>>>>>>>>>>>>> pattern: " + pattern + " <<<<<<<<<<<<<<");
             for (String word : words) {
                 if (word.matches(pattern)) {
-                    System.out.println(String.format("MATCHES!          word: %s", word));
+                    System.out.println(String.format("MATCHES!          word: %s, pattern: %s", word, pattern));
                 } else {
-                    System.out.println(String.format("NOT MATCHES!      word: %s", word));
+                    System.out.println(String.format("NOT MATCHES!      word: %s, pattern: %s", word, pattern));
                 }
             }
         }
@@ -73,4 +72,62 @@ public class RegexpTest {
         String b = content.replaceFirst("<p>", "<p>1:  " );
         String c = content.replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
     }
+
+    /**
+     * 从text中找出匹配正则表达式的字符
+     * 找出文本的全部中文                         [\\u4E00-\\u9FA5]+
+     * 找出文本的全部数字                        \d+
+     * 找出指定开头x和结尾y的文本                 x.+.y
+     * 取PIN=为开头的内容                          (?<=PIN=).\S*
+     * 取以=开头 以&结尾 取得的中间的内容            (?<==).*?(?=(&|$))
+     * 取"key" : "开头，",结尾的中间的内容            (?<="key" : ").*?(?=(",|$))
+     * 取某个字符串|开头的内容                      (\|.*)
+     */
+    @Test
+    public void findMatch() {
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher("asa1jbjb3");
+        while (m.find()) {
+            System.out.println(m.group());
+        }
+    }
+
+    /**
+     * 正则表达式解析sql
+     */
+    @Test
+    public void sqlRegParse() {
+        //匹配整个ddl，将ddl分为表名，列sql部分，表注释
+        String ddlReg = "\\s*create\\s+table\\s+(?<tableName>\\S+)[^\\(]*\\((?<columnsSQL>[\\s\\S]+)\\)[^\\)]+?(comment\\s*(=|on\\s+table)\\s*'(?<tableComment>.*?)'\\s*;?)?$";
+        //匹配列sql部分，分别解析每一列的列名 类型 和列注释
+        String colReg = "\\s*(?<fieldName>\\S+)\\s+(?<fieldType>\\w+)\\s*(?:\\([\\s\\d,]+\\))?((?!comment).)*(comment\\s*'(?<fieldComment>.*?)')?\\s*(,|$)";
+
+        Pattern ddlPattern = Pattern.compile(ddlReg, Pattern.CASE_INSENSITIVE);
+        Pattern colPattern = Pattern.compile(colReg, Pattern.CASE_INSENSITIVE);
+        String sql = fileTextString("src\\main\\resources\\myddl");
+
+        Matcher matcher = ddlPattern.matcher(sql);
+        if (matcher.find()) {
+            String tableName = matcher.group("tableName");
+            String tableComment = matcher.group("tableComment");
+
+            System.out.println(tableName + "\t\t" + tableComment);
+            System.out.println("--------------------");
+
+            String columnsSql = matcher.group("columnsSQL");
+
+            if (columnsSql != null && columnsSql.length() > 0) {
+                Matcher colMatcher = colPattern.matcher(columnsSql);
+                while (colMatcher.find()) {
+                    String fieldName = colMatcher.group("fieldName");
+                    String fieldType = colMatcher.group("fieldType");
+                    String fieldComment = colMatcher.group("fieldComment");
+                    if (!"key".equalsIgnoreCase(fieldType)) {
+                        System.out.println(fieldName + "\t\t" + fieldType + "\t\t" + fieldComment);
+                    }
+                }
+            }
+        }
+    }
+
 }

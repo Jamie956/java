@@ -1,9 +1,9 @@
-package com.jamie.utils;
+package com.jamie.project;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class AllTools {
+public class MyUtils {
     public static String fileTextString(String path) {
         try {
             FileInputStream in = new FileInputStream(path);

@@ -1,49 +1,50 @@
 package com.jamie.project;
 
-/**
- * @Author: Zjm
- * @Date: 2021/1/22 11:55
- */
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.junit.Test;
 
 import java.io.*;
 import java.util.*;
 
-import static com.jamie.utils.AllTools.fileTextString;
+import static com.jamie.project.MyUtils.fileTextString;
 
-/**
- * 根据entity，freemarker创建类（mapper, service, controller.ftl）
- */
 public class GenerateClass {
 
-    private static final String RESOURCES_PATH = "basic/src/main/resources/";
+    @Test
+    public void createClass() throws IOException {
+        String resourcePath = new File("").getCanonicalPath() + "/src/main/resources/";
 
-    public static void main(String[] args) {
-//        String[] arr = {"Guarantee","Violation","Pledge","JudgeDoc","TaxRating","Register","Punish","ConsumeLimit","Executed","StockFreeze"};
-//        for (String entity : arr) {
-//            createClass(entity, "Mapper", "com.ccr.qc.business");
-//            createClass(entity, "Service", "com.ccr.qc.business");
-//            createClass(entity, "Entity", "com.ccr.qc.business");
-//            createClass(entity, "Model", "com.ccr.qc.business");
-//        }
+        String text = fileTextString(resourcePath + "tableinfo");
+        String[] lines = text.split(System.getProperty("line.separator", "\n"));
 
-        createController();
+        List<String> entities = new ArrayList<>();
+        for (String line : lines) {
+            String[] words = line.split(",");
+            entities.add(words[0]);
+        }
+
+        for (String entity : entities) {
+            createClass(entity, "Mapper", "com.ccr.qc.business");
+            createClass(entity, "Service", "com.ccr.qc.business");
+            createClass(entity, "Entity", "com.ccr.qc.business");
+            createClass(entity, "Model", "com.ccr.qc.business");
+        }
     }
 
-    public static void createClass(String entity, String type, String classPath) {
+    public void createClass(String entity, String type, String classPath) {
         try {
+            String resourcePath = new File("").getCanonicalPath() + "/src/main/resources/";
+
             Map<String, Object> dataMap = new HashMap<>(2);
             dataMap.put("entity", entity);
-            dataMap.put("entity_first_low", entity.substring(0, 1).toLowerCase() + entity.substring(1));
             dataMap.put("class_path", classPath);
 
             Configuration configuration = new Configuration();
-            configuration.setDirectoryForTemplateLoading(new File(RESOURCES_PATH));
+            configuration.setDirectoryForTemplateLoading(new File(resourcePath));
             Template template = configuration.getTemplate(type.toLowerCase() + ".ftl");
 
-            String outDir = RESOURCES_PATH + type.toLowerCase();
+            String outDir = resourcePath + type.toLowerCase();
 
             File path = new File(outDir);
             if (!path.isDirectory()) {
@@ -63,28 +64,25 @@ public class GenerateClass {
         }
     }
 
-    /**
-     * 根据文本 实体英文名,实体中文
-     * 生成controller代码
-     */
-    public static void createController() {
-        String text = fileTextString(RESOURCES_PATH + "tableinfo");
-        String[] lines = text.split("\r\n");
-        Map<String, String> entityMap = new HashMap<>();
-        for (String line : lines) {
-            String[] words = line.split(",");
-            entityMap.put(words[0], words[1]);
-        }
-        createController(entityMap);
-    }
-
-    public static void createController(Map<String, String> entityMap) {
+    @Test
+    public void createController() {
         try {
+            String resourcePath = new File("").getCanonicalPath() + "/src/main/resources/";
+
+            String text = fileTextString(resourcePath + "tableinfo");
+            String[] lines = text.split(System.getProperty("line.separator", "\n"));
+
+            Map<String, String> entityMap = new HashMap<>();
+            for (String line : lines) {
+                String[] words = line.split(",");
+                entityMap.put(words[0], words[1]);
+            }
+
             Map<String, Object> dataMap = new HashMap<>(1);
             dataMap.put("entityMap", entityMap);
 
             Configuration configuration = new Configuration();
-            configuration.setDirectoryForTemplateLoading(new File(RESOURCES_PATH));
+            configuration.setDirectoryForTemplateLoading(new File(resourcePath));
             Template template = configuration.getTemplate("controller2.ftl");
 
             StringWriter writer = new StringWriter();
@@ -95,4 +93,5 @@ public class GenerateClass {
             e.printStackTrace();
         }
     }
+
 }

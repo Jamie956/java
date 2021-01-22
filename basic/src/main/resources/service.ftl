@@ -19,7 +19,7 @@ public class ${entity}Service extends ServiceImpl<${entity}Mapper, ${entity}> {
             if (srcResult == null) {
                 return null;
             }
-            return Utils.copyResult(srcResult, ${entity}Model::new);
+        return Utils.copyResult(srcResult, ${entity}Model::new);
     }
 
     public ${entity}Model get(Long id) {
