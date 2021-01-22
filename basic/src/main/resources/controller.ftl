@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 @RequestMapping("/${entity}")
 public class ${entity}Controller {
     @Resource
-    private ${entity}Service ${entity}Service;
+    private ${entity}Service ${entity?lower_case}Service;
 
     @ApiOperation("分页查询")
     @ApiImplicitParam(name = "query", value = "查询封装对象", paramType = "body")
