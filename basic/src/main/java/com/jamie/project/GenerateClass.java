@@ -11,6 +11,11 @@ import static com.jamie.project.MyUtils.fileTextString;
 
 public class GenerateClass {
 
+    /**
+     * 根据实体名，创建entity, model, service, mapper 类
+     *
+     * @throws IOException
+     */
     @Test
     public void createClass() throws IOException {
         String resourcePath = new File("").getCanonicalPath() + "/src/main/resources/";
@@ -64,6 +69,9 @@ public class GenerateClass {
         }
     }
 
+    /**
+     * 根据实体名创建 controller类
+     */
     @Test
     public void createController() {
         try {

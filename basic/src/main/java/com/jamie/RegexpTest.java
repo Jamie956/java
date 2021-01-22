@@ -68,8 +68,11 @@ public class RegexpTest {
     public void asdasd() {
         String content = "<p>asdasdas</p>\n" + "<p>sdfsd</p>\n" + "<p>bbb</p>\n" + "<p>cccc</p>";
 
+        //删除第一个<p>
         String a = ReUtil.delFirst("<p>", content);
+        //替换第一个<p>
         String b = content.replaceFirst("<p>", "<p>1:  " );
+        //删除全部<p></p>
         String c = content.replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
     }
 

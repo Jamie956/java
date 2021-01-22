@@ -1,4 +1,4 @@
-package com.jamie;
+package com.jamie.demo;
 
 //final 不允许被继承
 public final class SingletonLazy {
