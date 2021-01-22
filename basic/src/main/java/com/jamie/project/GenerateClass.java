@@ -17,13 +17,16 @@ import java.util.*;
 public class GenerateClass {
 
     public static void main(String[] args) {
-        createClass("Guarantee", "Mapper", "com.ccr.qc.company");
-        createClass("Guarantee", "Service", "com.ccr.qc.company");
-        createClass("Guarantee", "Controller", "com.ccr.qc.company");
-        createClass("Guarantee", "Entity", "com.ccr.qc.company");
-        createClass("Guarantee", "Model", "com.ccr.qc.company");
-    }
+        String[] arr = {"Guarantee","Violation","Pledge","JudgeDoc","TaxRating","Register","Punish","ConsumeLimit","Executed","StockFreeze"};
 
+        for (String entity : arr) {
+            createClass(entity, "Mapper", "com.ccr.qc.company");
+            createClass(entity, "Service", "com.ccr.qc.company");
+            createClass(entity, "Controller", "com.ccr.qc.company");
+            createClass(entity, "Entity", "com.ccr.qc.company");
+            createClass(entity, "Model", "com.ccr.qc.company");
+        }
+    }
 
     public static void createClass(String entity, String type, String classPath) {
         try {
