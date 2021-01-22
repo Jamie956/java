@@ -64,7 +64,7 @@ public class Testss {
             dataMap.put("kindsMap3", kindsMap3);
 
             Configuration configuration = new Configuration();
-            configuration.setDirectoryForTemplateLoading(new File("src/main/java/com.jamie.freemarker"));
+            configuration.setDirectoryForTemplateLoading(new File("src/main/java/com/jamie/freemarker"));
             StringWriter writer = new StringWriter();
             Template template = configuration.getTemplate("hello.ftl");
             template.process(dataMap, writer);

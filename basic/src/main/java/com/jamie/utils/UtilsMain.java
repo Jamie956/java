@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.jamie.utils.AllTools.fileTextString;
+
 public class UtilsMain {
     /*
     //source文件
@@ -36,10 +38,10 @@ public class UtilsMain {
      */
     @Test
     public void myCompare() throws IOException {
-        String sourceText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
+        String sourceText = fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
         String[] sourceArr = sourceText.split("\r\n");
 
-        String targetText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regPatterns");
+        String targetText = fileTextString("src\\main\\java\\com.jamie.utils\\regPatterns");
 
         int matchCount = 0;
         int notMatchCount = 0;
@@ -56,15 +58,6 @@ public class UtilsMain {
         System.out.println("notMatchCount: " + notMatchCount);
     }
 
-    /*
-     CREATE TABLE `userinfo` (
-     `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-     `username` varchar(255) NOT NULL COMMENT '用户名',
-     `addtime` datetime NOT NULL COMMENT '创建时间',
-     PRIMARY KEY (`user_id`)
-     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'
-     */
-
     /**
      * 正则表达式解析sql
      */
@@ -77,14 +70,16 @@ public class UtilsMain {
 
         Pattern ddlPattern = Pattern.compile(ddlReg, Pattern.CASE_INSENSITIVE);
         Pattern colPattern = Pattern.compile(colReg, Pattern.CASE_INSENSITIVE);
-        String sql = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
+        String sql = fileTextString("src\\main\\resources\\myddl");
 
         Matcher matcher = ddlPattern.matcher(sql);
         if (matcher.find()) {
             String tableName = matcher.group("tableName");
             String tableComment = matcher.group("tableComment");
+
             System.out.println(tableName + "\t\t" + tableComment);
-            System.out.println("==========");
+            System.out.println("--------------------");
+
             String columnsSql = matcher.group("columnsSQL");
 
             if (columnsSql != null && columnsSql.length() > 0) {
@@ -145,13 +140,13 @@ public class UtilsMain {
      */
     @Test
     public void findMatchTest() throws IOException {
-        String regsText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
+        String regsText = fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
         String[] regs = regsText.split("\r\n");
 
         for (String reg : regs) {
             System.out.println(String.format("<<<<<<<<<<<<<<<< reg: %s >>>>>>>>>>>>>>>", reg));
             Pattern pattern = Pattern.compile(reg);
-            String text = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regPatterns");
+            String text = fileTextString("src\\main\\java\\com.jamie.utils\\regPatterns");
             Matcher m = pattern.matcher(text);
             while (m.find()) {
                 System.out.println(m.group());
@@ -165,7 +160,7 @@ public class UtilsMain {
      */
     @Test
     public void splitAndRemove() throws IOException {
-        String sourceText = AllTools.fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
+        String sourceText = fileTextString("src\\main\\java\\com.jamie.utils\\regWords");
         String[] sourceArr = sourceText.split(" ");
         for (String s : sourceArr) {
             String a = StringUtils.remove(s, "\"");
