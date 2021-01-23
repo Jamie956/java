@@ -14,6 +14,7 @@
         <module>es</module>
         <module>basic</module>
         <module>spring</module>
+        <module>hive-udf</module>
     </modules>
 
     <properties>
@@ -45,6 +46,12 @@
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
                 <version>3.6.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.hive</groupId>
+                <artifactId>hive-exec</artifactId>
+                <version>1.2.1</version>
             </dependency>
 
             <!-- 数据库 -->
