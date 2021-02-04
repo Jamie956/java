@@ -17,8 +17,10 @@ public class JsonMapper2 extends Mapper<LongWritable, Text, Text, Text> {
         String lines = value.toString();
         JSONObject json = JSONObject.parseObject(lines);
 
+        //按json的外层key 遍历，相同的json key 作为mapper key 写出
         for (String jsonKey : json.keySet()) {
             if ("list".equals(jsonKey)) {
+                //如果遍历到key=list，给数组的每个元素加个comp
                 JSONArray list = json.getJSONArray("list");
                 for (Object o : list) {
                     JSONObject jsonObject = (JSONObject) JSONObject.toJSON(o);

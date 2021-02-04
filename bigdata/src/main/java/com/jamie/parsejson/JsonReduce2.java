@@ -22,10 +22,8 @@ public class JsonReduce2 extends Reducer<Text, Text, NullWritable, Text> {
 
     @Override
     protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-
-        //如果是数组，拍平
         if ("list".equals(key.toString())) {
-
+            //如果是数组，每个元素写出一次
             for (Text value : values) {
                 JSONArray list = JSONObject.parseArray(value.toString());
                 for (Object ele : list) {

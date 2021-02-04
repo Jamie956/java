@@ -46,37 +46,30 @@ public class JsonDriver {
     }
 
 /**
-{
-	"base": {
-		"code": "xm",
-		"name": "project"
-	},
-	"list": [{
-		"ACode": "cp1",
-		"AName": "Product1",
-		"BList": [{
-			"BCode": "gn1",
-			"BName": "Feature1"
-		}, {
-			"BCode": "gn2",
-			"BName": "Feature2"
-		}]
-	}, {
-		"ACode": "cp2",
-		"AName": "Product2",
-		"BList": [{
-			"BCode": "gn1",
-			"BName": "Feature1"
-		}]
-	}]
-}
+
+ {"base":{"code":"xm","name":"project"},"comp":"mt","list":[{"ACode":"aaaa","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"bbb","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
+ {"base":{"code":"xm2","name":"project2"},"comp":"mt","list":[{"ACode":"ccc","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"eee","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
+ {"base":{"code":"xm3","name":"project3"},"comp":"mt","list":[{"ACode":"ddd","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"fff","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
 
  预期
  base
+ {"code":"xm3","name":"project3"}
+ {"code":"xm2","name":"project2"}
  {"code":"xm","name":"project"}
+
+ comp
+ mt
+ mt
+ mt
+
  list
- {"ACode":"cp1","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]}
- {"ACode":"cp2","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}
+ {"comp":"mt","AName":"Product1","BList":[{"BName":"Feature1","BCode":"gn1"},{"BName":"Feature2","BCode":"gn2"}],"ACode":"ddd"}
+ {"comp":"mt","AName":"Product2","BList":[{"BName":"Feature1","BCode":"gn1"}],"ACode":"fff"}
+ {"comp":"mt","AName":"Product1","BList":[{"BName":"Feature1","BCode":"gn1"},{"BName":"Feature2","BCode":"gn2"}],"ACode":"ccc"}
+ {"comp":"mt","AName":"Product2","BList":[{"BName":"Feature1","BCode":"gn1"}],"ACode":"eee"}
+ {"comp":"mt","AName":"Product1","BList":[{"BName":"Feature1","BCode":"gn1"},{"BName":"Feature2","BCode":"gn2"}],"ACode":"aaaa"}
+ {"comp":"mt","AName":"Product2","BList":[{"BName":"Feature1","BCode":"gn1"}],"ACode":"bbb"}
+
 */
     @Test
     public void t1() throws IOException, ClassNotFoundException, InterruptedException {
