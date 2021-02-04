@@ -81,12 +81,15 @@ public class JsonDriver {
     @Test
     public void t1() throws IOException, ClassNotFoundException, InterruptedException {
         File srcPath = new File("src/main/resources/out");
-
+        //删除输出文件夹
         FileUtils.deleteDirectory(srcPath);
 
+        //构建job
         Job job = getJob(JsonDriver.class, JsonMapper2.class, JsonReduce2.class, Text.class, Text.class, NullWritable.class, Text.class);
 
 		LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
+		//自定义输出文件名
+		job.setOutputFormatClass(MyOutPutFormat.class);
 
         FileInputFormat.setInputPaths(job, new Path("src/main/resources/json2"));
         FileOutputFormat.setOutputPath(job, new Path("src/main/resources/out"));

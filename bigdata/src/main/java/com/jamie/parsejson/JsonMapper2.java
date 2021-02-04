@@ -1,5 +1,6 @@
 package com.jamie.parsejson;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -17,8 +18,18 @@ public class JsonMapper2 extends Mapper<LongWritable, Text, Text, Text> {
         JSONObject json = JSONObject.parseObject(lines);
 
         for (String jsonKey : json.keySet()) {
+            if ("list".equals(jsonKey)) {
+                JSONArray list = json.getJSONArray("list");
+                for (Object o : list) {
+                    JSONObject jsonObject = (JSONObject) JSONObject.toJSON(o);
+                    jsonObject.put("comp", json.getString("comp"));
+                }
+                v.set(list.toString());
+            } else {
+                v.set(json.getString(jsonKey));
+            }
+
             k.set(jsonKey);
-            v.set(json.getString(jsonKey));
             context.write(k, v);
         }
     }
