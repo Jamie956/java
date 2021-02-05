@@ -1,27 +1,22 @@
 package com.jamie.topn;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FlowBean implements WritableComparable<FlowBean> {
 
     private long upFlow;
     private long downFlow;
     private long sumFlow;
-
-
-    public FlowBean() {
-        super();
-    }
-
-    public FlowBean(long upFlow, long downFlow) {
-        super();
-        this.upFlow = upFlow;
-        this.downFlow = downFlow;
-    }
 
     @Override
     public void write(DataOutput out) throws IOException {
@@ -37,46 +32,9 @@ public class FlowBean implements WritableComparable<FlowBean> {
         sumFlow = in.readLong();
     }
 
-    public long getUpFlow() {
-        return upFlow;
-    }
-
-    public void setUpFlow(long upFlow) {
-        this.upFlow = upFlow;
-    }
-
-    public long getDownFlow() {
-        return downFlow;
-    }
-
-    public void setDownFlow(long downFlow) {
-        this.downFlow = downFlow;
-    }
-
-    public long getSumFlow() {
-        return sumFlow;
-    }
-
-    public void setSumFlow(long sumFlow) {
-        this.sumFlow = sumFlow;
-    }
-
-    @Override
-    public String toString() {
-        return upFlow + "\t" + downFlow + "\t" + sumFlow;
-    }
-
-    public void set(long downFlow2, long upFlow2) {
-        downFlow = downFlow2;
-        upFlow = upFlow2;
-        sumFlow = downFlow2 + upFlow2;
-    }
-
     @Override
     public int compareTo(FlowBean bean) {
-
         int result;
-
         if (this.sumFlow > bean.getSumFlow()) {
             result = -1;
         } else if (this.sumFlow < bean.getSumFlow()) {
@@ -84,7 +42,11 @@ public class FlowBean implements WritableComparable<FlowBean> {
         } else {
             result = 0;
         }
-
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return upFlow + "\t" + downFlow + "\t" + sumFlow;
     }
 }
