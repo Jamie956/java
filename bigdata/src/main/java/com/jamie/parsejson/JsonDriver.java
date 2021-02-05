@@ -1,7 +1,6 @@
 package com.jamie.parsejson;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
