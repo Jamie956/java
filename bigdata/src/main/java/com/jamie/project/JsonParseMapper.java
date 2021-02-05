@@ -15,54 +15,52 @@ public class JsonParseMapper extends Mapper<LongWritable, Text, Text, Text> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        String lines = value.toString();
-        JSONObject lineJson = JSONObject.parseObject(lines);
-
+        JSONObject lineJson = JSONObject.parseObject(value.toString());
         //获取当前行的公司名
         String compName = lineJson.getString("company_name");
+
+        long id = IDGenerator.nextId();
+        lineJson.put("tree_id", id);
+        jsonLoop(lineJson, id, compName);
 
         //按json的外层key 遍历，相同的json key 作为mapper key 写出
         for (String outerKey : lineJson.keySet()) {
             Object outerValue = lineJson.get(outerKey);
-            String outValue = "";
 
-            //如果 lineJson value 是数组，每个数组元素加一个公司名
-            if (outerValue instanceof JSONArray) {
-                JSONArray list = (JSONArray) outerValue;
-                for (Object item : list) {
-                    long snowId = IDGenerator.nextId();
-                    JSONObject subObject = (JSONObject) JSONObject.toJSON(item);
+            if (outerValue instanceof JSONArray || outerValue instanceof JSONObject) {
+                k.set(outerKey);
+                v.set(outerValue.toString());
+                context.write(k, v);
+            }
+        }
+    }
 
-                    subObject.put("company_name", compName);
-                    subObject.put("snow_id", snowId);
-
-                    for (String subKey : subObject.keySet()) {
-                        Object subValue = subObject.get(subKey);
-                        if (subValue instanceof JSONArray) {
-                            JSONArray subList = (JSONArray) subValue;
-                            for (Object subSubItem : subList) {
-                                JSONObject subSubObject = (JSONObject) JSONObject.toJSON(subSubItem);
-                                subSubObject.put("snow_id", snowId);
-
-                            }
-                        }
+    public static void jsonLoop(Object object, long parentId, String compName) {
+        if (object instanceof JSONObject) {
+            JSONObject json = (JSONObject) object;
+            for (String key : json.keySet()) {
+                Object o = json.get(key);
+                if (o instanceof JSONObject) {
+                    long id = IDGenerator.nextId();
+                    ((JSONObject) o).put("tree_id", id);
+                    ((JSONObject) o).put("parent_id", parentId);
+                    ((JSONObject) o).put("comp_name", compName);
+                    jsonLoop(o, id, compName);
+                } else if (o instanceof JSONArray) {
+                    for (Object o1 : ((JSONArray) o)) {
+                        long id = IDGenerator.nextId();
+                        ((JSONObject) o1).put("tree_id", id);
+                        ((JSONObject) o1).put("parent_id", parentId);
+                        ((JSONObject) o1).put("comp_name", compName);
+                        jsonLoop(o, id, compName);
                     }
                 }
-                outValue = outerValue.toString();
-            } else if (outerValue instanceof JSONObject){
-                JSONObject subJson = (JSONObject) JSONObject.toJSON(outerValue);
-
-                //如果 lineJson value 是文档
-                subJson.put("company_name", compName);
-                subJson.put("id", IDGenerator.nextId());
-                outValue = outerValue.toString();
             }
-
-            k.set(outerKey);
-            v.set(outValue);
-
-            if (!"".equals(outValue)) {
-                context.write(k, v);
+        }
+        if (object instanceof JSONArray) {
+            JSONArray arr = (JSONArray) object;
+            for (Object e : arr) {
+                jsonLoop(e, parentId, compName);
             }
         }
     }
