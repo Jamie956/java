@@ -1,5 +1,6 @@
 package com.jamie.sort;
 
+import com.jamie.topn.FlowBean;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 

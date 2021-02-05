@@ -1,5 +1,6 @@
 package com.jamie.sort;
 
+import com.jamie.topn.FlowBean;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Partitioner;
 
@@ -7,7 +8,6 @@ public class ProvincePartitioner extends Partitioner<FlowBean, Text> {
 
 	@Override
 	public int getPartition(FlowBean key, Text value, int numPartitions) {
-		
 		// 按照手机号的前三位分区
 		String prePhoneNum = value.toString().substring(0, 3);
 		

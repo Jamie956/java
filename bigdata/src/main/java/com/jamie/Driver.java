@@ -1,6 +1,9 @@
 package com.jamie;
 
 import com.jamie.friends.*;
+import com.jamie.sort.FlowCountSortMapper;
+import com.jamie.sort.FlowCountSortReducer;
+import com.jamie.sort.ProvincePartitioner;
 import com.jamie.table.TableBean;
 import com.jamie.table.TableMapper;
 import com.jamie.table.TableReducer;
@@ -135,6 +138,48 @@ public class Driver {
         Job job = initJob(Driver.class, TableMapper.class, TableReducer.class, Text.class, TableBean.class, TableBean.class, NullWritable.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/table"));
+        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        job.waitForCompletion(true);
+    }
+
+    /**
+     * 全排序
+     * <p>
+     * 数据
+     * 13956435636	132		1512	1644
+     * 13509468723	7335	110349	117684
+     * 13846544121	264		0		264
+     * 13736230513	2481	24681	27162
+     * <p>
+     * 预期
+     * 13509468723	7335	110349	117684
+     * 13736230513	2481	24681	27162
+     * 13956435636	132		1512	1644
+     * 13846544121	264		0		264
+     */
+    @Test
+    public void t11() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, FlowCountSortMapper.class, FlowCountSortReducer.class, FlowBean.class, Text.class, Text.class, FlowBean.class);
+
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/sort"));
+        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        job.waitForCompletion(true);
+    }
+
+    /**
+     * 分区内排序
+     */
+    @Test
+    public void te12() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, FlowCountSortMapper.class, FlowCountSortReducer.class, FlowBean.class, Text.class, Text.class, FlowBean.class);
+
+        // 关联分区
+        job.setPartitionerClass(ProvincePartitioner.class);
+        job.setNumReduceTasks(5);
+
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/sort"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
         job.waitForCompletion(true);
     }
