@@ -1,6 +1,9 @@
 package com.jamie;
 
 import com.jamie.friends.*;
+import com.jamie.table.TableBean;
+import com.jamie.table.TableMapper;
+import com.jamie.table.TableReducer;
 import com.jamie.topn.FlowBean;
 import com.jamie.topn.TopNMapper;
 import com.jamie.topn.TopNReducer;
@@ -11,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.compress.BZip2Codec;
 import org.apache.hadoop.io.compress.CompressionCodec;
@@ -118,6 +122,19 @@ public class Driver {
         FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
         Job job = initJob(Driver.class, TopNMapper.class, TopNReducer.class, FlowBean.class, Text.class, Text.class, FlowBean.class);
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/top10"));
+        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        job.waitForCompletion(true);
+    }
+
+    /**
+     * reduce 合并两个表
+     */
+    @Test
+    public void t10() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, TableMapper.class, TableReducer.class, Text.class, TableBean.class, TableBean.class, NullWritable.class);
+
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/table"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
         job.waitForCompletion(true);
     }

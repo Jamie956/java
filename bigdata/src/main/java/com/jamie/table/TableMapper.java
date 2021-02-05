@@ -8,8 +8,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import java.io.IOException;
 
 public class TableMapper extends Mapper<LongWritable, Text, Text, TableBean> {
-
-    String name;
+    String fileName;
     TableBean tableBean = new TableBean();
     Text k = new Text();
 
@@ -17,19 +16,15 @@ public class TableMapper extends Mapper<LongWritable, Text, Text, TableBean> {
     protected void setup(Mapper<LongWritable, Text, Text, TableBean>.Context context) {
         // 获取文件的名称
         FileSplit inputSplit = (FileSplit) context.getInputSplit();
-        name = inputSplit.getPath().getName();
+        fileName = inputSplit.getPath().getName();
     }
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        // 1 获取一行
-        String line = value.toString();
+        String[] fields = value.toString().split("\t");
 
-        if (name.startsWith("order")) {// 订单表
-
-            String[] fields = line.split("\t");
-
-            // 封装key和value
+        //用关联的id 作为key，使得相同key 的两条记录聚合在一起
+        if (fileName.startsWith("order")) {
             tableBean.setId(fields[0]);
             tableBean.setPid(fields[1]);
             tableBean.setAmount(Integer.parseInt(fields[2]));
@@ -38,11 +33,7 @@ public class TableMapper extends Mapper<LongWritable, Text, Text, TableBean> {
 
             //pid 作为key，用来关联2个表
             k.set(fields[1]);
-
-        } else {// 产品表
-
-            String[] fields = line.split("\t");
-
+        } else if (fileName.startsWith("pd")) {
             // 封装key和value
             tableBean.setId("");
             tableBean.setPid(fields[0]);
