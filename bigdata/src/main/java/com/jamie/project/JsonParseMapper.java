@@ -38,21 +38,31 @@ public class JsonParseMapper extends Mapper<LongWritable, Text, Text, Text> {
     public static void jsonLoop(Object object, long parentId, String compName) {
         if (object instanceof JSONObject) {
             JSONObject json = (JSONObject) object;
+            //遍历json 多个子节点
             for (String key : json.keySet()) {
                 Object o = json.get(key);
+                //当前子节点为 json 对象
                 if (o instanceof JSONObject) {
+                    //子节点的下级节点增加节点
                     long id = IDGenerator.nextId();
                     ((JSONObject) o).put("tree_id", id);
                     ((JSONObject) o).put("parent_id", parentId);
                     ((JSONObject) o).put("comp_name", compName);
+                    //递归寻找下级节点
                     jsonLoop(o, id, compName);
                 } else if (o instanceof JSONArray) {
-                    for (Object o1 : ((JSONArray) o)) {
-                        long id = IDGenerator.nextId();
-                        ((JSONObject) o1).put("tree_id", id);
-                        ((JSONObject) o1).put("parent_id", parentId);
-                        ((JSONObject) o1).put("comp_name", compName);
-                        jsonLoop(o, id, compName);
+                    //当前子节点为 数组 对象，遍历数组
+                    for (Object ele : ((JSONArray) o)) {
+                        if (ele instanceof JSONObject) {
+                            //子节点的下级节点增加节点
+                            long id = IDGenerator.nextId();
+                            ((JSONObject) ele).put("tree_id", id);
+                            ((JSONObject) ele).put("parent_id", parentId);
+                            ((JSONObject) ele).put("comp_name", compName);
+                            jsonLoop(ele, id, compName);
+                        } else {
+                            jsonLoop(ele, parentId, compName);
+                        }
                     }
                 }
             }

@@ -13,23 +13,37 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class JsonLoopLoop {
     /**
-    {
-        "TITLE": "Json Title",
-        "FORM": {
-            "USERNAME": "Rick and Morty"
+{
+    "TITLE": "Json Title",
+    "FORM": {
+        "USERNAME": "Rick and Morty"
+    },
+    "MAIN": {
+        "USERNAME": {
+            "BIT": "99"
+        }
+    },
+    "ARRAY": [
+        {
+            "FIRST": "Rick"
         },
-        "MAIN": {
-            "USERNAME": {"BIT":"99"}
-        },
-        "ARRAY": [
+        {
+            "LAST": "Morty"
+        }
+    ],
+    "ARRAY2": [
+        [
             {
-                "FIRST": "Rick"
-            },
+                "FIRST2": "Rick22"
+            }
+        ],
+        [
             {
-                "LAST": "Morty"
+                "LAST2": "Morty22"
             }
         ]
-    }
+    ]
+}
      */
     public static String json = "{\"TITLE\":\"Json Title\",\"FORM\":{\"USERNAME\":\"Rick and Morty\"},\"ARRAY\":[{\"FIRST\":\"Rick\"},{\"LAST\":\"Morty\"}]}";
 
@@ -44,7 +58,7 @@ public class JsonLoopLoop {
                 } else if (o instanceof JSONArray) {
                     for (Object o1 : ((JSONArray) o)) {
                         ((JSONObject) o1).put("a", "a");
-                        jsonLoop(o);
+                        jsonLoop(o1);
                     }
                 }
             }
