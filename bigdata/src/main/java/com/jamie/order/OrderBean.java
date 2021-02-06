@@ -1,25 +1,20 @@
 package com.jamie.order;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderBean implements WritableComparable<OrderBean> {
-
-    private int order_id;        // 订单id
-    private double price;        // 价格
-
-    public OrderBean() {
-        super();
-    }
-
-    public OrderBean(int order_id, double price) {
-        super();
-        this.order_id = order_id;
-        this.price = price;
-    }
+    private int order_id;
+    private double price;
 
     @Override
     public void write(DataOutput out) throws IOException {
@@ -54,22 +49,6 @@ public class OrderBean implements WritableComparable<OrderBean> {
         }
 
         return result;
-    }
-
-    public int getOrder_id() {
-        return order_id;
-    }
-
-    public void setOrder_id(int order_id) {
-        this.order_id = order_id;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     @Override

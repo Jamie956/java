@@ -4,6 +4,7 @@ import com.jamie.friends.*;
 import com.jamie.departjson.JsonParseMapper;
 import com.jamie.departjson.JsonParseOutPutFormat;
 import com.jamie.departjson.JsonParseReduce;
+import com.jamie.order.*;
 import com.jamie.outputformat.FilterMapper;
 import com.jamie.outputformat.FilterOutputFormat;
 import com.jamie.outputformat.FilterReducer;
@@ -266,6 +267,42 @@ http://www.sohu.com
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/outputformat"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        job.waitForCompletion(true);
+    }
+
+
+    /**
+     * WritableComparable 对象重写排序方法
+     */
+    @Test
+    public void order0() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, OrderMapper.class, OrderReducer.class, OrderBean.class, NullWritable.class, OrderBean.class, NullWritable.class, "/orderinfo", "/out");
+        job.waitForCompletion(true);
+    }
+
+    /**
+     * 要求出每一个订单中最贵的商品
+     * <p>
+     * orderId productId price
+     * 0000001	Pdt_01	222.8
+     * 0000002	Pdt_05	722.4
+     * 0000001	Pdt_02	33.8
+     * 0000003	Pdt_06	232.8
+     * 0000003	Pdt_02	33.8
+     * 0000002	Pdt_03	522.8
+     * 0000002	Pdt_04	122.4
+     * <p>
+     * 预期
+     * 1	222.8
+     * 2	722.4
+     * 3	232.8
+     */
+    @Test
+    public void order1() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, OrderMapper.class, OrderReducer.class, OrderBean.class, NullWritable.class, OrderBean.class, NullWritable.class, "/orderinfo", "/out");
+        job.setGroupingComparatorClass(OrderGroupingComparator.class);
         job.waitForCompletion(true);
     }
 

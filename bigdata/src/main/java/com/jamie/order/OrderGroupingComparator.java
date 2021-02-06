@@ -11,7 +11,6 @@ public class OrderGroupingComparator extends WritableComparator {
     @Override
     public int compare(WritableComparable a, WritableComparable b) {
         // 要求只要id相同，就认为是相同的key
-
         OrderBean aBean = (OrderBean) a;
         OrderBean bBean = (OrderBean) b;
 
@@ -25,6 +24,7 @@ public class OrderGroupingComparator extends WritableComparator {
             result = 0;
         }
 
+        //返回0就会执行reduce
         return result;
     }
 }
