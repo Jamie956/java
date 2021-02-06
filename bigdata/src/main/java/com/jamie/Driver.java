@@ -4,6 +4,9 @@ import com.jamie.friends.*;
 import com.jamie.departjson.JsonParseMapper;
 import com.jamie.departjson.JsonParseOutPutFormat;
 import com.jamie.departjson.JsonParseReduce;
+import com.jamie.log.LogMapper;
+import com.jamie.nline.NLineMapper;
+import com.jamie.nline.NLineReducer;
 import com.jamie.order.*;
 import com.jamie.outputformat.FilterMapper;
 import com.jamie.outputformat.FilterOutputFormat;
@@ -30,6 +33,7 @@ import org.apache.hadoop.io.compress.BZip2Codec;
 import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.NLineInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.LazyOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
@@ -303,6 +307,49 @@ http://www.sohu.com
         FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
         Job job = initJob(Driver.class, OrderMapper.class, OrderReducer.class, OrderBean.class, NullWritable.class, OrderBean.class, NullWritable.class, "/orderinfo", "/out");
         job.setGroupingComparatorClass(OrderGroupingComparator.class);
+        job.waitForCompletion(true);
+    }
+
+    /**
+     * nline
+     * number of splits:4
+     *
+     * 输入文件一共11行
+     * 每个切片分3行
+     * 需要4个切片
+     */
+    @Test
+    public void nline() throws Exception {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, NLineMapper.class, NLineReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class, "/words", "/out");
+        // 设置每个切片InputSplit中划分三条记录
+        NLineInputFormat.setNumLinesPerSplit(job, 3);
+        // 使用NLineInputFormat处理记录数
+        job.setInputFormatClass(NLineInputFormat.class);
+        job.waitForCompletion(true);
+    }
+
+    /**
+     * 去除日志中字段长度小于等于11的日志
+     */
+    @Test
+    public void logEtl() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+
+        Configuration conf = new Configuration();
+        Job job = Job.getInstance(conf);
+
+        job.setJarByClass(Driver.class);
+        job.setMapperClass(LogMapper.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(NullWritable.class);
+
+        //不进行reduce
+        job.setNumReduceTasks(0);
+
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/log"));
+        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+
         job.waitForCompletion(true);
     }
 
