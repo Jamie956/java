@@ -4,6 +4,7 @@ import com.jamie.friends.*;
 import com.jamie.departjson.JsonParseMapper;
 import com.jamie.departjson.JsonParseOutPutFormat;
 import com.jamie.departjson.JsonParseReduce;
+import com.jamie.index.*;
 import com.jamie.inputformat.SequenceFileMapper;
 import com.jamie.inputformat.SequenceFileReducer;
 import com.jamie.inputformat.WholeFileInputformat;
@@ -394,6 +395,24 @@ http://www.sohu.com
     }
 
     /**
+     * 建立搜索索引
+     * 每个词所在的文件，出现次数
+     */
+    @Test
+    public void index1() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, OneIndexMapper.class, OneIndexReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class, "/index", "/out");
+        job.waitForCompletion(true);
+    }
+
+    @Test
+    public void index2() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, TwoIndexMapper.class, TwoIndexReducer.class, Text.class, Text.class, Text.class, Text.class, "/index2", "/out");
+        job.waitForCompletion(true);
+    }
+
+    /**
      * friends 1
      * <p>
      * 人：好友
@@ -412,11 +431,8 @@ http://www.sohu.com
      */
     @Test
     public void t7() throws IOException, ClassNotFoundException, InterruptedException {
-        Job job = getJob(Driver.class, OneShareFriendsMapper.class, OneShareFriendsReducer.class, Text.class, Text.class);
-
-        FileInputFormat.setInputPaths(job, new Path("src/main/resources/friends"));
-        FileOutputFormat.setOutputPath(job, new Path("src/main/resources/out"));
-
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, OneShareFriendsMapper.class, OneShareFriendsReducer.class, Text.class, Text.class, Text.class, Text.class, "/friends", "/out");
         job.waitForCompletion(true);
     }
 
@@ -435,11 +451,8 @@ http://www.sohu.com
      */
     @Test
     public void t8() throws IOException, ClassNotFoundException, InterruptedException {
-        Job job = getJob(Driver.class, TwoShareFriendsMapper.class, TwoShareFriendsReducer.class, Text.class, Text.class);
-
-        FileInputFormat.setInputPaths(job, new Path("src/main/resources/friends2"));
-        FileOutputFormat.setOutputPath(job, new Path("src/main/resources/out"));
-
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, TwoShareFriendsMapper.class, TwoShareFriendsReducer.class, Text.class, Text.class, Text.class, Text.class, "/friends2", "/out");
         job.waitForCompletion(true);
     }
 }

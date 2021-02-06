@@ -9,24 +9,22 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import java.io.IOException;
 
 public class OneIndexMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
-    String name;
-    Text k = new Text();
+    String fileName;
     IntWritable v = new IntWritable(1);
 
     @Override
     protected void setup(Mapper<LongWritable, Text, Text, IntWritable>.Context context) {
         // 获取文件名称
         FileSplit inputSplit = (FileSplit) context.getInputSplit();
-        name = inputSplit.getPath().getName();
+        fileName = inputSplit.getPath().getName();
     }
 
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context) throws IOException, InterruptedException {
-        String line = value.toString();
-        String[] fields = line.split(" ");
+        String[] fields = value.toString().split(" ");
+        //每个词 连接 所在的文件名
         for (String word : fields) {
-            k.set(word + "--" + name);
-            context.write(k, v);
+            context.write(new Text(word + "--" + fileName), v);
         }
     }
 }
