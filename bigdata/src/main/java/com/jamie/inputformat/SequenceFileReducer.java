@@ -7,7 +7,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 
 public class SequenceFileReducer extends Reducer<Text, BytesWritable, Text, BytesWritable> {
-
     @Override
     protected void reduce(Text key, Iterable<BytesWritable> values, Reducer<Text, BytesWritable, Text, BytesWritable>.Context context) throws IOException, InterruptedException {
         for (BytesWritable value : values) {

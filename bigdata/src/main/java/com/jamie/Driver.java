@@ -4,6 +4,9 @@ import com.jamie.friends.*;
 import com.jamie.departjson.JsonParseMapper;
 import com.jamie.departjson.JsonParseOutPutFormat;
 import com.jamie.departjson.JsonParseReduce;
+import com.jamie.inputformat.SequenceFileMapper;
+import com.jamie.inputformat.SequenceFileReducer;
+import com.jamie.inputformat.WholeFileInputformat;
 import com.jamie.kv.KVTextMapper;
 import com.jamie.kv.KVTextReducer;
 import com.jamie.log.LogMapper;
@@ -28,6 +31,7 @@ import com.jamie.wordcount.WordcountReducer;
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
@@ -40,6 +44,7 @@ import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.NLineInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.LazyOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.junit.Test;
 
@@ -369,6 +374,22 @@ http://www.sohu.com
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/kv"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        job.waitForCompletion(true);
+    }
+
+    /**
+     * 将多个小文件合并成一个SequenceFile文件
+     */
+    @Test
+    public void sequence() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, SequenceFileMapper.class, SequenceFileReducer.class, Text.class, BytesWritable.class, Text.class, BytesWritable.class, "/format", "/out");
+
+        // 设置输入的inputFormat
+        job.setInputFormatClass(WholeFileInputformat.class);
+        // 设置输出的outputFormat
+        job.setOutputFormatClass(SequenceFileOutputFormat.class);
+
         job.waitForCompletion(true);
     }
 

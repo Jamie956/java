@@ -10,7 +10,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import java.io.IOException;
 
 public class WholeFileInputformat extends FileInputFormat<Text, BytesWritable> {
-
     @Override
     public RecordReader<Text, BytesWritable> createRecordReader(InputSplit split, TaskAttemptContext context) throws IOException, InterruptedException {
         //split 为文件，context 上下文
@@ -19,5 +18,4 @@ public class WholeFileInputformat extends FileInputFormat<Text, BytesWritable> {
 
         return recordReader;
     }
-
 }
