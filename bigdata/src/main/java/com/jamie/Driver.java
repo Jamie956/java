@@ -4,6 +4,8 @@ import com.jamie.friends.*;
 import com.jamie.departjson.JsonParseMapper;
 import com.jamie.departjson.JsonParseOutPutFormat;
 import com.jamie.departjson.JsonParseReduce;
+import com.jamie.kv.KVTextMapper;
+import com.jamie.kv.KVTextReducer;
 import com.jamie.log.LogMapper;
 import com.jamie.nline.NLineMapper;
 import com.jamie.nline.NLineReducer;
@@ -33,6 +35,8 @@ import org.apache.hadoop.io.compress.BZip2Codec;
 import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.KeyValueLineRecordReader;
+import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.NLineInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.LazyOutputFormat;
@@ -350,6 +354,21 @@ http://www.sohu.com
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/log"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
 
+        job.waitForCompletion(true);
+    }
+
+    @Test
+    public void kv() throws Exception {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Configuration conf = new Configuration();
+        //在map 阶段，根据分割符把一行数据分成key 和 value
+        conf.set(KeyValueLineRecordReader.KEY_VALUE_SEPERATOR, " ");
+
+        Job job = initJob(conf, Driver.class, KVTextMapper.class, KVTextReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class);
+        job.setInputFormatClass(KeyValueTextInputFormat.class);
+
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/kv"));
+        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
         job.waitForCompletion(true);
     }
 
