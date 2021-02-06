@@ -1,4 +1,4 @@
-package com.jamie.project;
+package com.jamie.departjson;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -27,6 +27,7 @@ public class JsonParseMapper extends Mapper<LongWritable, Text, Text, Text> {
         for (String outerKey : lineJson.keySet()) {
             Object outerValue = lineJson.get(outerKey);
 
+            //只取文档和数组 类型
             if (outerValue instanceof JSONArray || outerValue instanceof JSONObject) {
                 k.set(outerKey);
                 v.set(outerValue.toString());
@@ -35,6 +36,9 @@ public class JsonParseMapper extends Mapper<LongWritable, Text, Text, Text> {
         }
     }
 
+    /**
+     * json 递归生成树结构
+     */
     public static void jsonLoop(Object object, long parentId, String compName) {
         if (object instanceof JSONObject) {
             JSONObject json = (JSONObject) object;
@@ -74,5 +78,4 @@ public class JsonParseMapper extends Mapper<LongWritable, Text, Text, Text> {
             }
         }
     }
-
 }

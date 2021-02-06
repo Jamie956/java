@@ -1,6 +1,12 @@
 package com.jamie;
 
 import com.jamie.friends.*;
+import com.jamie.departjson.JsonParseMapper;
+import com.jamie.departjson.JsonParseOutPutFormat;
+import com.jamie.departjson.JsonParseReduce;
+import com.jamie.outputformat.FilterMapper;
+import com.jamie.outputformat.FilterOutputFormat;
+import com.jamie.outputformat.FilterReducer;
 import com.jamie.sort.FlowCountSortMapper;
 import com.jamie.sort.FlowCountSortReducer;
 import com.jamie.sort.ProvincePartitioner;
@@ -24,6 +30,8 @@ import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.LazyOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.junit.Test;
 
 import java.io.File;
@@ -180,6 +188,83 @@ public class Driver {
         job.setNumReduceTasks(5);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/sort"));
+        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        job.waitForCompletion(true);
+    }
+
+
+    /*
+
+    {"base":{"code":"xm","name":"project"},"comp":"mt","list":[{"ACode":"aaaa","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"bbb","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
+    {"base":{"code":"xm2","name":"project2"},"comp":"mt","list":[{"ACode":"ccc","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"eee","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
+    {"base":{"code":"xm3","name":"project3"},"comp":"mt","list":[{"ACode":"ddd","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"fff","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
+
+    预期
+    base
+{"code":"xm3","tree_id":1357867087288074254,"parent_id":1357867087288074248,"name":"project3"}
+{"code":"xm2","tree_id":1357867087288074247,"parent_id":1357867087288074241,"name":"project2"}
+{"code":"xm","tree_id":1357867087225159687,"parent_id":1357867087225159681,"name":"project"}
+
+
+    list
+{"AName":"Product1","tree_id":1357867087288074249,"BList":[{"tree_id":1357867087288074250,"parent_id":1357867087288074249,"BName":"Feature1","BCode":"gn1"},{"tree_id":1357867087288074251,"parent_id":1357867087288074249,"BName":"Feature2","BCode":"gn2"}],"parent_id":1357867087288074248,"ACode":"ddd"}
+{"AName":"Product2","tree_id":1357867087288074252,"BList":[{"tree_id":1357867087288074253,"parent_id":1357867087288074252,"BName":"Feature1","BCode":"gn1"}],"parent_id":1357867087288074248,"ACode":"fff"}
+{"AName":"Product1","tree_id":1357867087288074242,"BList":[{"tree_id":1357867087288074243,"parent_id":1357867087288074242,"BName":"Feature1","BCode":"gn1"},{"tree_id":1357867087288074244,"parent_id":1357867087288074242,"BName":"Feature2","BCode":"gn2"}],"parent_id":1357867087288074241,"ACode":"ccc"}
+{"AName":"Product2","tree_id":1357867087288074245,"BList":[{"tree_id":1357867087288074246,"parent_id":1357867087288074245,"BName":"Feature1","BCode":"gn1"}],"parent_id":1357867087288074241,"ACode":"eee"}
+{"AName":"Product1","tree_id":1357867087225159682,"BList":[{"tree_id":1357867087225159683,"parent_id":1357867087225159682,"BName":"Feature1","BCode":"gn1"},{"tree_id":1357867087225159684,"parent_id":1357867087225159682,"BName":"Feature2","BCode":"gn2"}],"parent_id":1357867087225159681,"ACode":"aaaa"}
+{"AName":"Product2","tree_id":1357867087225159685,"BList":[{"tree_id":1357867087225159686,"parent_id":1357867087225159685,"BName":"Feature1","BCode":"gn1"}],"parent_id":1357867087225159681,"ACode":"bbb"}
+
+    */
+    @Test
+    public void t13() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, JsonParseMapper.class, JsonParseReduce.class, Text.class, Text.class, NullWritable.class, Text.class);
+
+        LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
+        //自定义输出文件名
+        job.setOutputFormatClass(JsonParseOutPutFormat.class);
+
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/json3"));
+        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        job.waitForCompletion(true);
+    }
+
+
+    /*
+过滤输入的log日志，包含atguigu的网站输出到 atguigu.log，不包含atguigu的网站输出到 other.log
+http://www.baidu.com
+http://www.google.com
+http://cn.bing.com
+http://www.atguigu.com
+http://www.sohu.com
+http://www.sohu.com
+http://www.sina.com
+http://www.sin2a.com
+http://www.sin2desa.com
+http://www.sindsafa.com
+
+预期
+atguigu.log
+http://www.atguigu.com
+
+other.log
+http://cn.bing.com
+http://www.baidu.com
+http://www.google.com
+http://www.sin2a.com
+http://www.sin2desa.com
+http://www.sina.com
+http://www.sindsafa.com
+http://www.sohu.com
+
+     */
+    @Test
+    public void logFilter() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        Job job = initJob(Driver.class, FilterMapper.class, FilterReducer.class, Text.class, NullWritable.class, Text.class, NullWritable.class);
+        job.setOutputFormatClass(FilterOutputFormat.class);
+
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/outputformat"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
         job.waitForCompletion(true);
     }

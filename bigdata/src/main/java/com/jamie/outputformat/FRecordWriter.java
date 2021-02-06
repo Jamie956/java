@@ -12,41 +12,36 @@ import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import java.io.IOException;
 
 public class FRecordWriter extends RecordWriter<Text, NullWritable> {
+    public static final String RESOURCE = "src/main/resources/";
+    public static final Path SRC_PATH = new Path(RESOURCE);
 
-    FSDataOutputStream fosatguigu;
-    FSDataOutputStream fosother;
+    FSDataOutputStream atOut;
+    FSDataOutputStream otOut;
 
     public FRecordWriter(TaskAttemptContext job) {
-
         try {
-            // 1 获取文件系统
             FileSystem fs = FileSystem.get(job.getConfiguration());
-
-            // 2 创建输出到atguigu.log的输出流
-            fosatguigu = fs.create(new Path("src/main/resources/out/atguigu.log"));
-
-            // 3 创建输出到other.log的输出流
-            fosother = fs.create(new Path("src/main/resources/out/other.log"));
-
+            //创建文件输出流
+            atOut = fs.create(SRC_PATH.suffix("/out/atguigu.log"));
+            otOut = fs.create(SRC_PATH.suffix("/out/other.log"));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     @Override
-    public void write(Text key, NullWritable value) throws IOException, InterruptedException {
-        // 判断key当中是否有atguigu,如果有写出到atguigu.log  如果没有写出到other.log
+    public void write(Text key, NullWritable value) throws IOException {
+        //根据条件，写出到不同的流
         if (key.toString().contains("atguigu")) {
-            fosatguigu.write(key.toString().getBytes());
+            atOut.write(key.toString().getBytes());
         } else {
-            fosother.write(key.toString().getBytes());
+            otOut.write(key.toString().getBytes());
         }
     }
 
     @Override
-    public void close(TaskAttemptContext context) throws IOException, InterruptedException {
-        IOUtils.closeStream(fosatguigu);
-        IOUtils.closeStream(fosother);
+    public void close(TaskAttemptContext context) {
+        IOUtils.closeStream(atOut);
+        IOUtils.closeStream(otOut);
     }
 }

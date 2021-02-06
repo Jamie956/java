@@ -1,4 +1,4 @@
-package com.jamie.project;
+package com.jamie.departjson;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.io.*;
 import java.util.*;
 
-import static com.jamie.project.MyUtils.fileTextString;
+import static com.jamie.departjson.MyUtils.fileTextString;
 
 public class GenerateClass {
 

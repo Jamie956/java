@@ -1,4 +1,4 @@
-package com.jamie.project;
+package com.jamie.departjson;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -16,14 +16,13 @@ public class JsonParseReduce extends Reducer<Text, Text, NullWritable, Text> {
     Text v = new Text();
 
     @Override
-    protected void setup(Context context) throws IOException, InterruptedException {
-        multipleOutputs = new MultipleOutputs<NullWritable, Text>(context);
+    protected void setup(Context context) {
+        multipleOutputs = new MultipleOutputs<>(context);
     }
 
     @Override
     protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
         for (Text value : values) {
-
             Object object = JSONObject.parse(value.toString());
             //如果是数组，每个元素写出一次
             if (object instanceof JSONArray) {
@@ -35,7 +34,6 @@ public class JsonParseReduce extends Reducer<Text, Text, NullWritable, Text> {
                 //重命名输出文件
                 multipleOutputs.write(NullWritable.get(), value, key.toString());
             }
-
         }
     }
 

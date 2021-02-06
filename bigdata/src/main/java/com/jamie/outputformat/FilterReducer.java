@@ -7,15 +7,11 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 
 public class FilterReducer extends Reducer<Text, NullWritable, Text, NullWritable> {
-
     Text k = new Text();
 
     @Override
     protected void reduce(Text key, Iterable<NullWritable> values, Context context) throws IOException, InterruptedException {
-        String line = key.toString();
-
-        line = line + "\r\n";
-
+        String line = key.toString() + "\r\n";
         k.set(line);
 
         // 包括输出重复的数据

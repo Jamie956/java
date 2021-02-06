@@ -9,7 +9,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.IOException;
 
 public class FilterOutputFormat extends FileOutputFormat<Text, NullWritable> {
-
     @Override
     public RecordWriter<Text, NullWritable> getRecordWriter(TaskAttemptContext job) throws IOException, InterruptedException {
         return new FRecordWriter(job);
