@@ -18,7 +18,6 @@ public class JsonParseMapper extends Mapper<LongWritable, Text, Text, Text> {
         JSONObject lineJson = JSONObject.parseObject(value.toString());
         //获取当前行的公司名
         String compName = lineJson.getString("company_name");
-
         long id = IDGenerator.nextId();
         lineJson.put("tree_id", id);
         jsonLoop(lineJson, id, compName);

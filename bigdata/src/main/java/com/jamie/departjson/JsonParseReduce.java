@@ -15,9 +15,9 @@ import java.util.Properties;
 
 public class JsonParseReduce extends Reducer<Text, Text, NullWritable, Text> {
     private MultipleOutputs<NullWritable, Text> multipleOutputs;
-    Text v = new Text();
+    private Text v = new Text();
 
-    static Properties p;
+    private static Properties p;
 
     static {
         try {
@@ -58,7 +58,9 @@ public class JsonParseReduce extends Reducer<Text, Text, NullWritable, Text> {
         multipleOutputs.close();
     }
 
-    //根据资源文件转换 json 的key
+    /**
+     * 根据资源文件转换 json 的key
+     */
     public void convertJsonKey(Text key, Text value) {
         JSONObject destJson = new JSONObject();
         JSONObject srcJson = JSONObject.parseObject(value.toString());
@@ -72,6 +74,5 @@ public class JsonParseReduce extends Reducer<Text, Text, NullWritable, Text> {
         }
         value.set(destJson.toString());
     }
-
 }
 
