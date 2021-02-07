@@ -52,7 +52,6 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 
-import static com.jamie.Utils.getJob;
 import static com.jamie.Utils.initJob;
 
 public class Driver {

@@ -2,6 +2,7 @@ package com.jamie.project;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import java.io.File;
@@ -16,12 +17,15 @@ public class MyStringUtils {
      */
     @Test
     public void myCompare() throws IOException {
-        String resourcePath = new File("").getCanonicalPath() + "/src/main/resources/";
+//        String resourcePath = new File("").getCanonicalPath() + "/src/main/resources/";
 
-        String text = fileTextString(resourcePath + "/source");
+//        String text = fileTextString(resourcePath + "/source");
+        String text = FileUtils.readFileToString(new File("src/main/resources/source"), "UTF-8");
+
         String[] lines = text.split("\r\n");
 
-        String targetText = fileTextString(resourcePath + "/target");
+//        String targetText = fileTextString(resourcePath + "/target");
+        String targetText = FileUtils.readFileToString(new File("src/main/resources/target"), "UTF-8");
 
         int matchCount = 0;
         int notMatchCount = 0;
