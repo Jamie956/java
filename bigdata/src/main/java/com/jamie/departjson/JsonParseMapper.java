@@ -7,7 +7,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-import java.io.IOException;
+import java.io.*;
 
 public class JsonParseMapper extends Mapper<LongWritable, Text, Text, Text> {
     Text k = new Text();
@@ -26,7 +26,6 @@ public class JsonParseMapper extends Mapper<LongWritable, Text, Text, Text> {
         //按json的外层key 遍历，相同的json key 作为mapper key 写出
         for (String outerKey : lineJson.keySet()) {
             Object outerValue = lineJson.get(outerKey);
-
             //只取文档和数组 类型
             if (outerValue instanceof JSONArray || outerValue instanceof JSONObject) {
                 k.set(outerKey);

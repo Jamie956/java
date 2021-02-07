@@ -49,8 +49,7 @@ import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import static com.jamie.Utils.initJob;
 
@@ -209,18 +208,17 @@ public class Driver {
 
     /*
 
-    {"base":{"code":"xm","name":"project"},"comp":"mt","list":[{"ACode":"aaaa","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"bbb","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
-    {"base":{"code":"xm2","name":"project2"},"comp":"mt","list":[{"ACode":"ccc","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"eee","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
-    {"base":{"code":"xm3","name":"project3"},"comp":"mt","list":[{"ACode":"ddd","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"fff","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
+{"base":{"code":"xm","name":"project"},"comp":"mt","list":[{"ACode":"aaaa","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"bbb","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
+{"base":{"code":"xm2","name":"project2"},"comp":"mt","list":[{"ACode":"ccc","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"eee","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
+{"base":{"code":"xm3","name":"project3"},"comp":"mt","list":[{"ACode":"ddd","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"fff","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
 
-    预期
-    base
+预期
+base
 {"code":"xm3","tree_id":1357867087288074254,"parent_id":1357867087288074248,"name":"project3"}
 {"code":"xm2","tree_id":1357867087288074247,"parent_id":1357867087288074241,"name":"project2"}
 {"code":"xm","tree_id":1357867087225159687,"parent_id":1357867087225159681,"name":"project"}
 
-
-    list
+list
 {"AName":"Product1","tree_id":1357867087288074249,"BList":[{"tree_id":1357867087288074250,"parent_id":1357867087288074249,"BName":"Feature1","BCode":"gn1"},{"tree_id":1357867087288074251,"parent_id":1357867087288074249,"BName":"Feature2","BCode":"gn2"}],"parent_id":1357867087288074248,"ACode":"ddd"}
 {"AName":"Product2","tree_id":1357867087288074252,"BList":[{"tree_id":1357867087288074253,"parent_id":1357867087288074252,"BName":"Feature1","BCode":"gn1"}],"parent_id":1357867087288074248,"ACode":"fff"}
 {"AName":"Product1","tree_id":1357867087288074242,"BList":[{"tree_id":1357867087288074243,"parent_id":1357867087288074242,"BName":"Feature1","BCode":"gn1"},{"tree_id":1357867087288074244,"parent_id":1357867087288074242,"BName":"Feature2","BCode":"gn2"}],"parent_id":1357867087288074241,"ACode":"ccc"}
@@ -230,7 +228,7 @@ public class Driver {
 
     */
     @Test
-    public void t13() throws IOException, ClassNotFoundException, InterruptedException {
+    public void jsonConvert() throws IOException, ClassNotFoundException, InterruptedException {
         FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
         Job job = initJob(Driver.class, JsonParseMapper.class, JsonParseReduce.class, Text.class, Text.class, NullWritable.class, Text.class);
 
@@ -242,7 +240,6 @@ public class Driver {
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
         job.waitForCompletion(true);
     }
-
 
     /*
 过滤输入的log日志，包含atguigu的网站输出到 atguigu.log，不包含atguigu的网站输出到 other.log
@@ -322,7 +319,7 @@ http://www.sohu.com
     /**
      * nline
      * number of splits:4
-     *
+     * <p>
      * 输入文件一共11行
      * 每个切片分3行
      * 需要4个切片
