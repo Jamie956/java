@@ -1,5 +1,6 @@
 package com.jamie;
 
+import com.jamie.departjson.EtlMapper;
 import com.jamie.friends.*;
 import com.jamie.departjson.JsonParseMapper;
 import com.jamie.departjson.JsonParseOutPutFormat;
@@ -207,6 +208,7 @@ public class Driver {
 
 
     /*
+字段比对，清洗特殊符号，生成关联id、补公司名，按Mysql表拆分集合
 
 {"base":{"code":"xm","name":"project"},"comp":"mt","list":[{"ACode":"aaaa","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"bbb","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
 {"base":{"code":"xm2","name":"project2"},"comp":"mt","list":[{"ACode":"ccc","AName":"Product1","BList":[{"BCode":"gn1","BName":"Feature1"},{"BCode":"gn2","BName":"Feature2"}]},{"ACode":"eee","AName":"Product2","BList":[{"BCode":"gn1","BName":"Feature1"}]}]}
@@ -228,7 +230,7 @@ list
 
     */
     @Test
-    public void jsonConvert() throws IOException, ClassNotFoundException, InterruptedException {
+    public void oneJson2Many() throws IOException, ClassNotFoundException, InterruptedException {
         FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
         Job job = initJob(Driver.class, JsonParseMapper.class, JsonParseReduce.class, Text.class, Text.class, NullWritable.class, Text.class);
 
@@ -240,6 +242,32 @@ list
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
         job.waitForCompletion(true);
     }
+
+    /*
+    字段比对，清洗特殊符号
+     */
+    @Test
+    public void etl() throws IOException, ClassNotFoundException, InterruptedException {
+        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+
+        Configuration conf = new Configuration();
+        Job job = Job.getInstance(conf);
+
+        job.setJarByClass(Driver.class);
+        job.setMapperClass(EtlMapper.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(NullWritable.class);
+
+        //不进行reduce
+        job.setNumReduceTasks(0);
+
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/json3"));
+        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+
+        job.waitForCompletion(true);
+    }
+
+
 
     /*
 过滤输入的log日志，包含atguigu的网站输出到 atguigu.log，不包含atguigu的网站输出到 other.log
@@ -339,7 +367,7 @@ http://www.sohu.com
      * 去除日志中字段长度小于等于11的日志
      */
     @Test
-    public void logEtl() throws IOException, ClassNotFoundException, InterruptedException {
+    public void noReduce() throws IOException, ClassNotFoundException, InterruptedException {
         FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
 
         Configuration conf = new Configuration();

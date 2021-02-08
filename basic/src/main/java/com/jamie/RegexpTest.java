@@ -1,6 +1,7 @@
 package com.jamie;
 
 import cn.hutool.core.util.ReUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -133,4 +134,10 @@ public class RegexpTest {
         }
     }
 
+    @Test
+    public void convert() {
+//        String line = "aaaa\raaa";
+        String line = StringUtils.replace("aaaa\raaa", "\r", "<br/>");
+//        line = line.replaceAll("\r", "<br/>");
+    }
 }
