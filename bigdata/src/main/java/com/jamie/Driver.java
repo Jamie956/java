@@ -261,7 +261,10 @@ list
         //不进行reduce
         job.setNumReduceTasks(0);
 
-        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/json3"));
+        //自定义输出文件名
+        job.setOutputFormatClass(JsonParseOutPutFormat.class);
+
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/wdm_szhdy"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
 
         job.waitForCompletion(true);

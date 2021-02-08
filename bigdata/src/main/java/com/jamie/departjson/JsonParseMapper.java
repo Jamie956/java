@@ -76,4 +76,5 @@ public class JsonParseMapper extends Mapper<LongWritable, Text, Text, Text> {
             }
         }
     }
+
 }
