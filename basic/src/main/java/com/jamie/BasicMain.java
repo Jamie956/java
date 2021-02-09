@@ -863,6 +863,44 @@ public class BasicMain {
         System.out.println(escapeHtml3);
     }
 
+    /**
+     * ConcurrentModificationException 异常重现
+     *
+     * map 在遍历时新增key-value 或删除 抛出异常
+     *
+     * 用iterator 在遍历时 删除元素不会报错
+     */
+    @Test
+    public void testMapForAdd() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("k1", "v1");
+        map.put("k2", "v2");
+        map.put("k3", "v3");
+
+//        for (String k : map.keySet()) {
+//            String v = map.get(k);
+//
+////            map.put("k4", "v4");
+////            map.remove("k2");
+//        }
+
+        Iterator<String> iterator = map.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            String value = map.get(key);
+
+//            System.out.println(iterator.next());
+
+            if ("k1".equals(key)) {
+                iterator.remove();
+
+//                map.put("k111","vvvvv");
+            }
+
+        }
+
+    }
+
 }
 
 
