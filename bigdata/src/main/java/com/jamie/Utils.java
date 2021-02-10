@@ -2,6 +2,7 @@ package com.jamie;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.jamie.utils.IDGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -63,6 +64,33 @@ public class Utils {
         return key;
     }
 
+    /**
+     * json 递归生成树结构
+     */
+    public static void jsonLoop(Object object, long parentId) {
+        if (object instanceof JSONObject) {
+            JSONObject json = (JSONObject) object;
+            long id = IDGenerator.nextId();
+            json.put("snow_id", id);
+            json.put("parent_snow_id", parentId);
+
+            for (String key : json.keySet()) {
+                Object value = json.get(key);
+                if (value instanceof JSONObject || value instanceof JSONArray) {
+                    jsonLoop(value, id);
+                } else if (value instanceof String) {
+                    //最终的节点
+                    json.put(key, value.toString()+"!!");
+                }
+            }
+        }
+        if (object instanceof JSONArray) {
+            JSONArray arr = (JSONArray) object;
+            for (Object e : arr) {
+                jsonLoop(e, parentId);
+            }
+        }
+    }
 
     public static Job initJob(Class<?> driverClass, Class<? extends Mapper> mapperClass, Class<? extends Reducer> reduceClass, Class<?> mapperKey, Class<?> mapperValue, Class<?> reduceKey, Class<?> reduceValue) throws IOException {
 

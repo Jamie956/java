@@ -1,10 +1,11 @@
 package com.jamie;
 
-import com.jamie.departjson.EtlMapper;
+import com.jamie.cache.DistributedCacheMapper;
+import com.jamie.departjson.MyOutPutFormat;
+import com.jamie.departjson.OuputManyMapper;
+import com.jamie.departjson.OuputManyReduce;
+import com.jamie.departjson.Output1Mapper;
 import com.jamie.friends.*;
-import com.jamie.departjson.JsonParseMapper;
-import com.jamie.departjson.JsonParseOutPutFormat;
-import com.jamie.departjson.JsonParseReduce;
 import com.jamie.index.*;
 import com.jamie.inputformat.SequenceFileMapper;
 import com.jamie.inputformat.SequenceFileReducer;
@@ -51,6 +52,8 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.junit.Test;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import static com.jamie.Utils.initJob;
 
@@ -232,11 +235,11 @@ list
     @Test
     public void oneJson2Many() throws IOException, ClassNotFoundException, InterruptedException {
         FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
-        Job job = initJob(Driver.class, JsonParseMapper.class, JsonParseReduce.class, Text.class, Text.class, NullWritable.class, Text.class);
+        Job job = initJob(Driver.class, OuputManyMapper.class, OuputManyReduce.class, Text.class, Text.class, NullWritable.class, Text.class);
 
         LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
         //自定义输出文件名
-        job.setOutputFormatClass(JsonParseOutPutFormat.class);
+        job.setOutputFormatClass(MyOutPutFormat.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/json3"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
@@ -254,7 +257,7 @@ list
         Job job = Job.getInstance(conf);
 
         job.setJarByClass(Driver.class);
-        job.setMapperClass(EtlMapper.class);
+        job.setMapperClass(Output1Mapper.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(NullWritable.class);
 
@@ -262,14 +265,13 @@ list
         job.setNumReduceTasks(0);
 
         //自定义输出文件名
-        job.setOutputFormatClass(JsonParseOutPutFormat.class);
+        job.setOutputFormatClass(MyOutPutFormat.class);
 
-        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/wdm_szhdy"));
+        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/json3"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
 
         job.waitForCompletion(true);
     }
-
 
 
     /*
@@ -481,5 +483,60 @@ http://www.sohu.com
         FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
         Job job = initJob(Driver.class, TwoShareFriendsMapper.class, TwoShareFriendsReducer.class, Text.class, Text.class, Text.class, Text.class, "/friends2", "/out");
         job.waitForCompletion(true);
+    }
+
+    /*
+order
+1001	1
+1002	2
+1003	3
+1004	1
+1005	2
+1006	3
+
+pd
+1	小米
+2	华为
+3	格力
+
+预期
+1001	1	小米
+1002	2	华为
+1003	3	格力
+1004	1	小米
+1005	2	华为
+1006	3	格力
+
+     */
+    @Test
+    public void cache() throws IOException, ClassNotFoundException, InterruptedException, URISyntaxException {
+        String in = "src/main/resources/table/order";
+        String out = "src/main/resources/out";
+        String pd = "src/main/resources/cache/pd";
+
+
+        FileUtils.deleteDirectory(new File(out));
+
+        Configuration configuration = new Configuration();
+        Job job = Job.getInstance(configuration);
+
+        job.setJarByClass(Driver.class);
+        job.setMapperClass(DistributedCacheMapper.class);
+
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(NullWritable.class);
+
+        FileInputFormat.setInputPaths(job, new Path(in));
+        FileOutputFormat.setOutputPath(job, new Path(out));
+
+        // 6 加载缓存数据
+        ///Users/jamie/project/java-core/bigdata/src/main/resources/cache/pd
+        job.addCacheFile(new URI(pd));
+
+        // 不进行reduce
+        job.setNumReduceTasks(0);
+
+        boolean result = job.waitForCompletion(true);
+        System.exit(result ? 0 : 1);
     }
 }

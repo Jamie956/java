@@ -12,41 +12,44 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class DistributedCacheMapper extends Mapper<LongWritable, Text, Text, NullWritable> {
 
     HashMap<String, String> pdMap = new HashMap<>();
+    Text k = new Text();
 
+    /**
+     * 加载缓存文件
+     * @param context
+     * @throws IOException
+     */
     @Override
-    protected void setup(Mapper<LongWritable, Text, Text, NullWritable>.Context context) throws IOException, InterruptedException {
-        // 加载cache pd表，每个map 都读同一个cache
+    protected void setup(Mapper<LongWritable, Text, Text, NullWritable>.Context context) throws IOException {
+        // 加载cache
         URI[] cacheFiles = context.getCacheFiles();
-        String path = cacheFiles[0].getPath().toString();
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8"));
+        String path = cacheFiles[0].getPath();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
 
         String line;
         while (StringUtils.isNotEmpty(line = reader.readLine())) {
             String[] fileds = line.split("\t");
+            //id 品牌
             pdMap.put(fileds[0], fileds[1]);
         }
 
-        // 2 关闭资源
+        // 关闭资源
         IOUtils.closeStream(reader);
     }
 
-    Text k = new Text();
 
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, NullWritable>.Context context) throws IOException, InterruptedException {
         String line = value.toString();
-        String[] fileds = line.split("\t");
-        String pid = fileds[1];
-        String pname = pdMap.get(pid);
-        line = line + "\t" + pname;
-
-        k.set(line);
+        String pid = line.split("\t")[1];
+        String productName = pdMap.get(pid);
+        k.set(line + "\t" + productName);
 
         context.write(k, NullWritable.get());
     }

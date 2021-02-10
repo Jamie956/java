@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import java.io.IOException;
 
 
-public class JsonParseOutPutFormat extends TextOutputFormat<NullWritable, Text>{
+public class MyOutPutFormat extends TextOutputFormat<NullWritable, Text>{
     @Override
     public Path getDefaultWorkFile(TaskAttemptContext context, String extension) throws IOException{
         FileOutputCommitter committer = (FileOutputCommitter) getOutputCommitter(context);
