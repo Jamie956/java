@@ -155,7 +155,8 @@ public class Driver {
      */
     @Test
     public void te3() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
 
         Job job = initJob(Driver.class, WordcountMapper.class, WordcountReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class);
 
@@ -173,7 +174,8 @@ public class Driver {
      */
     @Test
     public void t5() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
 
         Configuration configuration = new Configuration();
         // 开启map端输出压缩
@@ -194,7 +196,8 @@ public class Driver {
      */
     @Test
     public void te6() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
 
         Job job = initJob(Driver.class, WordcountMapper.class, WordcountReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class);
 
@@ -217,7 +220,8 @@ public class Driver {
      */
     @Test
     public void t0() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, TopNMapper.class, TopNReducer.class, FlowBean.class, Text.class, Text.class, FlowBean.class);
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/top10"));
         FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
@@ -229,7 +233,8 @@ public class Driver {
      */
     @Test
     public void t10() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, TableMapper.class, TableReducer.class, Text.class, TableBean.class, TableBean.class, NullWritable.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/table"));
@@ -254,7 +259,8 @@ public class Driver {
      */
     @Test
     public void t11() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, FlowCountSortMapper.class, FlowCountSortReducer.class, FlowBean.class, Text.class, Text.class, FlowBean.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/sort"));
@@ -267,7 +273,8 @@ public class Driver {
      */
     @Test
     public void te12() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, FlowCountSortMapper.class, FlowCountSortReducer.class, FlowBean.class, Text.class, Text.class, FlowBean.class);
 
         // 关联分区
@@ -304,7 +311,8 @@ list
     */
     @Test
     public void oneJson2Many() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, OuputManyMapper.class, OuputManyReduce.class, Text.class, Text.class, NullWritable.class, Text.class);
 
         LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
@@ -321,7 +329,8 @@ list
      */
     @Test
     public void etl() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
 
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf);
@@ -374,7 +383,8 @@ http://www.sohu.com
      */
     @Test
     public void logFilter() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, FilterMapper.class, FilterReducer.class, Text.class, NullWritable.class, Text.class, NullWritable.class);
         job.setOutputFormatClass(FilterOutputFormat.class);
 
@@ -389,7 +399,8 @@ http://www.sohu.com
      */
     @Test
     public void order0() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, OrderMapper.class, OrderReducer.class, OrderBean.class, NullWritable.class, OrderBean.class, NullWritable.class, "/orderinfo", "/out");
         job.waitForCompletion(true);
     }
@@ -413,7 +424,8 @@ http://www.sohu.com
      */
     @Test
     public void order1() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, OrderMapper.class, OrderReducer.class, OrderBean.class, NullWritable.class, OrderBean.class, NullWritable.class, "/orderinfo", "/out");
         job.setGroupingComparatorClass(OrderGroupingComparator.class);
         job.waitForCompletion(true);
@@ -429,7 +441,8 @@ http://www.sohu.com
      */
     @Test
     public void nline() throws Exception {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, NLineMapper.class, NLineReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class, "/words", "/out");
         // 设置每个切片InputSplit中划分三条记录
         NLineInputFormat.setNumLinesPerSplit(job, 3);
@@ -443,7 +456,8 @@ http://www.sohu.com
      */
     @Test
     public void noReduce() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
 
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf);
@@ -464,7 +478,8 @@ http://www.sohu.com
 
     @Test
     public void kv() throws Exception {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Configuration conf = new Configuration();
         //在map 阶段，根据分割符把一行数据分成key 和 value
         conf.set(KeyValueLineRecordReader.KEY_VALUE_SEPERATOR, " ");
@@ -482,7 +497,8 @@ http://www.sohu.com
      */
     @Test
     public void sequence() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, SequenceFileMapper.class, SequenceFileReducer.class, Text.class, BytesWritable.class, Text.class, BytesWritable.class, "/format", "/out");
 
         // 设置输入的inputFormat
@@ -499,14 +515,16 @@ http://www.sohu.com
      */
     @Test
     public void index1() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, OneIndexMapper.class, OneIndexReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class, "/index", "/out");
         job.waitForCompletion(true);
     }
 
     @Test
     public void index2() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, TwoIndexMapper.class, TwoIndexReducer.class, Text.class, Text.class, Text.class, Text.class, "/index2", "/out");
         job.waitForCompletion(true);
     }
@@ -530,7 +548,8 @@ http://www.sohu.com
      */
     @Test
     public void t7() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, OneShareFriendsMapper.class, OneShareFriendsReducer.class, Text.class, Text.class, Text.class, Text.class, "/friends", "/out");
         job.waitForCompletion(true);
     }
@@ -550,7 +569,8 @@ http://www.sohu.com
      */
     @Test
     public void t8() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
         Job job = initJob(Driver.class, TwoShareFriendsMapper.class, TwoShareFriendsReducer.class, Text.class, Text.class, Text.class, Text.class, "/friends2", "/out");
         job.waitForCompletion(true);
     }
