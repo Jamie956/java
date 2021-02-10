@@ -131,16 +131,29 @@ public class Driver {
         job.waitForCompletion(true);
     }
 
-    /**
-     * 词频统计
-     */
+/*
+词频统计
+a b c
+v b
+a d a
+
+预期
+a	3
+b	2
+c	1
+d	1
+v	1
+
+ */
     @Test
     public void t1() throws IOException, ClassNotFoundException, InterruptedException {
+        String inputPath = "src/main/resources/words";
+
         FileUtils.deleteDirectory(new File(OUTPUT_PATH));
 
         Job job = initJob(Driver.class, WordcountMapper.class, WordcountReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class);
 
-        FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/words"));
+        FileInputFormat.setInputPaths(job, inputPath);
         FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
 
         job.waitForCompletion(true);
