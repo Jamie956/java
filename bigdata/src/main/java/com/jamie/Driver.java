@@ -141,7 +141,7 @@ public class Driver {
         Job job = initJob(Driver.class, WordcountMapper.class, WordcountReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/words"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
 
         job.waitForCompletion(true);
     }
@@ -164,7 +164,7 @@ public class Driver {
         job.setCombinerClass(WordcountCombiner.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/words"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
 
         job.waitForCompletion(true);
     }
@@ -186,7 +186,7 @@ public class Driver {
         Job job = initJob(configuration, Driver.class, WordcountMapper.class, WordcountReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/words"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
 
         job.waitForCompletion(true);
     }
@@ -210,7 +210,7 @@ public class Driver {
 //	    FileOutputFormat.setOutputCompressorClass(job, DefaultCodec.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/words"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
 
         job.waitForCompletion(true);
     }
@@ -224,7 +224,7 @@ public class Driver {
 
         Job job = initJob(Driver.class, TopNMapper.class, TopNReducer.class, FlowBean.class, Text.class, Text.class, FlowBean.class);
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/top10"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
         job.waitForCompletion(true);
     }
 
@@ -238,7 +238,7 @@ public class Driver {
         Job job = initJob(Driver.class, TableMapper.class, TableReducer.class, Text.class, TableBean.class, TableBean.class, NullWritable.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/table"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
         job.waitForCompletion(true);
     }
 
@@ -264,7 +264,7 @@ public class Driver {
         Job job = initJob(Driver.class, FlowCountSortMapper.class, FlowCountSortReducer.class, FlowBean.class, Text.class, Text.class, FlowBean.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/sort"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
         job.waitForCompletion(true);
     }
 
@@ -282,7 +282,7 @@ public class Driver {
         job.setNumReduceTasks(5);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/sort"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
         job.waitForCompletion(true);
     }
 
@@ -320,7 +320,7 @@ list
         job.setOutputFormatClass(MyOutPutFormat.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/json3"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
         job.waitForCompletion(true);
     }
 
@@ -347,7 +347,7 @@ list
         job.setOutputFormatClass(MyOutPutFormat.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/json3"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
 
         job.waitForCompletion(true);
     }
@@ -389,7 +389,7 @@ http://www.sohu.com
         job.setOutputFormatClass(FilterOutputFormat.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/outputformat"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
         job.waitForCompletion(true);
     }
 
@@ -471,7 +471,7 @@ http://www.sohu.com
         job.setNumReduceTasks(0);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/log"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
 
         job.waitForCompletion(true);
     }
@@ -488,7 +488,7 @@ http://www.sohu.com
         job.setInputFormatClass(KeyValueTextInputFormat.class);
 
         FileInputFormat.setInputPaths(job, SRC_PATH.suffix("/kv"));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix("/out"));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
         job.waitForCompletion(true);
     }
 
