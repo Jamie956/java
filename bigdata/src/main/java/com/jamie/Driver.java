@@ -5,6 +5,9 @@ import com.jamie.departjson.MyOutPutFormat;
 import com.jamie.departjson.OuputManyMapper;
 import com.jamie.departjson.OuputManyReduce;
 import com.jamie.departjson.Output1Mapper;
+import com.jamie.flowsum.FlowBean1;
+import com.jamie.flowsum.FlowCountMapper;
+import com.jamie.flowsum.FlowCountReducer;
 import com.jamie.friends.*;
 import com.jamie.index.*;
 import com.jamie.inputformat.SequenceFileMapper;
@@ -60,13 +63,80 @@ import static com.jamie.Utils.initJob;
 public class Driver {
     public static final String RESOURCE = "src/main/resources/";
     public static final Path SRC_PATH = new Path(RESOURCE);
+    public static final String OUTPUT_PATH = "src/main/resources/out";
+
+    /*
+计算同一个手机号码的总上行流量、总下行流量、总和
+
+1	1	2
+1	1	1
+2	2	3
+2	3	1
+3	2	2
+3	1	1
+3	2	1
+
+预期
+1	2	3	5
+2	5	4	9
+3	5	4	9
+     */
+    @Test
+    public void phoneFlowSum() throws InterruptedException, IOException, ClassNotFoundException {
+        String inputPath = "src/main/resources/phone";
+
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
+        Job job = initJob(Driver.class, FlowCountMapper.class, FlowCountReducer.class, Text.class, FlowBean1.class, Text.class, FlowBean1.class);
+
+        FileInputFormat.setInputPaths(job, new Path(inputPath));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
+
+        job.waitForCompletion(true);
+    }
+
+    /*
+手机号136、137、138、139开头都分别放到一个独立的4个文件中，其他开头的放到一个文件中
+
+136	1	2
+136	1	1
+137	2	3
+137	3	1
+138	2	2
+139	1	1
+140	2	1
+
+预期
+136	2	3	5
+137	5	4	9
+138	2	2	4
+139	1	1	2
+140	2	1	3
+
+     */
+    @Test
+    public void te2() throws InterruptedException, IOException, ClassNotFoundException {
+        String inputPath = "src/main/resources/phone";
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
+
+        Job job = initJob(Driver.class, FlowCountMapper.class, FlowCountReducer.class, Text.class, FlowBean1.class, Text.class, FlowBean1.class);
+        // 自定义分区规则
+        job.setPartitionerClass(com.jamie.flowsum.MyPartitioner.class);
+        // 指定reduce 数量
+        job.setNumReduceTasks(5);
+
+        FileInputFormat.setInputPaths(job, new Path(inputPath));
+        FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
+
+        job.waitForCompletion(true);
+    }
 
     /**
      * 词频统计
      */
     @Test
     public void t1() throws IOException, ClassNotFoundException, InterruptedException {
-        FileUtils.deleteDirectory(new File(RESOURCE + "/out"));
+        FileUtils.deleteDirectory(new File(OUTPUT_PATH));
 
         Job job = initJob(Driver.class, WordcountMapper.class, WordcountReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class);
 

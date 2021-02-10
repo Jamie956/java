@@ -6,21 +6,22 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class FlowCountMapper extends Mapper<LongWritable, Text, Text, FlowBean> {
+public class FlowCountMapper extends Mapper<LongWritable, Text, Text, FlowBean1> {
     Text k = new Text();
-    FlowBean v = new FlowBean();
-
+    FlowBean1 v = new FlowBean1();
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String line = value.toString();
         String[] fields = line.split("\t");
-        k.set(fields[1]);
 
-        long upFlow = Long.parseLong(fields[fields.length - 3]);
-        long downFlow = Long.parseLong(fields[fields.length - 2]);
+        String num = fields[0];
+        long up = Long.parseLong(fields[1]);
+        long down = Long.parseLong(fields[2]);
 
-        v.set(upFlow, downFlow);
+        k.set(num);
+        v.setUpFlow(up);
+        v.setDownFlow(down);
         context.write(k, v);
     }
 }

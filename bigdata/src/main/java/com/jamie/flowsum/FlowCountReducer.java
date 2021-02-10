@@ -5,20 +5,21 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class FlowCountReducer extends Reducer<Text, FlowBean, Text, FlowBean> {
-    FlowBean v = new FlowBean();
+public class FlowCountReducer extends Reducer<Text, FlowBean1, Text, FlowBean1> {
+    FlowBean1 v = new FlowBean1();
 
     @Override
-    protected void reduce(Text key, Iterable<FlowBean> values, Context context) throws IOException, InterruptedException {
-        long sum_upFlow = 0;
-        long sum_downFlow = 0;
+    protected void reduce(Text key, Iterable<FlowBean1> values, Context context) throws IOException, InterruptedException {
+        long sumUp = 0;
+        long sumDown = 0;
 
-        // 1 累加求和
-        for (FlowBean flowBean : values) {
-            sum_upFlow += flowBean.getUpFlow();
-            sum_downFlow += flowBean.getDownFlow();
+        for (FlowBean1 value : values) {
+            sumUp += value.getUpFlow();
+            sumDown += value.getDownFlow();
         }
-        v.set(sum_upFlow, sum_downFlow);
+        v.setUpFlow(sumUp);
+        v.setDownFlow(sumDown);
+        v.setSumFlow(sumUp + sumDown);
         context.write(key, v);
     }
 }
