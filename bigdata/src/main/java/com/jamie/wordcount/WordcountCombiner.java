@@ -9,6 +9,7 @@ import java.io.IOException;
 public class WordcountCombiner extends Reducer<Text, IntWritable, Text, IntWritable> {
     IntWritable v = new IntWritable();
 
+    //各节点自身进行reduce
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
         int sum = 0;

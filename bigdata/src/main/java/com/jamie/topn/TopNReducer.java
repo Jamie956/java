@@ -12,13 +12,10 @@ public class TopNReducer extends Reducer<FlowBean, Text, Text, FlowBean> {
 
     @Override
     protected void reduce(FlowBean key, Iterable<Text> values, Context context) {
-        for (Text value : values) {
-            FlowBean bean = new FlowBean();
-            bean.setDownFlow(key.getDownFlow());
-            bean.setUpFlow(key.getUpFlow());
-            bean.setSumFlow(key.getDownFlow() + key.getUpFlow());
+        for (Text num : values) {
+            FlowBean bean = new FlowBean(key.getCount());
 
-            flowMap.put(bean, new Text(value));
+            flowMap.put(bean, new Text(num));
 
             if (flowMap.size() > 10) {
                 flowMap.remove(flowMap.lastKey());
@@ -26,10 +23,11 @@ public class TopNReducer extends Reducer<FlowBean, Text, Text, FlowBean> {
         }
     }
 
+    //最后 写出排序后的map
     @Override
     protected void cleanup(Reducer<FlowBean, Text, Text, FlowBean>.Context context) throws IOException, InterruptedException {
-        for (FlowBean flowBean : flowMap.keySet()) {
-            context.write(new Text(flowMap.get(flowBean)), flowBean);
+        for (FlowBean bean : flowMap.keySet()) {
+            context.write(new Text(flowMap.get(bean)), bean);
         }
     }
 }

@@ -11,9 +11,9 @@ public class FlowCountSortMapper extends Mapper<LongWritable, Text, FlowBean, Te
 
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, FlowBean, Text>.Context context) throws IOException, InterruptedException {
-        String[] fields = value.toString().split(",");
-        FlowBean k = new FlowBean(Long.parseLong(fields[1]), Long.parseLong(fields[2]), Long.parseLong(fields[3]));
-        context.write(k, new Text(fields[0]));
+//        String[] fields = value.toString().split(",");
+//        FlowBean k = new FlowBean(Long.parseLong(fields[1]), Long.parseLong(fields[2]), Long.parseLong(fields[3]));
+//        context.write(k, new Text(fields[0]));
     }
 
 }
