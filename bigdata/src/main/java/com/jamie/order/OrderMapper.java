@@ -19,9 +19,12 @@ public class OrderMapper extends Mapper<LongWritable, Text, OrderBean, NullWrita
 
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, OrderBean, NullWritable>.Context context) throws IOException, InterruptedException {
-        String[] fields = value.toString().split("\t");
-        k.setOrder_id(Integer.parseInt(fields[0]));
-        k.setPrice(Double.parseDouble(fields[2]));
+        String[] fields = value.toString().split(" ");
+
+        int orderId = Integer.parseInt(fields[0]);
+        double price = Double.parseDouble(fields[1]);
+        k.setOrderId(orderId);
+        k.setPrice(price);
         context.write(k, NullWritable.get());
     }
 }

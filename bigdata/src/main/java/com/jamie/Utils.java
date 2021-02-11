@@ -19,9 +19,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Utils {
-    public static final String RESOURCE = "src/main/resources/";
-    public static final Path SRC_PATH = new Path(RESOURCE);
-
     private static Properties p;
 
     static {
@@ -127,8 +124,7 @@ public class Utils {
         return job;
     }
 
-    public static Job initJob(Class<?> driverClass, Class<? extends Mapper> mapperClass, Class<? extends Reducer> reduceClass, Class<?> mapperKey, Class<?> mapperValue, Class<?> reduceKey, Class<?> reduceValue, String inPath, String outPath) throws IOException {
-
+    public static Job initJob(Class<?> driverClass, Class<? extends Mapper> mapperClass, Class<? extends Reducer> reduceClass, Class<?> mapperKey, Class<?> mapperValue, Class<?> reduceKey, Class<?> reduceValue, String inPath) throws IOException {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf);
         job.setJarByClass(driverClass);
@@ -142,8 +138,27 @@ public class Utils {
         job.setOutputKeyClass(reduceKey);
         job.setOutputValueClass(reduceValue);
 
-        FileInputFormat.setInputPaths(job, SRC_PATH.suffix(inPath));
-        FileOutputFormat.setOutputPath(job, SRC_PATH.suffix(outPath));
+        FileInputFormat.setInputPaths(job, new Path("src/main/resources/" + inPath));
+        FileOutputFormat.setOutputPath(job, new Path("src/main/resources/out"));
+
+        return job;
+    }
+
+    public static Job initJob(Configuration conf, Class<?> driverClass, Class<? extends Mapper> mapperClass, Class<? extends Reducer> reduceClass, Class<?> mapperKey, Class<?> mapperValue, Class<?> reduceKey, Class<?> reduceValue, String inPath) throws IOException {
+        Job job = Job.getInstance(conf);
+        job.setJarByClass(driverClass);
+
+        job.setMapperClass(mapperClass);
+        job.setReducerClass(reduceClass);
+
+        job.setMapOutputKeyClass(mapperKey);
+        job.setMapOutputValueClass(mapperValue);
+
+        job.setOutputKeyClass(reduceKey);
+        job.setOutputValueClass(reduceValue);
+
+        FileInputFormat.setInputPaths(job, new Path("src/main/resources/" + inPath));
+        FileOutputFormat.setOutputPath(job, new Path("src/main/resources/out"));
 
         return job;
     }

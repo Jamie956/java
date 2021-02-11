@@ -13,18 +13,18 @@ import java.io.IOException;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderBean implements WritableComparable<OrderBean> {
-    private int order_id;
+    private int orderId;
     private double price;
 
     @Override
     public void write(DataOutput out) throws IOException {
-        out.writeInt(order_id);
+        out.writeInt(orderId);
         out.writeDouble(price);
     }
 
     @Override
     public void readFields(DataInput in) throws IOException {
-        order_id = in.readInt();
+        orderId = in.readInt();
         price = in.readDouble();
     }
 
@@ -33,9 +33,9 @@ public class OrderBean implements WritableComparable<OrderBean> {
         // 先按照定id升序排序，如果相同 按照价格降序排序
         int result;
 
-        if (order_id > bean.getOrder_id()) {
+        if (orderId > bean.getOrderId()) {
             result = 1;
-        } else if (order_id < bean.getOrder_id()) {
+        } else if (orderId < bean.getOrderId()) {
             result = -1;
         } else {
 
@@ -53,6 +53,6 @@ public class OrderBean implements WritableComparable<OrderBean> {
 
     @Override
     public String toString() {
-        return order_id + "\t" + price;
+        return orderId + "\t" + price;
     }
 }

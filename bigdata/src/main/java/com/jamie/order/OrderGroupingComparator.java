@@ -14,17 +14,12 @@ public class OrderGroupingComparator extends WritableComparator {
         OrderBean aBean = (OrderBean) a;
         OrderBean bBean = (OrderBean) b;
 
-        int result;
-        if (aBean.getOrder_id() > bBean.getOrder_id()) {
-            result = 1;
-        } else if (aBean.getOrder_id() < bBean.getOrder_id()) {
-            result = -1;
-        } else {
-            //id相同，分到一组
-            result = 0;
+        if (aBean.getOrderId() > bBean.getOrderId()) {
+            return 1;
+        } else if (aBean.getOrderId() < bBean.getOrderId()) {
+            return -1;
         }
-
         //返回0就会执行reduce
-        return result;
+        return 0;
     }
 }

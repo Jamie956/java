@@ -7,7 +7,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 
 public class KVTextReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
-
     IntWritable v = new IntWritable();
 
     @Override
