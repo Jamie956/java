@@ -12,11 +12,10 @@ import java.io.IOException;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TableBean implements Writable {
-    private String id;
-    private String pid;
-    private int amount;
-    private String pname;
+public class Table implements Writable {
+    private String orderId;
+    private String productId;
+    private String productName;
     private String flag;
 
     /**
@@ -25,10 +24,9 @@ public class TableBean implements Writable {
     @Override
     public void write(DataOutput out) throws IOException {
         // 序列化方法
-        out.writeUTF(id);
-        out.writeUTF(pid);
-        out.writeInt(amount);
-        out.writeUTF(pname);
+        out.writeUTF(orderId);
+        out.writeUTF(productId);
+        out.writeUTF(productName);
         out.writeUTF(flag);
     }
 
@@ -38,15 +36,14 @@ public class TableBean implements Writable {
     @Override
     public void readFields(DataInput in) throws IOException {
         // 反序列化方法
-        id = in.readUTF();
-        pid = in.readUTF();
-        amount = in.readInt();
-        pname = in.readUTF();
+        orderId = in.readUTF();
+        productId = in.readUTF();
+        productName = in.readUTF();
         flag = in.readUTF();
     }
 
     @Override
     public String toString() {
-        return id + "\t" + amount + "\t" + pname;
+        return orderId + "\t" + productId + "\t" + productName;
     }
 }

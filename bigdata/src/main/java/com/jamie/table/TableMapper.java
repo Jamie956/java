@@ -7,13 +7,13 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
 import java.io.IOException;
 
-public class TableMapper extends Mapper<LongWritable, Text, Text, TableBean> {
+public class TableMapper extends Mapper<LongWritable, Text, Text, Table> {
     String fileName;
-    TableBean tableBean = new TableBean();
+    Table table = new Table();
     Text k = new Text();
 
     @Override
-    protected void setup(Mapper<LongWritable, Text, Text, TableBean>.Context context) {
+    protected void setup(Mapper<LongWritable, Text, Text, Table>.Context context) {
         // 获取文件的名称
         FileSplit inputSplit = (FileSplit) context.getInputSplit();
         fileName = inputSplit.getPath().getName();
@@ -23,29 +23,31 @@ public class TableMapper extends Mapper<LongWritable, Text, Text, TableBean> {
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String[] fields = value.toString().split("\t");
 
-        //用关联的id 作为key，使得相同key 的两条记录聚合在一起
+        //用关联的id 作为key，使得相同key 聚合在一起
         if (fileName.startsWith("order")) {
-            tableBean.setId(fields[0]);
-            tableBean.setPid(fields[1]);
-            tableBean.setAmount(Integer.parseInt(fields[2]));
-            tableBean.setPname("");
-            tableBean.setFlag("order");
+            String orderId = fields[0];
+            String productId = fields[1];
 
-            //pid 作为key，用来关联2个表
-            k.set(fields[1]);
-        } else if (fileName.startsWith("pd")) {
-            // 封装key和value
-            tableBean.setId("");
-            tableBean.setPid(fields[0]);
-            tableBean.setAmount(0);
-            tableBean.setPname(fields[1]);
-            tableBean.setFlag("pd");
+            table.setOrderId(orderId);
+            table.setProductId(productId);
+            table.setProductName("");
+            table.setFlag("order");
 
-            //pid 作为key，用来关联2个表
-            k.set(fields[0]);
+            //productId 作为key，聚合
+            k.set(productId);
+        } else if (fileName.startsWith("product")) {
+            String productId = fields[0];
+            String productName = fields[1];
+
+            table.setOrderId("");
+            table.setProductId(productId);
+            table.setProductName(productName);
+            table.setFlag("product");
+
+            //productId 作为key，聚合
+            k.set(productId);
         }
 
-        // 写出
-        context.write(k, tableBean);
+        context.write(k, table);
     }
 }

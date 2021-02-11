@@ -7,31 +7,33 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TableReducer extends Reducer<Text, TableBean, TableBean, NullWritable> {
+public class TableReducer extends Reducer<Text, Table, Table, NullWritable> {
     @Override
-    protected void reduce(Text key, Iterable<TableBean> values, Context context) throws IOException, InterruptedException {
-        ArrayList<TableBean> orders = new ArrayList<>();
-        TableBean product = new TableBean();
+    protected void reduce(Text key, Iterable<Table> values, Context context) throws IOException, InterruptedException {
+        ArrayList<Table> orders = new ArrayList<>();
+        Table product = new Table();
 
-        for (TableBean bean : values) {
-            if ("order".equals(bean.getFlag())) {
-                TableBean tmpBean = new TableBean();
-                tmpBean.setId(bean.getId());
-                tmpBean.setPid(bean.getPid());
-                tmpBean.setAmount(bean.getAmount());
+        for (Table value : values) {
+            String flag = value.getFlag();
+            String orderId = value.getOrderId();
+            String productId = value.getProductId();
+            String productName = value.getProductName();
 
-                orders.add(tmpBean);
+            if ("order".equals(flag)) {
+                Table order = new Table();
+                order.setOrderId(orderId);
+                order.setProductId(productId);
 
-            } else if ("pd".equals(bean.getFlag())) {
-                product.setPid(bean.getPid());
-                product.setId(bean.getId());
-                product.setPname(bean.getPname());
+                orders.add(order);
+
+            } else if ("product".equals(flag)) {
+                product.setProductId(productId);
+                product.setProductName(productName);
             }
         }
 
-        for (TableBean order : orders) {
-            //合并pd表
-            order.setPname(product.getPname());
+        for (Table order : orders) {
+            order.setProductName(product.getProductName());
             context.write(order, NullWritable.get());
         }
     }
