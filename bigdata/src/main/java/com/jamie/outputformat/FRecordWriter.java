@@ -12,18 +12,18 @@ import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import java.io.IOException;
 
 public class FRecordWriter extends RecordWriter<Text, NullWritable> {
-    public static final String RESOURCE = "src/main/resources/";
-    public static final Path SRC_PATH = new Path(RESOURCE);
-
     FSDataOutputStream atOut;
     FSDataOutputStream otOut;
 
+    //构造函数 创建文件流
     public FRecordWriter(TaskAttemptContext job) {
+        String atLog = "src/main/resources/out/atguigu.log";
+        String otLog = "src/main/resources/out/other.log";
         try {
             FileSystem fs = FileSystem.get(job.getConfiguration());
             //创建文件输出流
-            atOut = fs.create(SRC_PATH.suffix("/out/atguigu.log"));
-            otOut = fs.create(SRC_PATH.suffix("/out/other.log"));
+            atOut = fs.create(new Path(atLog));
+            otOut = fs.create(new Path(otLog));
         } catch (IOException e) {
             e.printStackTrace();
         }

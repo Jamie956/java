@@ -7,11 +7,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 public class OuputManyReduce extends Reducer<Text, Text, NullWritable, Text> {
     MultipleOutputs<NullWritable, Text> multipleOutputs;
@@ -34,8 +30,9 @@ public class OuputManyReduce extends Reducer<Text, Text, NullWritable, Text> {
                     multipleOutputs.write(NullWritable.get(), v, key.toString());
                 }
             } else {
+                v.set(value);
                 //重命名输出文件
-                multipleOutputs.write(NullWritable.get(), value, key.toString());
+                multipleOutputs.write(NullWritable.get(), v, key.toString());
             }
         }
     }

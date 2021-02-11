@@ -14,11 +14,6 @@ public class FilterReducer extends Reducer<Text, NullWritable, Text, NullWritabl
         String line = key.toString() + "\r\n";
         k.set(line);
 
-        // 包括输出重复的数据
-//        for (NullWritable nullWritable : values) {
-//            context.write(k, NullWritable.get());
-//        }
-
         //不包括输出重复数据
         context.write(k, NullWritable.get());
     }
