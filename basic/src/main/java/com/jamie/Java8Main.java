@@ -1,5 +1,6 @@
 package com.jamie;
 
+import com.jamie.entity.Person;
 import org.junit.Test;
 
 import java.util.*;
@@ -11,6 +12,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Java8Main {
+
+    /**
+     * 对象排序
+     */
+    @Test
+    public void orderingDouble() {
+        List<Person> ps = Arrays.asList(new Person("Lord of the rings", 8.8), new Person("Back to the future", 8.5), new Person("Carlito's way", 7.9), new Person("Pulp fiction", 8.9));
+        ps.sort(Comparator.comparingDouble(Person::getLength).reversed());
+        ps.forEach(System.out::println);
+    }
 
     /**
      * Predicate

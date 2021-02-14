@@ -1,4 +1,4 @@
-package com.jamie.aenum;
+package com.jamie.enum1;
 
 public enum DateConvert {
     /**

@@ -1,7 +1,8 @@
-package com.jamie.aenum;
+package com.jamie.enum1;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,4 +33,8 @@ public enum Color {
         return CACHE.get(name);
     }
 
+    @Test
+    public void enumtest3() {
+        String value = Color.getValueByName("red");
+    }
 }

@@ -1,6 +1,7 @@
 package com.jamie.freemarker;
 
 
+import com.jamie.entity.User;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;

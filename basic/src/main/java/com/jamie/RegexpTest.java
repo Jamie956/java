@@ -1,12 +1,13 @@
 package com.jamie;
 
 import cn.hutool.core.util.ReUtil;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static com.jamie.project.MyUtils.fileTextString;
 
 public class RegexpTest {
     /**
@@ -100,7 +101,7 @@ public class RegexpTest {
      * 正则表达式解析sql
      */
     @Test
-    public void sqlRegParse() {
+    public void sqlRegParse() throws IOException {
         //匹配整个ddl，将ddl分为表名，列sql部分，表注释
         String ddlReg = "\\s*create\\s+table\\s+(?<tableName>\\S+)[^\\(]*\\((?<columnsSQL>[\\s\\S]+)\\)[^\\)]+?(comment\\s*(=|on\\s+table)\\s*'(?<tableComment>.*?)'\\s*;?)?$";
         //匹配列sql部分，分别解析每一列的列名 类型 和列注释
@@ -108,7 +109,7 @@ public class RegexpTest {
 
         Pattern ddlPattern = Pattern.compile(ddlReg, Pattern.CASE_INSENSITIVE);
         Pattern colPattern = Pattern.compile(colReg, Pattern.CASE_INSENSITIVE);
-        String sql = fileTextString("src\\main\\resources\\myddl");
+        String sql = FileUtils.readFileToString(new File("src/main/resources/myddl"), "UTF-8");
 
         Matcher matcher = ddlPattern.matcher(sql);
         if (matcher.find()) {
@@ -134,10 +135,4 @@ public class RegexpTest {
         }
     }
 
-    @Test
-    public void convert() {
-//        String line = "aaaa\raaa";
-        String line = StringUtils.replace("aaaa\raaa", "\r", "<br/>");
-//        line = line.replaceAll("\r", "<br/>");
-    }
 }

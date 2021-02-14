@@ -2,12 +2,11 @@ package com.jamie.project;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import java.io.*;
 import java.util.*;
-
-import static com.jamie.project.MyUtils.fileTextString;
 
 public class GenerateClass {
 
@@ -18,9 +17,7 @@ public class GenerateClass {
      */
     @Test
     public void createClass() throws IOException {
-        String resourcePath = new File("").getCanonicalPath() + "/src/main/resources/";
-
-        String text = fileTextString(resourcePath + "tableinfo");
+        String text = FileUtils.readFileToString(new File("src/main/resources/tableinfo"), "UTF-8");
         String[] lines = text.split(System.getProperty("line.separator", "\n"));
 
         List<String> entities = new ArrayList<>();
@@ -75,9 +72,7 @@ public class GenerateClass {
     @Test
     public void createController() {
         try {
-            String resourcePath = new File("").getCanonicalPath() + "/src/main/resources/";
-
-            String text = fileTextString(resourcePath + "tableinfo");
+            String text = FileUtils.readFileToString(new File("src/main/resources/tableinfo"), "UTF-8");
             String[] lines = text.split(System.getProperty("line.separator", "\n"));
 
             Map<String, String> entityMap = new HashMap<>();
@@ -90,7 +85,7 @@ public class GenerateClass {
             dataMap.put("entityMap", entityMap);
 
             Configuration configuration = new Configuration();
-            configuration.setDirectoryForTemplateLoading(new File(resourcePath));
+            configuration.setDirectoryForTemplateLoading(new File("/src/main/resources/"));
             Template template = configuration.getTemplate("controller2.ftl");
 
             StringWriter writer = new StringWriter();

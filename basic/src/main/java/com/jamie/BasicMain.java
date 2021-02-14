@@ -1,13 +1,10 @@
 package com.jamie;
 
-import com.jamie.aenum.Color;
-import com.jamie.aenum.Season;
+import com.alibaba.fastjson.JSONArray;
 import com.jamie.concurrency.SyncObject;
 import com.jamie.entity.*;
 import com.alibaba.fastjson.JSONObject;
 
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.junit.Test;
 
@@ -20,112 +17,8 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BasicMain {
-    private int i = 1;
-
     /**
-     * 泛型类
-     */
-    static class Point<T> {
-        public T x;
-
-        public void setX(T x) {
-            this.x = x;
-        }
-    }
-
-    /**
-     * 泛型方法
-     */
-    public static <E> void test2(E[] x) {
-    }
-
-    /**
-     * 泛型方法 extends
-     */
-    public static <T extends Comparable<T>> T maximum(T x, T y, T z) {
-        T max = x;
-        if (y.compareTo(max) > 0) {
-            max = y;
-        }
-        if (z.compareTo(max) > 0) {
-            max = z;
-        }
-        return max;
-    }
-
-    /**
-     * 接口泛型
-     */
-    interface Cat<V> {
-        public V pr();
-    }
-
-    /**
-     * 非静态成员类，可以访问成员变量
-     */
-    class A {
-        A() {
-            System.out.println(i);
-        }
-    }
-
-    /**
-     * 方法+内部类，可以访问成员变量
-     *
-     * @return
-     */
-    public List innerClass() {
-        class C {
-            private int i = 2;
-
-            C() {
-                System.out.println(i);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 静态成员类+内部类，不能访问成员变量，但可以访问静态变量
-     */
-    static class B {
-        B() {
-            System.out.println("create B");
-        }
-    }
-
-    /**
-     * 静态方法+内部类，不能访问成员变量
-     *
-     * @return
-     */
-    public static List staticInnerClass() {
-        class C {
-            C() {
-                System.out.println("create C");
-            }
-        }
-        return null;
-    }
-
-    @MyAnnotation(value = "a")
-    static class TestAnno {
-    }
-
-
-    @Test
-    public void testStatic() {
-        //非静态
-        new BasicMain().new A();
-        new BasicMain().innerClass();
-
-        //静态
-        new B();
-        BasicMain.staticInnerClass();
-    }
-
-    /**
-     * 获取注解
+     * 获取注解的值
      */
     @Test
     public void annotationTest() {
@@ -134,229 +27,17 @@ public class BasicMain {
     }
 
     /**
-     * 字符串格式化
-     * 补零
-     */
-    @Test
-    public void stringMethod() {
-        String a = String.format("halo %s ", 1);
-        String b = StringUtils.rightPad("440", 8, "0");
-    }
-
-    /**
-     * 运行时异常
-     * 1.比如校验数据不正确，在运行时抛出异常
-     */
-    @Test
-    public void runtimeException() {
-        throw new RuntimeException();
-//        throw new IndexOutOfBoundsException("111");
-    }
-
-    /**
-     * 受检异常
-     * 1.编译时检查，需要捕获的异常，可能发生的异常
-     */
-    @Test
-    public void checkException() {
-        try {
-            throw new IOException();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 泛型擦除
-     */
-    @Test
-    public void genClean() {
-        Class<?> class1 = new ArrayList<String>().getClass();
-        Class<?> class2 = new ArrayList<Integer>().getClass();
-        System.out.println(class1.equals(class2));
-    }
-
-    /**
-     * ArrayList 构造函数测试
-     * 1.无参，初始共享空数组实例
-     * 2.容量参数，创建指定大小object实例
-     */
-    @Test
-    public void listInit() {
-
-        new ArrayList<>();
-        new ArrayList<>(5);
-
-        LinkedList list = new LinkedList<>();
-        list.add(1);
-        list.add(2);
-        new ArrayList<>(list);
-
-    }
-
-    /**
-     * 扩容测试
-     * 1.第一次添加元素，使用默认容量10
-     * 2.超过容量扩容增加原来的0.5倍
-     */
-    @Test
-    public void listCapacity() {
-        ArrayList list = new ArrayList<>();
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-
-    }
-
-    /**
-     * 指定索引位置插入
-     * 1.边界检测
-     * 2.数组复制, regWords index+1, length size-index
-     */
-    @Test
-    public void listIndex() {
-        ArrayList list = new ArrayList();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-
-        list.add(1, "a");
-    }
-
-    /**
-     * 遍历器测试
-     * 1.指针检测是否还有下一个元素
-     * 2.读取指针元素，移动指针
-     */
-    @Test
-    public void listForeach() {
-        ArrayList list = new ArrayList();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-
-        Iterator it = list.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
-    }
-
-    /**
-     * linked list 构造函数
-     */
-    @Test
-    public void listConstruct() {
-        new LinkedList();
-    }
-
-    /**
-     * linked list CRUD test
-     * 1.指针连接
-     * 2.节点数据结构，前后双指针
-     * 3.移除，断开连接
-     */
-    @Test
-    public void listRemove() {
-        LinkedList list = new LinkedList<>();
-        list.add(1);
-        list.add(2);
-
-        list.remove();
-    }
-
-    /**
-     * Set 构造实验
-     * 1.hashmap存储元素
-     * 2.无参，构造函数初始默认load factor
-     * 3.集合参数，size小于12时使用默认容量16
-     * 4.容量，加载因子参数
-     */
-    @Test
-    public void setConstruct() {
-        new HashSet<>();
-        new HashSet<>(Arrays.asList(1, 2, 3));
-        new HashSet<>(12, 0.8f);
-    }
-
-    /**
-     * set add element
-     */
-    @Test
-    public void setAdd() {
-        HashSet set = new HashSet();
-        set.add(1);
-        set.add(2);
-        set.add(1);
-    }
-
-
-    /**
-     * hash map test
-     * 1.构造函数初始load factor
-     * 2.元素储存在table数组
-     * 3.节点结构，hash, key, val, next
-     */
-    @Test
-    public void mapPut() {
-        HashMap map = new HashMap<>();
-        map.put("k1", "v1");
-        map.put("k2", "v2");
-    }
-
-    /**
-     * 静态代码块、代码块、构造方法 执行顺序
-     * 执行父类子类的静态代码块 -> 父类代码块，构造方法 -> 子类代码块，构造方法
+     * 执行顺序
+     * 1父类静态代码块
+     * 2子类静态代码块
+     * 3父类代码块
+     * 5父类构造函数
+     * 4子类代码块
+     * 6子类构造函数
      */
     @Test
     public void testOrder() {
         new InitOrderB();
-    }
-
-    private static int hash(String str) {
-        final int p = 16777619;
-        int hash = (int) 2166136261L;
-        for (int i = 0; i < str.length(); i++) {
-            hash = (hash ^ str.charAt(i)) * p;
-        }
-        hash += hash << 13;
-        hash ^= hash >> 7;
-        hash += hash << 3;
-        hash ^= hash >> 17;
-        hash += hash << 5;
-
-        if (hash < 0) {
-            hash = Math.abs(hash);
-
-        }
-        return hash;
-    }
-
-    /**
-     * 一致性hash环，根据用户ip路由到不同服务器地址（不带虚拟节点）
-     * 1. 初始化加载服务器地址，装在treemap里，key->hash, value->真实地址
-     * 2. 用户根据ip得到对应hash，treemap.get(hash(userIp)) 获取服务器列表，获取顺时针最靠近的值
-     */
-    @Test
-    public void consistentHashing() {
-        SortedMap<Integer, String> sortedMap = new TreeMap<>();
-
-        String[] servers = {"192.168.0.0:111", "192.168.0.1:111", "192.168.0.2:111", "192.168.0.3:111", "192.168.0.4:111"};
-
-        for (int i = 0; i < servers.length; i++) {
-            int hash = hash(servers[i]);
-            sortedMap.put(hash, servers[i]);
-        }
-
-        SortedMap<Integer, String> subMap = sortedMap.tailMap(hash("127.0.0.1:1111"));
-        String a = subMap.get(subMap.firstKey());
     }
 
     /**
@@ -371,22 +52,13 @@ public class BasicMain {
     }
 
     /**
-     * test cglib
-     */
-    @Test
-    public void cglib() {
-        com.jamie.entity.IHello helloProxy = CGLibProxy.getInstance().getProxy(com.jamie.entity.HelloImpl.class);
-        helloProxy.greeting();
-    }
-
-    /**
      * 深克隆，引用类型也会被克隆
      */
     @Test
     public void deepClone() {
         try {
             User user = new User(new Address("stress1"));
-            User clone = (User) BasicMain.deepClone(user);
+            User clone = (User) deepClone(user);
 
             System.out.println(user == clone);
             System.out.println(user.getAddress() == clone.getAddress());
@@ -396,58 +68,21 @@ public class BasicMain {
         }
     }
 
+    /**
+     * 对象 -> 字节输出流 -> 对象
+     * @param object
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static Object deepClone(Object object) throws IOException, ClassNotFoundException {
+        //字节输出流
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(object);
 
         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
         return ois.readObject();
-    }
-
-    /**
-     * values()，获取全部枚举成员数组
-     */
-    @Test
-    public void enumTest() {
-        for (Season season : Season.values()) {
-            switch (season) {
-                case SPRING:
-                    System.out.println("name: " + season.name() + " code: " + season.getCode());
-                    break;
-                case AUTUMN:
-                    System.out.println("name: " + season.name() + " code: " + season.getCode());
-                    break;
-                case SUMMER:
-                    System.out.println("name: " + season.name() + " code: " + season.getCode());
-                    break;
-                case WINTER:
-                    System.out.println("name: " + season.name() + " code: " + season.getCode());
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    /**
-     * valueOf()，根据枚举名字，获取指定的枚举实例
-     * ordinal()，获取枚举的索引
-     */
-    @Test
-    public void enumTest2() {
-        Season a = Season.valueOf("SPRING");
-        Season c = Season.SPRING;
-        int b = Season.valueOf("SUMMER").ordinal();
-    }
-
-    /**
-     *
-     */
-    @Test
-    public void enumtest3() {
-
-        String value = Color.getValueByName("red");
     }
 
     /**
@@ -466,6 +101,7 @@ public class BasicMain {
 
     /**
      * 浅克隆，不克隆引用类型
+     * 对象实现Cloneable，重写clone 方法，调用父类方法
      */
     @Test
     public void shallowClone() {
@@ -483,13 +119,18 @@ public class BasicMain {
     @Test
     public void objectIO() {
         try {
+            //字节输出流
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            //构建对象输出流
             ObjectOutputStream oos = new ObjectOutputStream(baos);
             oos.writeObject(new Person("tom"));
 
+            //字节输出流
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            //读取对象输出流
             ObjectInputStream ois = new ObjectInputStream(bais);
             Person person = (Person) ois.readObject();
+
             System.out.println(person);
         } catch (Exception e) {
             e.printStackTrace();
@@ -795,57 +436,27 @@ public class BasicMain {
     }
 
     /**
-     * 排序
+     * double 排序
      */
     @Test
-    public void orderingDouble() {
-        //对象排序
-//        List<Person> ps = Arrays.asList(new Person("Lord of the rings", 8.8), new Person("Back to the future", 8.5), new Person("Carlito's way", 7.9), new Person("Pulp fiction", 8.9));
-//        ps.sort(Comparator.comparingDouble(Person::getLength).reversed());
-//        ps.forEach(System.out::println);
-
-        //数组排序
-//        Double[] doubles = {0.06, 0.01, 0.30, 0.20, 0.25};
-//        Arrays.sort(doubles);
-    }
-
-    /**
-     * 集合排序
-     */
     public void listdoubleorder() {
-        List<JSONObject> list = new ArrayList<>();
+        String jsonString = "[{\"name\":\"a\",\"value\":0.01}, {\"name\":\"b\",\"value\":0.06}, {\"name\":\"c\",\"value\":0.3}]";
 
-        JSONObject json1 = new JSONObject();
-        json1.put("name", "a");
-        json1.put("value", 0.01d);
+        //1
+        JSONArray json = JSONObject.parseArray(jsonString);
+        json.sort((o1, o2) -> {
+            double value1 = ((JSONObject)o1).getDoubleValue("value") * 10000;
+            double value2 = ((JSONObject)o2).getDoubleValue("value") * 10000;
+            return (int) (value2 - value1);
+        });
 
-        JSONObject json2 = new JSONObject();
-        json2.put("name", "b");
-        json2.put("value", 0.06d);
+        //2
+        json.sort((a, b) -> (int)(((JSONObject)a).getDoubleValue("value") - ((JSONObject)b).getDoubleValue("value")));
 
-        JSONObject json3 = new JSONObject();
-        json3.put("name", "c");
-        json3.put("value", 0.30d);
+        //3
+//        json.sort(Comparator.comparingDouble(e -> e.getDoubleValue("value")));
 
-        list.add(json1);
-        list.add(json2);
-        list.add(json3);
-
-//        list.sort((o1, o2) -> {
-//            double value1 = o1.getDoubleValue("value") * 10000;
-//            double value2 = o2.getDoubleValue("value") * 10000;
-//            return (int) (value2 - value1);
-//        });
-
-//        list.sort((a, b) -> (int)(a.getDoubleValue("value") - b.getDoubleValue("value")));
-
-        //升序
-        list.sort(Comparator.comparingDouble(e -> e.getDoubleValue("value")));
-
-        //降序
-//        list.sort(Comparator.comparingDouble((JSONObject e) -> e.getDoubleValue("value")).reversed());
     }
-
 
     //html 转义
     @Test
@@ -861,44 +472,6 @@ public class BasicMain {
         System.out.println(unescapeHtml3);
         String escapeHtml3 = StringEscapeUtils.escapeHtml3(unescapeHtml3);
         System.out.println(escapeHtml3);
-    }
-
-    /**
-     * ConcurrentModificationException 异常重现
-     *
-     * map 在遍历时新增key-value 或删除 抛出异常
-     *
-     * 用iterator 在遍历时 删除元素不会报错
-     */
-    @Test
-    public void testMapForAdd() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("k1", "v1");
-        map.put("k2", "v2");
-        map.put("k3", "v3");
-
-//        for (String k : map.keySet()) {
-//            String v = map.get(k);
-//
-////            map.put("k4", "v4");
-////            map.remove("k2");
-//        }
-
-        Iterator<String> iterator = map.keySet().iterator();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            String value = map.get(key);
-
-//            System.out.println(iterator.next());
-
-            if ("k1".equals(key)) {
-                iterator.remove();
-
-//                map.put("k111","vvvvv");
-            }
-
-        }
-
     }
 
 }

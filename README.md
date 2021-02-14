@@ -1,7 +1,6 @@
-hi java core
- 
-[基础知识、JDK](/src/main/java/basic)
 
+
+[基础知识、JDK](/src/main/java/basic)
 
 [设计模式](/src/main/java/pattern)
 
@@ -46,3 +45,89 @@ hive-udf    maven打包包含依赖
         </plugins>
     </build>
 ```
+
+
+
+# 基础
+
+泛型
+
+```java
+
+/**
+     * 泛型类
+     */
+static class Point<T> {
+  public T x;
+
+  public void setX(T x) {
+    this.x = x;
+  }
+}
+
+/**
+     * 泛型方法
+     */
+public static <E> void test2(E[] x) {
+}
+
+/**
+     * 泛型方法 extends
+     */
+public static <T extends Comparable<T>> T maximum(T x, T y, T z) {
+  T max = x;
+  if (y.compareTo(max) > 0) {
+    max = y;
+  }
+  if (z.compareTo(max) > 0) {
+    max = z;
+  }
+  return max;
+}
+
+/**
+     * 接口泛型
+     */
+interface Cat<V> {
+  public V pr();
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
