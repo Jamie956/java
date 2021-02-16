@@ -15,7 +15,10 @@ import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-public class AS {
+/**
+ * 加密解密
+ */
+public class Secrect {
     /**
      * 对称加密，加密和解密都是同一个密钥
      * <p>
@@ -29,15 +32,15 @@ public class AS {
         String transformation = "DES";
         String algorithm = "DES";
 
-        String encryptDES = encryptDES(input, key, transformation, algorithm);
-        System.out.println("加密:" + encryptDES);
+        String encryptDes = encryptDES(input, key, transformation, algorithm);
+        System.out.println("加密:" + encryptDes);
 
-        String s = decryptDES(encryptDES, key, transformation, algorithm);
+        String s = decryptDES(encryptDes, key, transformation, algorithm);
         System.out.println("解密:" + s);
     }
 
     /**
-     * 使用DES加密数据
+     * DES加密
      */
     private static String encryptDES(String input, String key, String transformation, String algorithm) throws Exception {
         Cipher cipher = Cipher.getInstance(transformation);
@@ -48,7 +51,7 @@ public class AS {
     }
 
     /**
-     * 使用DES解密
+     * DES解密
      */
     private static String decryptDES(String input, String key, String transformation, String algorithm) throws Exception {
         Cipher cipher = Cipher.getInstance(transformation);
@@ -59,10 +62,10 @@ public class AS {
     }
 
     /**
-     * 数字摘要
+     * 数字摘要 md5
      */
     @Test
-    public void sas() throws NoSuchAlgorithmException {
+    public void md5Test() throws NoSuchAlgorithmException {
         // 原文
         String input = "aa";
         // 算法
@@ -92,7 +95,7 @@ public class AS {
      * 非对称加密RSA
      */
     @Test
-    public void asa() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+    public void rsaTest() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         String input = "你好";
         // 加密算法
         String algorithm = "RSA";
@@ -112,11 +115,8 @@ public class AS {
         String privateKeyString = Base64.encode(privateKeyEncoded);
         String publicKeyString = Base64.encode(publicKeyEncoded);
 
-        // 打印私钥
         System.out.println("私钥：" + privateKeyString);
-        // 打印公钥
         System.out.println("公钥：" + publicKeyString);
-
 
         Cipher cipher = Cipher.getInstance(algorithm);
         //私钥加密
@@ -126,7 +126,6 @@ public class AS {
 
         // 公钥解密
         cipher.init(Cipher.DECRYPT_MODE, publicKey);
-        // 对密文进行解密，不需要使用base64，因为原文不会乱码
         byte[] bytes1 = cipher.doFinal(bytes);
         System.out.println("公钥解密：" + new String(bytes1));
 
@@ -149,12 +148,11 @@ public class AS {
         PublicKey publicKey = keyPair.getPublic();
         // 获取私钥
         PrivateKey privateKey = keyPair.getPrivate();
-        // 获取byte数组
-        byte[] publicKeyEncoded = publicKey.getEncoded();
-        byte[] privateKeyEncoded = privateKey.getEncoded();
+
         // 进行Base64编码
-        String publicKeyString = Base64.encode(publicKeyEncoded);
-        String privateKeyString = Base64.encode(privateKeyEncoded);
+        String publicKeyString = Base64.encode(publicKey.getEncoded());
+        String privateKeyString = Base64.encode(privateKey.getEncoded());
+
         // 保存文件
         FileUtils.writeStringToFile(new File(pubPath), publicKeyString, Charset.forName("UTF-8"));
         FileUtils.writeStringToFile(new File(priPath), privateKeyString, Charset.forName("UTF-8"));
