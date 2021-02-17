@@ -4,12 +4,15 @@ package com.jamie.concurrency.juc.collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+//?
 public class ConcurrentHashMapTest {
     public static void work(Map map) {
-        for (int i = 0; i < 6; i++) {
-            map.put(i, Thread.currentThread().getName() + "-" + i);
+        for (int i = 0; i < 1000; i++) {
+            String name = Thread.currentThread().getName();
+            map.put(i,  name + "-" + i);
         }
     }
 
