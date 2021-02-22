@@ -1,4 +1,4 @@
-package com.jamie.nio;
+package com.jamie.io;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import java.nio.channels.SocketChannel;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class BIOTest {
+public class XIOTest {
 
     //客户端
     @Test
@@ -42,7 +42,7 @@ public class BIOTest {
         sChannel.close();
     }
 
-    //服务端
+
     @Test
     public void server() throws IOException {
         ServerSocketChannel ssChannel = ServerSocketChannel.open();
