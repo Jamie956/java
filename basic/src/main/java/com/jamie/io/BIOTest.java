@@ -12,8 +12,7 @@ import java.util.concurrent.Executors;
 public class BIOTest {
     /**
      * 阻塞IO，服务端
-     *
-     * telnet 127.0.0.1 6666
+     * 终端连接服务端：telnet 127.0.0.1 6666
      */
     @Test
     public void server() throws IOException {
@@ -28,10 +27,10 @@ public class BIOTest {
         while (true) {
             //获取当前线程
             System.out.println("等待下一个客户端连接...");
-//            System.out.println(Thread.currentThread().getId() + " # " + Thread.currentThread().getName());
+            System.out.println(Thread.currentThread().getId() + " # " + Thread.currentThread().getName());
             final Socket socket = serverSocket.accept();
             System.out.println("连接成功!");
-//            System.out.println(Thread.currentThread().getId() + " # " + Thread.currentThread().getName());
+            System.out.println(Thread.currentThread().getId() + " # " + Thread.currentThread().getName());
 
             //分配线程与新连接通信
             pool.execute(new Runnable() {
