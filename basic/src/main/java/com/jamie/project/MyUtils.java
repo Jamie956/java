@@ -17,7 +17,12 @@ database.user=33
     */
     @Test
     public void getProperty() throws IOException {
-        InputStream in = new BufferedInputStream(new FileInputStream("src/main/resources/test.properties"));
+//        InputStream in = new BufferedInputStream(new FileInputStream("src/main/resources/test.properties"));
+        //获取输入流
+        ClassPathResource resource = new ClassPathResource("/test.properties");
+        InputStream in = resource.getInputStream();
+
+        //创建资源对象，加载输入流
         Properties p = new Properties();
         p.load(in);
 
@@ -54,6 +59,28 @@ database.user=33
         System.out.println("---------------总数统计---------------");
         System.out.println("匹配数目: " + matchCount);
         System.out.println("不匹配数目: " + notMatchCount);
+    }
+
+    /**
+     * 找重复
+     */
+    @Test
+    public void findDup() throws IOException {
+        String text = FileUtils.readFileToString(new File("src/main/resources/source"), "UTF-8");
+        //每行转成数组
+        String[] lines = text.split("\r\n");
+        //每一行和整个数组比较，统计出现次数
+        for (String line : lines) {
+            int count = 0;
+            for (String ele : lines) {
+                if (ele.equals(line)) {
+                    count++;
+                }
+            }
+            if (count > 1) {
+                System.out.println(line + " 总共出现了 " + count + "次");
+            }
+        }
     }
 
     /**
