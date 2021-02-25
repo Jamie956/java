@@ -1,12 +1,13 @@
 package com.jamie.flowsum;
 
+import com.jamie.topn.FlowBean;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Partitioner;
 
-public class MyPartitioner extends Partitioner<Text, FlowBean1> {
+public class MyPartitioner extends Partitioner<Text, FlowBean> {
 
     @Override
-    public int getPartition(Text key, FlowBean1 value, int numPartitions) {
+    public int getPartition(Text key, FlowBean value, int numPartitions) {
         String prefix = key.toString().substring(0, 3);
 
         int partition = 4;

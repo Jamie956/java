@@ -12,30 +12,24 @@ import java.io.IOException;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlowBean1 implements Writable {
-    private long upFlow;
-    private long downFlow;
-    private long sumFlow;
+public class Counter implements Writable {
+    private int count;
 
     // 序列化方法
     @Override
     public void write(DataOutput out) throws IOException {
-        out.writeLong(upFlow);
-        out.writeLong(downFlow);
-        out.writeLong(sumFlow);
+        out.writeInt(count);
     }
 
     // 反序列化方法
     @Override
     public void readFields(DataInput in) throws IOException {
         // 必须要求和序列化方法顺序一致
-        upFlow = in.readLong();
-        downFlow = in.readLong();
-        sumFlow = in.readLong();
+        count = in.readInt();
     }
 
     @Override
     public String toString() {
-        return upFlow + "\t" + downFlow + "\t" + sumFlow;
+        return count + "...";
     }
 }
