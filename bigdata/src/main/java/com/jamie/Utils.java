@@ -3,7 +3,6 @@ package com.jamie;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jamie.utils.IDGenerator;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapreduce.Job;
@@ -34,32 +33,32 @@ public class Utils {
     /**
      * 替换换行符
      */
-    public static Object replaceCrlf(Object value) {
-        if (value == null) {
-            return null;
-        }
-        String newValue = "";
-        if (StringUtils.isNoneBlank(value.toString())) {
-            newValue = value.toString().replaceAll("(\\r\\n|\\n|\\n\\r|\\r)", "<br/>");
-        }
-        if (value instanceof JSONObject) {
-            return JSONObject.parseObject(newValue);
-        } else if (value instanceof JSONArray) {
-            return JSONObject.parseArray(newValue);
-        }
-        return newValue;
-    }
+//    public static Object replaceCrlf(Object value) {
+//        if (value == null) {
+//            return null;
+//        }
+//        String newValue = "";
+//        if (StringUtils.isNoneBlank(value.toString())) {
+//            newValue = value.toString().replaceAll("(\\r\\n|\\n|\\n\\r|\\r)", "<br/>");
+//        }
+//        if (value instanceof JSONObject) {
+//            return JSONObject.parseObject(newValue);
+//        } else if (value instanceof JSONArray) {
+//            return JSONObject.parseArray(newValue);
+//        }
+//        return newValue;
+//    }
 
     /**
      * 根据资源文件转换 json 的key
      */
-    public static String convertKey(String prefix, String key) {
-        String propertyValue = p.getProperty(prefix + "." + key);
-        if (propertyValue != null) {
-            return propertyValue;
-        }
-        return key;
-    }
+//    public static String convertKey(String prefix, String key) {
+//        String propertyValue = p.getProperty(prefix + "." + key);
+//        if (propertyValue != null) {
+//            return propertyValue;
+//        }
+//        return key;
+//    }
 
     /**
      * json 递归生成树结构
@@ -77,7 +76,7 @@ public class Utils {
                     jsonLoop(value, id);
                 } else if (value instanceof String) {
                     //最终的节点
-                    json.put(key, value.toString()+"!!");
+                    json.put(key, value.toString() + "!!");
                 }
             }
         }
@@ -160,6 +159,24 @@ public class Utils {
         FileInputFormat.setInputPaths(job, new Path("src/main/resources/" + inPath));
         FileOutputFormat.setOutputPath(job, new Path("src/main/resources/out"));
 
+        return job;
+    }
+
+    public static Job initJob(Class<?> driverClass, Class<? extends Mapper> mapperClass, Class<?> key, Class<?> value, String inPath) throws IOException {
+        Configuration configuration = new Configuration();
+        Job job = Job.getInstance(configuration);
+
+        job.setJarByClass(driverClass);
+        job.setMapperClass(mapperClass);
+
+        job.setOutputKeyClass(key);
+        job.setOutputValueClass(value);
+
+        FileInputFormat.setInputPaths(job, new Path("src/main/resources/" + inPath));
+        FileOutputFormat.setOutputPath(job, new Path("src/main/resources/out"));
+
+        // 不进行reduce
+        job.setNumReduceTasks(0);
         return job;
     }
 }

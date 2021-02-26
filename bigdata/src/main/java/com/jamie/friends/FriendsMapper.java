@@ -6,7 +6,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class OneShareFriendsMapper extends Mapper<LongWritable, Text, Text, Text> {
+public class FriendsMapper extends Mapper<LongWritable, Text, Text, Text> {
     Text k = new Text();
     Text v = new Text();
 
@@ -18,7 +18,6 @@ public class OneShareFriendsMapper extends Mapper<LongWritable, Text, Text, Text
         String[] friends = fields[1].split(",");
 
         for (String friend : friends) {
-            //好友作为key
             k.set(friend);
             v.set(person);
             context.write(k, v);
