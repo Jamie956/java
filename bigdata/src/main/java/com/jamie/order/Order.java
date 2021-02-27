@@ -12,47 +12,42 @@ import java.io.IOException;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderBean implements WritableComparable<OrderBean> {
+public class Order implements WritableComparable<Order> {
     private int orderId;
-    private double price;
+    private int price;
 
     @Override
     public void write(DataOutput out) throws IOException {
         out.writeInt(orderId);
-        out.writeDouble(price);
+        out.writeInt(price);
     }
 
     @Override
     public void readFields(DataInput in) throws IOException {
         orderId = in.readInt();
-        price = in.readDouble();
+        price = in.readInt();
     }
 
     @Override
-    public int compareTo(OrderBean bean) {
+    public int compareTo(Order bean) {
         // 先按照定id升序排序，如果相同 按照价格降序排序
-        int result;
-
         if (orderId > bean.getOrderId()) {
-            result = 1;
+            return 1;
         } else if (orderId < bean.getOrderId()) {
-            result = -1;
+            return -1;
         } else {
-
             if (price > bean.getPrice()) {
-                result = -1;
+                return -1;
             } else if (price < bean.getPrice()) {
-                result = 1;
+                return 1;
             } else {
-                result = 0;
+                return 0;
             }
         }
-
-        return result;
     }
 
     @Override
     public String toString() {
-        return orderId + "\t" + price;
+        return orderId + "," + price;
     }
 }
