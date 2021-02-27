@@ -13,22 +13,14 @@ public class LogMapper extends Mapper<LongWritable, Text, Text, NullWritable> {
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, NullWritable>.Context context) throws IOException, InterruptedException {
         String line = value.toString();
-        boolean result = parseLog(line, context);
-        if (!result) {
+        String[] fields = line.split(" ");
+        if (fields.length < 11) {
+            context.getCounter("map", "false").increment(1);
             return;
         }
+        context.getCounter("map", "true").increment(1);
         k.set(line);
         context.write(k, NullWritable.get());
     }
 
-    private boolean parseLog(String line, Context context) {
-        String[] fields = line.split(" ");
-        if (fields.length > 11) {
-            context.getCounter("map", "true").increment(1);
-            return true;
-        } else {
-            context.getCounter("map", "false").increment(1);
-            return false;
-        }
-    }
 }
