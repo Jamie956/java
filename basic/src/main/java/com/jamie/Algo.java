@@ -14,27 +14,27 @@ public class Algo {
     /**
      * 递归遍历json 全部节点，并在每个节点新增一个节点
      */
-    public static void jsonLoop(Object object) {
+    public static void jsonRecursion(Object object) {
         if (object instanceof JSONObject) {
             JSONObject json = (JSONObject) object;
             //每个 json 节点增加新节点
-            json.put("a", "a");
+            json.put("newNode", "val");
             for (String key : json.keySet()) {
                 Object value = json.get(key);
-                jsonLoop(value);
+                jsonRecursion(value);
             }
         } else if (object instanceof JSONArray) {
             JSONArray array = (JSONArray) object;
-            for (Object e : array) {
-                jsonLoop(e);
+            for (Object element : array) {
+                jsonRecursion(element);
             }
         }
     }
 
     @Test
-    public void jsonRecursion() {
+    public void testRecursion() {
         String jsonString = "{\"TITLE\":\"Json Title\",\"FORM\":{\"USERNAME\":\"Rick and Morty\"},\"ARRAY\":[{\"FIRST\":\"Rick\"},{\"LAST\":\"Morty\"}]}";
         JSONObject json = JSON.parseObject(jsonString);
-        jsonLoop(json);
+        jsonRecursion(json);
     }
 }
