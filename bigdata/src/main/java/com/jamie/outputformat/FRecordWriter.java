@@ -15,7 +15,7 @@ public class FRecordWriter extends RecordWriter<Text, NullWritable> {
     FSDataOutputStream atOut;
     FSDataOutputStream otOut;
 
-    //构造函数 创建文件流
+    //构建输出流
     public FRecordWriter(TaskAttemptContext job) {
         String atLog = "src/main/resources/out/atguigu.log";
         String otLog = "src/main/resources/out/other.log";

@@ -75,8 +75,7 @@ public class Utils {
                 if (value instanceof JSONObject || value instanceof JSONArray) {
                     jsonLoop(value, id);
                 } else if (value instanceof String) {
-                    //最终的节点
-                    json.put(key, value.toString() + "!!");
+                    json.put(key, value.toString() + "!");
                 }
             }
         }

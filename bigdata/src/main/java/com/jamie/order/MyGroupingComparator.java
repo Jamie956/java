@@ -13,7 +13,7 @@ public class MyGroupingComparator extends WritableComparator {
         if (((Order) a).getOrderId() != ((Order) b).getOrderId()) {
             return -1;
         }
-        //返回0 分到 reduce 一组
+        //第一次返回0 执行reduce
         return 0;
     }
 }
