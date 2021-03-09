@@ -12,6 +12,9 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -474,6 +477,23 @@ public class BasicMain {
         System.out.println(escapeHtml3);
     }
 
+
+    @Test
+    public void isDateTest() {
+        boolean a = isDate("2021-03-01");
+        boolean b = isDate("6363-34-60");
+        boolean c = isDate("0000-00-00");
+    }
+
+    private static boolean isDate(String date) {
+        try {
+            Date.valueOf(date);
+            return true;
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 
 

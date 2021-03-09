@@ -15,8 +15,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class HDFSUtils {
+//    private static final String HDFS_PATH = "hdfs://hadoop212:8020";
     private static final String HDFS_PATH = "hdfs://hadoop102:9000";
-    private static final String HDFS_USER = "root";
+    private static final String HDFS_USER = "hdfs";
     private static FileSystem fileSystem;
     private static Configuration configuration;
 
@@ -90,7 +91,7 @@ public class HDFSUtils {
      */
     @Test
     public void readToString() throws Exception {
-        FSDataInputStream inputStream = fileSystem.open(new Path("/a.txt"));
+        FSDataInputStream inputStream = fileSystem.open(new Path("/origin_data/ccr_qc/company_list/000000_0"));
         String context = inputStreamToString(inputStream, "utf-8");
         System.out.println(context);
     }
