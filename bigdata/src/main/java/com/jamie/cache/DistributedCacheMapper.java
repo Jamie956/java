@@ -24,7 +24,7 @@ public class DistributedCacheMapper extends Mapper<LongWritable, Text, Text, Nul
      */
     @Override
     protected void setup(Mapper<LongWritable, Text, Text, NullWritable>.Context context) throws IOException {
-        // 加载cache
+        // 加载cache 文件product
         URI[] cacheFiles = context.getCacheFiles();
         String path = cacheFiles[0].getPath();
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
@@ -32,8 +32,10 @@ public class DistributedCacheMapper extends Mapper<LongWritable, Text, Text, Nul
         String line;
         while (StringUtils.isNotEmpty(line = reader.readLine())) {
             String[] fields = line.split("\t");
-            //id 品牌
-            cacheMap.put(fields[0], fields[1]);
+
+            String productId = fields[0];
+            String productName = fields[1];
+            cacheMap.put(productId, productName);
         }
 
         // 关闭资源
@@ -42,9 +44,10 @@ public class DistributedCacheMapper extends Mapper<LongWritable, Text, Text, Nul
 
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, NullWritable>.Context context) throws IOException, InterruptedException {
+        //读取order
         String line = value.toString();
-        String pid = line.split("\t")[1];
-        String productName = cacheMap.get(pid);
+        String productId = line.split("\t")[1];
+        String productName = cacheMap.get(productId);
         k.set(line + "\t" + productName);
 
         context.write(k, NullWritable.get());
