@@ -9,27 +9,19 @@ import java.io.*;
 import java.util.Properties;
 
 public class MyUtils {
-    /*
-读取资源文件
-database.driver=11
-database.url=22
-database.user=33
-    */
+    /**
+     * 读取资源文件
+     */
     @Test
     public void getProperty() throws IOException {
-//        InputStream in = new BufferedInputStream(new FileInputStream("src/main/resources/test.properties"));
         //获取输入流
         ClassPathResource resource = new ClassPathResource("/test.properties");
         InputStream in = resource.getInputStream();
 
-        //创建资源对象，加载输入流
         Properties p = new Properties();
         p.load(in);
 
-        String className2 = p.getProperty("database.driver");
-        String url = p.getProperty("database.url");
-        String user = p.getProperty("database.user");
-        String no = p.getProperty("database.no");
+        String name = p.getProperty("user.name");
     }
 
     /**
